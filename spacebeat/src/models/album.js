@@ -1,0 +1,19 @@
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  const Album = sequelize.define('Album', {
+    album_name: DataTypes.STRING,
+    album_likes: DataTypes.INTEGER,
+    album_releasedate: DataTypes.DATE,
+    album_image: DataTypes.STRING
+  }, {});
+  Album.associate = function(models) {
+    models.Album.belongsTo(models.Artist,{
+      onDelete: "CASCADE",      
+      foreignKey:{
+        allowNull: false
+      }
+    });
+    models.Album.hasMany(models.Song, {as: 'album_songs'});
+  };
+  return Album;
+};
