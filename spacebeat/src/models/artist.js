@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     artist_name: DataTypes.STRING,
     artist_genre: DataTypes.STRING,
     artist_likes: DataTypes.INTEGER,
-    artist_description: DataTypes.TEXT,
     artist_image: DataTypes.STRING
   }, {});
   Artist.associate = function(models) {
