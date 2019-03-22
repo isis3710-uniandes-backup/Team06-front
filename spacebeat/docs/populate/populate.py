@@ -11,9 +11,9 @@ class Populate:
         print('xd') 
 
     def writeFile(self, regular):
-        token = "BQDc1Uq2UHElkSXT2MRn7wbLlFRRZnxCh9cOtobkMNymqKs-uziTBSkoXSRj2LKJhJ5F8LNkMTwrlkzFqHakYgEjUocjTKef63GbnNnJ6XFYk4VMbnT6LPpmTI92sVYGr-hYcqFLC0FHCBk"
+        token = "BQCLstsdd76zsyACTGBXmvSGSRdxYXpRztRCw_kNTBu1PTIg9SvM73heFcm8rVdIesUldfaNZulKIkwFn8C6WnrMiE21RP-moRj3ipRtQ5nMinMi4zF8mjSVUE-8oxyeQrnyV9wWMCmWwNY"
         print("Writting " + regular)
-        endpoint = "https://api.spotify.com/v1/search?q="+regular+"&type=artist&limit=50&access_token="+token
+        endpoint = "https://api.spotify.com/v1/search?q=year:"+regular+"&type=artist&limit=50&access_token="+token
 
         r = requests.get(url = endpoint)
         data = r.json()['artists']['items']
@@ -56,7 +56,7 @@ class Populate:
         albumfile.close()
         artistfile.close()
 
-letters = ['w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+letters = ['2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019']
 
 populate = Populate()
 
