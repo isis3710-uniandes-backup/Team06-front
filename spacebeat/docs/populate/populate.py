@@ -58,7 +58,7 @@ class Populate:
     
     def loadToDB(self):
 
-        ip = 'localhost:8082'
+        ip = '172.24.41.67:8082'
         dfartists = pd.read_csv('./unique/artists.csv', encoding="cp1252", header=None)
         dfalbums = pd.read_csv('./unique/albums.csv', encoding="cp1252", header=None)
         dfsongs = pd.read_csv('./unique/songs.csv', encoding="cp1252", header=None)
