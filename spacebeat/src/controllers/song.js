@@ -29,6 +29,19 @@ module.exports = {
             }).catch((error) => res.status(400).send(error));
         }).catch((error) => res.status(400).send(error));               
     },
+    getByIdentifier(req,res){        
+        return Song.findAll({
+            where: {song_identifier: req.params.song_identifier},
+            order: [['createdAt', 'DESC'],],
+        }).then((songs) => {
+            if(songs.length <1){
+                return res.status(404).send({
+                    message: 'Song not found',
+                });
+            }
+            res.status(200).send(songs[0]);})
+        .catch((error) => res.status(400).send(error));               
+    },
     get(req, res){
         return Artist.findById(req.params.artist_id)
         .then((artist) => {
@@ -76,6 +89,7 @@ module.exports = {
                     song_name: req.body.song_name,
                     song_duration: req.body.song_duration,
                     song_likes: req.body.song_likes || 0,
+                    song_identifier: req.body.song_identifier,
                     AlbumId: req.params.album_id
                 }).then((song) => res.status(201).send(song))
                 .catch((error) => res.status(400).send(error));
@@ -105,10 +119,11 @@ module.exports = {
                         });
                     }
                     return song.update({
-                        song_name: req.body.song_name || album.song_name,
-                        song_duration: req.body.song_duration || album.song_duration,
-                        song_likes: req.body.song_likes || album.song_likes,
-                        AlbumId: req.params.album_id || album.AlbumId
+                        song_name: req.body.song_name || song.song_name,
+                        song_duration: req.body.song_duration || song.song_duration,
+                        song_likes: req.body.song_likes || song.song_likes,
+                        song_identifier: req.body.song_identifier || song.song_identifier,
+                        AlbumId: req.params.album_id || song.AlbumId
                     }).then((song) => res.status(201).send(song))
                     .catch((error) => res.status(400).send(error));
                 }).catch((error) => res.status(400).send(error));

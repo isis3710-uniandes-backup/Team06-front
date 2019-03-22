@@ -1,6 +1,7 @@
 import json
 import csv
 import requests
+import pandas as pd
 
 class Populate:
 
@@ -11,7 +12,7 @@ class Populate:
         print('xd') 
 
     def writeFile(self, regular):
-        token = "BQCLstsdd76zsyACTGBXmvSGSRdxYXpRztRCw_kNTBu1PTIg9SvM73heFcm8rVdIesUldfaNZulKIkwFn8C6WnrMiE21RP-moRj3ipRtQ5nMinMi4zF8mjSVUE-8oxyeQrnyV9wWMCmWwNY"
+        token = "BQAIKRtWESfs36jQCV_mAgjyk75bx-TXCjnOM_5t8Q_2UoH6pwTry5t0t_Lyr0ANBdy-0MPGvxaveSxzk0sbeQTPNfl_ZQKKhx5CZd03VvLzS19oUwlurJME30ShXkDggO91XDsVf73ND6Y"
         print("Writting " + regular)
         endpoint = "https://api.spotify.com/v1/search?q=year:"+regular+"&type=artist&limit=50&access_token="+token
 
@@ -51,14 +52,73 @@ class Populate:
                     except:
                         print('Data set couldnt be added in group '+regular)
 
-
         songfile.close()
         albumfile.close()
         artistfile.close()
+    
+    def loadToDB(self):
 
-letters = ['2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019']
+        ip = 'localhost:8082'
+        dfartists = pd.read_csv('./unique/artists.csv', encoding="cp1252", header=None)
+        dfalbums = pd.read_csv('./unique/albums.csv', encoding="cp1252", header=None)
+        dfsongs = pd.read_csv('./unique/songs.csv', encoding="cp1252", header=None)
+        dfartists = dfartists.T
+        dfalbums = dfalbums.T
+        dfsongs = dfsongs.T
+
+        for row in dfartists:
+
+            artist={'artist_name' : dfartists[row][0],
+            'artist_genre' : dfartists[row][1],
+            'artist_likes' : dfartists[row][2],
+            'artist_image' : dfartists[row][3],
+            'artist_identifier' : dfartists[row][4]}
+
+            r = requests.post(url= 'http://'+ip+'/api/artist', json=artist)
+
+            if(r.status_code < 300):
+                print("Artistas posteados: ", row+1)
+            else:
+                print("Artista "+str(row+1)+" tuvo un error")
+
+        for row in dfalbums:            
+
+            r = requests.get(url = 'http://'+ip+'/api/artistidentifier/'+dfalbums[row][5])         
+
+            album={'album_name' : dfalbums[row][0],            
+            'album_likes' : dfalbums[row][1],
+            'album_releasedate' : dfalbums[row][2],
+            'album_image' : dfalbums[row][3],
+            'album_identifier' : dfalbums[row][4]}
+
+            r = requests.post(url= 'http://'+ip+'/api/artist/'+r.json()['id']+'/album', json=album)
+
+            if(r.status_code < 300):
+                print("Albums posteados: ", row+1)
+            else:
+                print("Album "+str(row+1)+" tuvo un error")
+
+        for row in dfsongs:            
+
+            r = requests.get(url = 'http://'+ip+'/api/albumidentifier/'+dfsongs[row][4])        
+
+            song={'song_name' : dfsongs[row][0],            
+            'song_duration' : dfsongs[row][1],
+            'song_likes' : dfsongs[row][2],
+            'song_identifier' : dfsongs[row][2]}
+
+            album = r.json()
+
+            r = requests.post(url= 'http://'+ip+'/api/artist/'+album['ArtistId']+'/album/'+album['id']+'/song', json=album)
+
+            if(r.status_code < 300):
+                print("Songs posteados: ", row+1)
+            else:
+                print("Song "+str(row+1)+" tuvo un error")
 
 populate = Populate()
+populate.loadToDB()
 
+""" letters = ['2019']
 for letter in letters:
-    populate.writeFile(letter)
+    populate.writeFile(letter) """

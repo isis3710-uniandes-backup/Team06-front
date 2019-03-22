@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     album_name: DataTypes.STRING,
     album_likes: DataTypes.INTEGER,
     album_releasedate: DataTypes.DATE,
-    album_image: DataTypes.STRING
+    album_image: DataTypes.STRING,
+    album_identifier: {type: DataTypes.STRING, unique: true}
   }, {});
   Album.associate = function(models) {
     models.Album.belongsTo(models.Artist,{

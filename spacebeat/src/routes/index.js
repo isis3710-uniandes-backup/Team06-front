@@ -37,6 +37,7 @@ router.get('/api/artist/:id', artistController.get);
 router.post('/api/artist/', artistController.post);
 router.put('/api/artist/:id', artistController.put);
 router.delete('/api/artist/:id', artistController.delete);
+router.get('/api/artistidentifier/:artist_identifier',artistController.getByIdentifier);
 
 // Album
 router.get('/api/artist/:artist_id/album/', albumController.getAll);
@@ -44,6 +45,7 @@ router.get('/api/artist/:artist_id/album/:id', albumController.get);
 router.post('/api/artist/:artist_id/album/', albumController.post);
 router.put('/api/artist/:artist_id/album/:id', albumController.put);
 router.delete('/api/artist/:artist_id/album/:id', albumController.delete);
+router.get('/api/albumidentifier/:album_identifier',albumController.getByIdentifier);
 
 // Song
 router.get('/api/artist/:artist_id/album/:album_id/song', songController.getAll);
@@ -51,6 +53,7 @@ router.get('/api/artist/:artist_id/album/:album_id/song/:id', songController.get
 router.post('/api/artist/:artist_id/album/:album_id/song', songController.post);
 router.put('/api/artist/:artist_id/album/:album_id/song/:id', songController.put);
 router.delete('/api/artist/:artist_id/album/:album_id/song/:id', songController.delete);
+router.get('/api/songidentifier/:song_identifier',songController.getByIdentifier);
 
 // Playlist
 router.get('/api/user/:user_id/playlist/', playlistController.getAll);

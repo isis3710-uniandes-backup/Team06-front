@@ -26,6 +26,11 @@
                     "field": "album_image",
                     "seqType": "Sequelize.STRING"
                 },
+                "album_identifier": {
+                    "unique": true,
+                    "field": "album_identifier",
+                    "seqType": "Sequelize.STRING"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -72,12 +77,13 @@
                     "field": "artist_likes",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "artist_description": {
-                    "field": "artist_description",
-                    "seqType": "Sequelize.TEXT"
-                },
                 "artist_image": {
                     "field": "artist_image",
+                    "seqType": "Sequelize.STRING"
+                },
+                "artist_identifier": {
+                    "unique": true,
+                    "field": "artist_identifier",
                     "seqType": "Sequelize.STRING"
                 },
                 "createdAt": {
@@ -430,6 +436,11 @@
                 "song_likes": {
                     "field": "song_likes",
                     "seqType": "Sequelize.INTEGER"
+                },
+                "song_identifier": {
+                    "unique": true,
+                    "field": "song_identifier",
+                    "seqType": "Sequelize.STRING"
                 },
                 "createdAt": {
                     "allowNull": false,

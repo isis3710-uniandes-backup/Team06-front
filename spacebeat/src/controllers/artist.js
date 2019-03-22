@@ -1,10 +1,24 @@
 const Artist = require('../models').Artist;
 
 module.exports = {
+    
     getAll(req,res){
         return Artist.findAll({
             order: [['createdAt', 'DESC'],],
         }).then((artists) => res.status(200).send(artists))
+        .catch((error) => res.status(400).send(error));
+    },
+    getByIdentifier(req,res){
+        return Artist.findAll({
+            where: {artist_identifier: req.params.artist_identifier},
+            order: [['createdAt', 'DESC'],],
+        }).then((artists) => {
+            if(artists.length < 1){
+                return res.status(404).send({
+                    message: 'Artist not found',
+                });
+            }
+            res.status(200).send(artists[0]);})
         .catch((error) => res.status(400).send(error));
     },
     get(req, res){
@@ -24,7 +38,8 @@ module.exports = {
             artist_name: req.body.artist_name,
             artist_genre: req.body.artist_genre,
             artist_likes: req.body.artist_likes || 0,
-            artist_description: req.body.artist_description,
+            artist_description: req.body.artist_description,            
+            artist_identifier : req.body.artist_identifier,
             artist_image: req.body.artist_image
         }).then((artist) => res.status(201).send(artist))
         .catch((error) => res.status(400).send(error));
@@ -42,7 +57,8 @@ module.exports = {
                 artist_genre: req.body.artist_genre || artist.artist_genre,
                 artist_likes: req.body.artist_likes || artist.artist_likes,
                 artist_description: req.body.artist_description || artist.artist_description,
-                artist_image: req.body.artist_image || artist.artist_image
+                artist_image: req.body.artist_image || artist.artist_image,
+                artist_identifier : req.body.artist_identifier || artist.artist_identifier
             })
             .then((artist) => res.status(200).send(artist))
             .catch((error) => res.status(400).send(error));

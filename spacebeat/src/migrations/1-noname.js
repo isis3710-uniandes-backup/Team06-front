@@ -22,7 +22,7 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 1,
     "name": "noname",
-    "created": "2019-03-21T00:07:58.106Z",
+    "created": "2019-03-22T19:43:34.129Z",
     "comment": ""
 };
 
@@ -101,13 +101,14 @@ var migrationCommands = [{
                     "type": Sequelize.INTEGER,
                     "field": "artist_likes"
                 },
-                "artist_description": {
-                    "type": Sequelize.TEXT,
-                    "field": "artist_description"
-                },
                 "artist_image": {
                     "type": Sequelize.STRING,
                     "field": "artist_image"
+                },
+                "artist_identifier": {
+                    "type": Sequelize.STRING,
+                    "field": "artist_identifier",
+                    "unique": true
                 },
                 "createdAt": {
                     "type": Sequelize.DATE,
@@ -293,6 +294,11 @@ var migrationCommands = [{
                     "type": Sequelize.STRING,
                     "field": "album_image"
                 },
+                "album_identifier": {
+                    "type": Sequelize.STRING,
+                    "field": "album_identifier",
+                    "unique": true
+                },
                 "createdAt": {
                     "type": Sequelize.DATE,
                     "field": "createdAt",
@@ -382,6 +388,11 @@ var migrationCommands = [{
                 "song_likes": {
                     "type": Sequelize.INTEGER,
                     "field": "song_likes"
+                },
+                "song_identifier": {
+                    "type": Sequelize.STRING,
+                    "field": "song_identifier",
+                    "unique": true
                 },
                 "createdAt": {
                     "type": Sequelize.DATE,
