@@ -11,7 +11,7 @@ class Populate:
         print('xd') 
 
     def writeFile(self, regular):
-        token = "BQCIRCTqryXcdxUIwMicqvKUTimk4d_RJuE3muF0cT8MeU3-AxtaoD21M5fOTSdpTx11pxBgoUBQ_m7w_q9WxtAOOdPgtYi_YYmXTG2ygaBj3cBS_f3WbIqrUPlfQo1DF2Q55ogLjl-vYn8"
+        token = "BQDc1Uq2UHElkSXT2MRn7wbLlFRRZnxCh9cOtobkMNymqKs-uziTBSkoXSRj2LKJhJ5F8LNkMTwrlkzFqHakYgEjUocjTKef63GbnNnJ6XFYk4VMbnT6LPpmTI92sVYGr-hYcqFLC0FHCBk"
         print("Writting " + regular)
         endpoint = "https://api.spotify.com/v1/search?q="+regular+"&type=artist&limit=50&access_token="+token
 
@@ -27,7 +27,7 @@ class Populate:
 
         for datartist in data:
 
-            endpoint = 'https://api.spotify.com/v1/search?q=artist:"'+datartist['name']+'"&type=album&limit=50&access_token='+token
+            endpoint = 'https://api.spotify.com/v1/search?q=artist:"'+datartist['name']+'"&type=album&limit=10&access_token='+token
             r = requests.get(url = endpoint)
             dataalbums = r.json()['albums']['items']
 
@@ -56,7 +56,7 @@ class Populate:
         albumfile.close()
         artistfile.close()
 
-letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+letters = ['w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 
 populate = Populate()
 
