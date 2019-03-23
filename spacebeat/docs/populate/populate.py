@@ -66,6 +66,7 @@ class Populate:
         dfalbums = dfalbums.T
         dfsongs = dfsongs.T
 
+        """
         for row in dfartists:
 
             artist={'artist_name' : dfartists[row][0],
@@ -80,10 +81,12 @@ class Populate:
                 print("Artistas posteados: ", row+1)
             else:
                 print("Artista "+str(row+1)+" tuvo un error")
+        """
 
+        """
         for row in dfalbums:            
 
-            r = requests.get(url = 'http://'+ip+'/api/artistidentifier/'+dfalbums[row][5])         
+            r = requests.get(url = 'http://'+ip+'/api/artistidentifier/'+dfalbums[row][5])   
 
             album={'album_name' : dfalbums[row][0],            
             'album_likes' : dfalbums[row][1],
@@ -91,30 +94,39 @@ class Populate:
             'album_image' : dfalbums[row][3],
             'album_identifier' : dfalbums[row][4]}
 
-            r = requests.post(url= 'http://'+ip+'/api/artist/'+r.json()['id']+'/album', json=album)
+            try:
+                artist = r.json()
 
-            if(r.status_code < 300):
-                print("Albums posteados: ", row+1)
-            else:
-                print("Album "+str(row+1)+" tuvo un error")
+                r = requests.post(url= 'http://'+ip+'/api/artist/'+str(artist['id'])+'/album', json=album)
 
-        for row in dfsongs:            
+                if(r.status_code < 300):
+                    print("Albums posteados: ", row+1)
+                else:
+                    print("Album "+str(row+1)+" tuvo un error")
+            except:
+                print("Album "+str(row+1)+" no tiene artista registrado")
+        """
+        
+        for row in range(111000,dfsongs.shape[1]):            
 
             r = requests.get(url = 'http://'+ip+'/api/albumidentifier/'+dfsongs[row][4])        
 
             song={'song_name' : dfsongs[row][0],            
             'song_duration' : dfsongs[row][1],
             'song_likes' : dfsongs[row][2],
-            'song_identifier' : dfsongs[row][2]}
+            'song_identifier' : dfsongs[row][3]}
 
-            album = r.json()
+            try:
+                album = r.json()
 
-            r = requests.post(url= 'http://'+ip+'/api/artist/'+album['ArtistId']+'/album/'+album['id']+'/song', json=album)
+                r = requests.post(url= 'http://'+ip+'/api/artist/'+str(album['ArtistId'])+'/album/'+str(album['id'])+'/song', json=song)
 
-            if(r.status_code < 300):
-                print("Songs posteados: ", row+1)
-            else:
-                print("Song "+str(row+1)+" tuvo un error")
+                if(r.status_code < 300):
+                    print("Songs posteados: ", row+1)
+                else:
+                    print("Song "+str(row+1)+" tuvo un error")
+            except:
+                print("Song "+str(row+1)+" no tiene álbum registrado")
 
 populate = Populate()
 populate.loadToDB()
