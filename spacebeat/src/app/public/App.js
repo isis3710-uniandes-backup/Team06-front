@@ -34,6 +34,24 @@ export default class App extends Component{
 
     return(
       <div>
+        <nav>     
+            
+          <div className="nav-wrapper pink darken-4">
+            <div className = "row"> 
+              <div className = "col s12">
+                <a href="#" className="brand-logo center">SPACEBEAT</a>
+                <ul className="right hide-on-med-and-down">
+                {
+                  this.state.login?
+                  <li><a onClick = {this.toSignUp} href="#">Sign Up</a></li>
+                  :<li><a onClick = {this.toLogIn} href="#">Log In</a></li>
+                }                
+                </ul>
+              </div>
+            </div>
+          </div>  
+        </nav>
+
         <div className = "row">
           <div className = "col s7">
             <div className="slider">
@@ -69,19 +87,7 @@ export default class App extends Component{
               </ul>
             </div>
           </div>
-          <div className = "col s5">
-            <nav>            
-              <div className="nav-wrapper pink darken-4">
-                <a href="#" className="brand-logo center">SPACEBEAT</a>
-                <ul className="right hide-on-med-and-down">
-                {
-                  this.state.login?
-                  <li><a onClick = {this.toSignUp} href="#">Sign Up</a></li>
-                  :<li><a onClick = {this.toLogIn} href="#">Log In</a></li>
-                }                
-                </ul>
-              </div>
-            </nav>
+          <div className = "col s5">            
 
             <div className="container">
               <br></br>

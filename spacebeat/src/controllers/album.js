@@ -30,6 +30,13 @@ module.exports = {
             res.status(200).send(albums[0]);})
         .catch((error) => res.status(400).send(error));  
     },
+    getByName(req,res){
+        return Album.findAll({
+            where:{album_name:{$iLike:'%'+req.params.album_name+'%'}},
+            limit: 10
+        }).then((albums) => res.status(200).send(albums))
+        .catch((error) => res.status(400).send(error));
+    },
     get(req, res){
         return Artist.findById(req.params.artist_id)
         .then((artist) => {

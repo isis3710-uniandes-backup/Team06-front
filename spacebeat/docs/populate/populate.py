@@ -66,7 +66,6 @@ class Populate:
         dfalbums = dfalbums.T
         dfsongs = dfsongs.T
 
-        """
         for row in dfartists:
 
             artist={'artist_name' : dfartists[row][0],
@@ -81,12 +80,11 @@ class Populate:
                 print("Artistas posteados: ", row+1)
             else:
                 print("Artista "+str(row+1)+" tuvo un error")
-        """
 
-        """
+
         for row in dfalbums:            
 
-            r = requests.get(url = 'http://'+ip+'/api/artistidentifier/'+dfalbums[row][5])   
+            r = requests.get(url = 'http://'+ip+'/api/artistbyidentifier/'+dfalbums[row][5])   
 
             album={'album_name' : dfalbums[row][0],            
             'album_likes' : dfalbums[row][1],
@@ -105,11 +103,11 @@ class Populate:
                     print("Album "+str(row+1)+" tuvo un error")
             except:
                 print("Album "+str(row+1)+" no tiene artista registrado")
-        """
-        
-        for row in range(111000,dfsongs.shape[1]):            
 
-            r = requests.get(url = 'http://'+ip+'/api/albumidentifier/'+dfsongs[row][4])        
+
+        for row in dfsongs):            
+
+            r = requests.get(url = 'http://'+ip+'/api/albumbyidentifier/'+dfsongs[row][4])        
 
             song={'song_name' : dfsongs[row][0],            
             'song_duration' : dfsongs[row][1],
