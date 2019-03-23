@@ -9,7 +9,10 @@ export default class Explorer extends Component{
     users: [],
     artists: [],
     albums: [],
-    songs: []
+    songs: [],
+    albumToAdd : {},
+    songToAdd : {},
+    roomToAdd : {}
   }
 
   stopSearching = () =>{
@@ -85,31 +88,43 @@ export default class Explorer extends Component{
             });
           }
         );
-        /* fetch('/api/userbyname/'+ this.state.search.trim()).then(res=>res.json()).then(data =>{    
-          this.setState({
-            users: data
-          });        
-        });
-  
-        fetch('/api/artistbyname/'+ this.state.search.trim()).then(res=>res.json()).then(data =>{        
-          this.setState({
-            artists: data
-          });        
-        });
-  
-        fetch('/api/albumbyname/'+ this.state.search.trim()).then(res=>res.json()).then(data =>{     
-          this.setState({
-            albums: data
-          });        
-        });
-  
-        fetch('/api/songbyname/'+ this.state.search.trim()).then(res=>res.json()).then(data =>{
-          this.setState({
-            songs: data
-          });        
-        }); */
+
       });      
     }
+  }
+
+  setAlbumToAdd = (album) =>{
+    this.setState({
+      albumToAdd: album
+    });
+  }
+
+  setSongToAdd = (song) =>{
+    this.setState({
+      songToAdd: song
+    });
+  }
+
+  setRoomToAdd = (room) =>{
+    this.setState({
+      roomToAdd: room
+    });
+  }
+
+  addAlbumToRoom = () =>{
+
+  }
+
+  addSongToRoom = () =>{
+
+  }
+
+  cancelAdd = () =>{
+    this.setState({
+      roomToAdd: {},
+      songToAdd : {},
+      albumToAdd :{}
+    });
   }
 
   buildArtistsCards = () =>{
@@ -128,7 +143,7 @@ export default class Explorer extends Component{
             <span className="card-title activator grey-text text-darken-4">{artist.artist_name}<i className="material-icons right">more_vert</i></span>          
           </div>
           <div className="card-action">
-            <p><a href="#">Add to Favorites</a><i className="material-icons right">thumb_up</i></p>
+            <p><a href="#!">Add to Favorites</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{artist.artist_name}<i className="material-icons right">close</i></span>
@@ -174,7 +189,7 @@ export default class Explorer extends Component{
               <span className="card-title activator grey-text text-darken-4">{user.user_names+' '+user.user_lastnames}<i className="material-icons right">more_vert</i></span>          
             </div>
             <div className="card-action">
-              <p><a href="#">Add as Friend</a><i className="material-icons right">person_add</i></p>
+              <p><a href="#!">Add as Friend<i className="material-icons right">person_add</i></a></p>
             </div>
             <div className="card-reveal">
               <span className="card-title grey-text text-darken-4">{user.user_names+' '+user.user_lastnames}<i className="material-icons right">close</i></span>
@@ -231,7 +246,11 @@ export default class Explorer extends Component{
             <span className="card-title activator grey-text text-darken-4">{album.album_name}<i className="material-icons right">more_vert</i></span>
           </div>
           <div className="card-action">
-            <p><a href="#">Add to Room</a><i className="material-icons right">thumb_up</i></p>
+          {
+            this.state.user.Chatrooms.length >0?
+              <p><a onClick = {() => this.setAlbumToAdd(album)} className="waves-effect modal-trigger" href="#addAlbumModal">Add to Room</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
+            :<p><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
+          }            
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{album.album_name}<i className="material-icons right">close</i></span>
@@ -269,7 +288,13 @@ export default class Explorer extends Component{
             </div>
           </div>
           <div className="card-action">
-            <p><a href="#">Add to Room</a><i className="material-icons right">thumb_up</i></p>
+
+          {
+            this.state.user.Chatrooms.length >0?
+              <p><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongModal">Add to Room</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
+            :<p><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
+          }
+            
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{song.song_name}<i className="material-icons right">close</i></span>
@@ -283,6 +308,16 @@ export default class Explorer extends Component{
     });
 
     return cards;
+  }
+
+  buildRoomsDrops = () =>{
+    const drops = this.state.user.Chatrooms.map((room,i)=>{
+      return(
+        <li key = {room.id}><a onClick = {() => this.setRoomToAdd(room)} href="#!">{room.chatroom_name}</a></li>
+      )
+    });
+
+    return drops;
   }
 
   handleInput = (e) => {
@@ -393,7 +428,40 @@ export default class Explorer extends Component{
           </div>
         }
 
-        
+        {/* Modals */}
+
+        <div id="addSongModal" className="modal">
+          <div className="modal-content">
+            <h4>Add Song to Room</h4>
+            <p><b>Song selected: </b>{this.state.songToAdd.song_name}</p>
+            <p>Choose the room you want to add the song you just selected:</p>
+            <a className='dropdown-trigger btn' data-target='dropdownSong'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
+            <ul id='dropdownSong' className='dropdown-content'>
+              {this.buildRoomsDrops()}
+            </ul>
+          </div>
+          <div className="modal-footer">
+            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            <a onClick = {this.addSongToRoom} href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>
+          </div>
+        </div>
+
+        <div id="addAlbumModal" className="modal">
+          <div className="modal-content">
+            <h4>Add Album to Room</h4>
+            <p><b>Album selected: </b>{this.state.albumToAdd.album_name}</p>
+            <p>Choose the room you want to add the album you just selected:</p>
+            <a className='dropdown-trigger btn' data-target='dropdownAlbum'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
+            <ul id='dropdownAlbum' className='dropdown-content'>
+              {this.buildRoomsDrops()}
+            </ul>
+          </div>
+          <div className="modal-footer">
+            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            <a onClick = {this.addAlbumToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>
+          </div>
+        </div>
+
       </div>
     )     
   }  

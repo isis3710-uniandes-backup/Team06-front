@@ -72,18 +72,18 @@ export default class Session extends Component{
                 <div className="background">
                   <img className = "responsive-img" src={"./images/"+this.state.user.user_banner}/>
                 </div>
-                <a href="#"><img className="circle" src={"./images/"+this.state.user.user_image}/></a>
-                <a href="#"><span className="white-text name">{this.state.user.user_names + " " + this.state.user.user_lastnames}</span></a>
-                <a href="#"><span className="white-text email">{this.state.user.user_email}</span></a>
+                <a href="#!"><img className="circle" src={"./images/"+this.state.user.user_image}/></a>
+                <a href="#!"><span className="white-text name">{this.state.user.user_names + " " + this.state.user.user_lastnames}</span></a>
+                <a href="#!"><span className="white-text email">{this.state.user.user_email}</span></a>
               </div>
               :
               <div className="user-view">
                 <div className="background">
                   <img className = "responsive-img" src={"./images/defaultbanner.jpg"}/>
                 </div>
-                <a href="#"><img className="circle" src={"./images/defaultprofile.jpg"}/></a>
-                <a href="#"><span className="white-text name">{this.state.user.user_names + " " + this.state.user.user_lastnames}</span></a>
-                <a href="#"><span className="white-text email">{this.state.user.user_email}</span></a>
+                <a href="#!"><img className="circle" src={"./images/defaultprofile.jpg"}/></a>
+                <a href="#!"><span className="white-text name">{this.state.user.user_names + " " + this.state.user.user_lastnames}</span></a>
+                <a href="#!"><span className="white-text email">{this.state.user.user_email}</span></a>
               </div>
             }
           </li>
@@ -122,7 +122,7 @@ export default class Session extends Component{
           <nav>            
             <div className="nav-wrapper pink darken-4">
               <a href="#" className="brand-logo center">SPACEBEAT</a>
-              <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+              <a href="#!" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
               <ul className="right hide-on-med-and-down">                           
               </ul>
             </div>
@@ -154,7 +154,7 @@ export default class Session extends Component{
               <div className="col l4 offset-l2 s12">
                 <h5 className="white-text">Links</h5>
                 <ul>
-                  <li><a className="grey-text text-lighten-3" href="#">Contact support</a></li>
+                  <li><a className="grey-text text-lighten-3" href="#!">Contact support</a></li>
                 </ul>
               </div>
             </div>
@@ -175,7 +175,7 @@ export default class Session extends Component{
             <p>Are you sure you want to log out?</p>
           </div>
           <div className="modal-footer">
-            <a href="#" className="modal-close waves-effect waves-green btn-flat">No</a>
+            <a href="#!" className="modal-close waves-effect waves-green btn-flat">No</a>
             <a onClick = {this.logOut} className="modal-close waves-effect waves-green btn-flat">Yes</a>
           </div>
         </div>        

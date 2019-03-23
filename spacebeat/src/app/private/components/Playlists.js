@@ -97,9 +97,9 @@ export default class Playlists extends Component{
                 <div className="collapsible-body"><span>{playlist.playlist_name}</span>
 
                   <center>
-                    <a className="waves-effect waves-light btn grey" href="#">Change name</a>
+                    <a className="waves-effect waves-light btn grey" href="#!">Change name</a>
                     {" "}
-                    <a onClick = {() => this.deletePlaylist(i)} className="waves-effect waves-light btn red darken-4"  href="#">Delete</a>
+                    <a onClick = {() => this.deletePlaylist(i)} className="waves-effect waves-light btn red darken-4"  href="#!">Delete</a>
                   </center>
                 </div>
             </li>
