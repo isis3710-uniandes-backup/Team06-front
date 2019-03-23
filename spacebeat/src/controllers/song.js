@@ -279,11 +279,11 @@ module.exports = {
                         message: 'Song not found in Playlist',
                     });
                 }
-                return PlaylistSong.destroy({
+                return playlistsong[0].destroy({
                     where:{PlaylistId: req.params.playlist_id, SongId: req.params.id},                        
                 })
                 .then((song) => res.status(200).send(song))
-                .catch((error) => res.status(400).send(error));
+                .catch((error) => res.status(400).send(error));              
             }).catch((error) => res.status(400).send(error));
         }).catch((error) => res.status(400).send(error));
     },

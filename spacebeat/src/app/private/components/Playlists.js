@@ -4,15 +4,64 @@ export default class Playlists extends Component{
 
   state = {
     user: this.props.user,
-    playlists: this.props.user.Playlists,
     adding: false,
-    playlist_name: ''
+    playlist_name: '',
+    playlistToAdd : {},
+    roomToAdd: {}
   }
 
   toAdd = () =>{
     this.setState({
       adding: true
     });
+  }
+
+  cancelAdd = () =>{
+    this.setState({
+      playlistToAdd:{},
+      roomToAdd: {}
+    });
+  }
+
+  setPlaylistToAdd = (playlist) =>{
+    this.setState({
+      playlistToAdd: playlist
+    });
+  }
+
+  setRoomToAdd = (room) =>{
+    this.setState({
+      roomToAdd: room
+    });
+  }
+
+  addPlaylistToRoom = () =>{
+    const new_room = {chatroom_name: this.state.roomToAdd.chatroom_name, chatroom_mediaidentifier: 'playlist:'+this.state.playlistToAdd.id};
+      
+    fetch('/api/user/'+this.state.user.id + '/chatroom/'+this.state.roomToAdd.id,{
+      method: 'PUT',
+      body: JSON.stringify(new_room),
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }}).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("Has ocurred any problem trying to add this playlist to that room");
+      }}).then(data => {
+          let idUser = this.state.user.id;
+          fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {  
+            this.setState({
+              playlistToAdd:{},
+              roomToAdd: {}
+            }, () =>{
+              this.props.updateProfile(updatedUser);  
+              M.toast({html:'Playlist correctly added to room', classes: 'rounded'});
+            });             
+          });                   
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));
   }
   
   addPlaylist = () =>{
@@ -32,19 +81,23 @@ export default class Playlists extends Component{
           } 
           else{
             throw new Error("Playlist could not be created");
-        }}).then(data => {
-          M.toast({html:'Your playlist has been created correctly', classes: 'rounded'});
+        }}).then(data => {          
           this.setState({
-            playlists: [...this.state.playlists, data],
             adding: false,
             playlist_name: ''
-          }, () => {
-            if(this.state.playlists.length == 1){
-              document.dispatchEvent(new Event('component'));
-            }
-            let updatedUser = this.state.user;
-            updatedUser.Playlists = this.state.playlists;
-            this.props.updateProfile(updatedUser);
+          }, () => {                       
+            let idUser = this.state.user.id;
+            fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {              
+                this.props.updateProfile(updatedUser);  
+                this.setState({
+                  user:updatedUser
+                },()=>{
+                  if(this.state.user.Playlists.length == 1){
+                    document.dispatchEvent(new Event('component'));
+                  }
+                  M.toast({html:'Your playlist has been created correctly', classes: 'rounded'});
+                });                                               
+            }); 
           });
         }).catch(error => M.toast({html:error.message, classes: 'rounded'}));      
     }
@@ -53,9 +106,9 @@ export default class Playlists extends Component{
     }  
   }
 
-  deletePlaylist = (n) =>{
+  deletePlaylist = (playlist) =>{
 
-    fetch('/api/user/'+this.state.user.id+'/playlist/'+this.state.playlists[n].id,{
+    fetch('/api/user/'+this.state.user.id+'/playlist/'+playlist.id,{
       method: 'DELETE'
       }).then(res => {              
         if(res.ok){
@@ -64,17 +117,34 @@ export default class Playlists extends Component{
         else{
           throw new Error("Playlist could not be deleted");
       }}).then(data => {
-        M.toast({html:'Your playlist has been deleted correctly', classes: 'rounded'});
-        let playlists = [...this.state.playlists];
-        playlists.splice(parseInt(n),1);
-        this.setState({
-            playlists: playlists
-        }, () => {
-          let updatedUser = this.state.user;
-          updatedUser.Playlists = playlists;
-          this.props.updateProfile(updatedUser);
-        });
+        let idUser = this.state.user.id;
+        fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {              
+            this.props.updateProfile(updatedUser); 
+            this.setState({
+              user:updatedUser
+            },()=>M.toast({html:'Your playlist has been deleted correctly', classes: 'rounded'}));                                 
+        });     
       }).catch(error => M.toast({html:error.message, classes: 'rounded'}));    
+  }
+
+  deleteSongFromPlaylist = (playlist, song) => {
+    fetch('/api/user/'+this.state.user.id+'/playlist/'+playlist.id+'/song/'+song.id,{
+      method: 'DELETE'
+      }).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("Song could not be deleted");
+      }}).then(data => {
+        let idUser = this.state.user.id;
+        fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {              
+            this.props.updateProfile(updatedUser); 
+            this.setState({
+              user:updatedUser
+            },()=>M.toast({html:'Song correctly deleted from playlist', classes: 'rounded'}));                                 
+        });     
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));   
   }
 
   handleInput = (e) => {
@@ -88,21 +158,53 @@ export default class Playlists extends Component{
     document.dispatchEvent(new Event('component'));
   }
 
+  buildSongs=(playlist)=>{
+    const songs = playlist.PlaylistSongs.map((playlistsong, i)=>{
+      return (
+      <li key = {playlistsong.id} className="collection-item avatar">
+        <img src={playlistsong.Song.Album.album_image} alt="" className="circle"/>
+        <span className="title">{playlistsong.Song.song_name}</span>
+        <p>
+          <b>Album: </b>{playlistsong.Song.Album.album_name} <br></br>
+          <b>Artist: </b>{playlistsong.Song.Album.Artist.artist_name}
+        </p>
+        <a className="red-text text-darken-4 secondary-content" onClick = {()=>{this.deleteSongFromPlaylist(playlist, playlistsong.Song)}} href="#!"><i className="material-icons">delete</i></a>
+      </li>)
+    });
+
+    return songs;
+  }
+
+  buildRoomsDrops = () =>{
+    const drops = this.state.user.Chatrooms.map((room,i)=>{
+      return(
+        <li key = {room.id}><a onClick = {() => this.setRoomToAdd(room)} href="#!">{room.chatroom_name}</a></li>
+      )
+    });
+
+    return drops;
+  }
+
   render(){  
       
-    const playlists = this.state.playlists.map((playlist,i) =>{
+    const playlists = this.state.user.Playlists.map((playlist,i) =>{
         return(
-            <li key = {i}>
-                <div className="collapsible-header"><i className="material-icons">format_list_bulleted</i>{playlist.playlist_name}</div>
-                <div className="collapsible-body"><span>{playlist.playlist_name}</span>
-
-                  <center>
-                    <a className="waves-effect waves-light btn grey" href="#!">Change name</a>
-                    {" "}
-                    <a onClick = {() => this.deletePlaylist(i)} className="waves-effect waves-light btn red darken-4"  href="#!">Delete</a>
-                  </center>
-                </div>
-            </li>
+          <li key = {i}>
+            <div className="collapsible-header"><i className="material-icons">format_list_bulleted</i>{playlist.playlist_name}</div>
+            <div className="collapsible-body">
+              <center><h5>{playlist.playlist_name}</h5></center>
+              <br></br>
+              <ul className="collection">
+                {this.buildSongs(playlist)}
+              </ul>
+              <br></br>
+              <center>
+                <a onClick = {() => this.setPlaylistToAdd(playlist)} className="waves-effect modal-trigger waves-light btn grey" href="#addPlaylistRoomModal">Add to Room</a>
+                {" "}
+                <a onClick = {() => this.deletePlaylist(playlist)} className="waves-effect waves-light btn red darken-4"  href="#!">Delete</a>
+              </center>
+            </div>
+          </li>
         )
     });
 
@@ -115,8 +217,8 @@ export default class Playlists extends Component{
             <h5 className = "center-align">My playlists</h5>
             <br></br>
             {
-              this.state.playlists.length > 0?
-              <ul className="collapsible">
+              this.state.user.Playlists.length > 0?
+              <ul className="collapsible popout">
                 {playlists}
               </ul>
               :null
@@ -141,6 +243,31 @@ export default class Playlists extends Component{
                   <a onClick = {this.toAdd} className="btn-floating btn-large waves-effect waves-light grey darken-2"><i className="material-icons">add</i></a>
                 </center> 
             }
+
+            {/* Modals */}
+
+            <div id="addPlaylistRoomModal" className="modal">
+              <div className="modal-content">
+                <h4>Add Playlist to Room</h4>
+                <p><b>Playlist selected: </b>{this.state.playlistToAdd.playlist_name}</p>
+                {
+                  this.state.user.Chatrooms.length>0?
+                  <div>
+                    <p>Choose the room where you want to add the playlist you just selected:</p>
+                    <p><b>Room selected: </b></p><a className='dropdown-trigger btn' data-target='dropdownSongRoom'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
+                    <ul id='dropdownSongRoom' className='dropdown-content'>
+                      {this.buildRoomsDrops()}
+                    </ul>
+                    <p><i>Any media object you have related to this room will be replaced for this new one.</i></p>
+                  </div>
+                  :<p>You have not created any room</p>
+                }            
+              </div>
+              <div className="modal-footer">
+                <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                {this.state.roomToAdd.chatroom_name?<a onClick = {this.addPlaylistToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>:null}
+              </div>
+            </div>
                  
 
         </div>

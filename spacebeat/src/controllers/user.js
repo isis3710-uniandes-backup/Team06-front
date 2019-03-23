@@ -4,6 +4,10 @@ const Playlist = require('../models').Playlist;
 const Chatroom = require('../models').Chatroom;
 const Post = require('../models').Post;
 const Message = require('../models').Message;
+const PlaylistSong = require('../models').PlaylistSong;
+const Song = require('../models').Song;
+const Album = require('../models').Album;
+const Artist = require('../models').Artist;
 
 module.exports = {
     getAll(req,res){
@@ -21,7 +25,7 @@ module.exports = {
         .catch((error) => res.status(400).send(error));
     },
     get(req, res){
-        return User.findById(req.params.id,{include:[Playlist, Chatroom, Post, Message, {model: Partner, as:'Partners'}]})
+        return User.findById(req.params.id,{include:[{model: Playlist, include: [{model: PlaylistSong, include: [{model: Song, include: [{model: Album, include: [Artist]}]}]}]}, Chatroom, Post, Message, {model: Partner, as:'Partners'}]})
         .then((user) =>{
             if(!user){
                 return res.status(404).send({

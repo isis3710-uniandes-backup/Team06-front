@@ -107,8 +107,11 @@ export default class Preferences extends Component{
                             edit: false,
                             doing: false
                         },()=> {
-                                M.toast({html:'Profile updated correctly', classes: 'rounded'});                                    
-                                this.props.updateProfile(data);
+                                let idUser = data.id;
+                                fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {              
+                                    this.props.updateProfile(updatedUser);  
+                                    M.toast({html:'Profile updated correctly', classes: 'rounded'});;                                
+                                });   
                             }
                         );                                 
                     }).catch(error => {

@@ -82,8 +82,8 @@ export default class Session extends Component{
                   <img className = "responsive-img" src={"./images/defaultbanner.jpg"}/>
                 </div>
                 <a href="#!"><img className="circle" src={"./images/defaultprofile.jpg"}/></a>
-                <a href="#!"><span className="white-text name">{this.state.user.user_names + " " + this.state.user.user_lastnames}</span></a>
-                <a href="#!"><span className="white-text email">{this.state.user.user_email}</span></a>
+                <a href="#!"><span className="white-text name">{"Loading..."}</span></a>
+                <a href="#!"><span className="white-text email">{"Wait a second..."}</span></a>
               </div>
             }
           </li>

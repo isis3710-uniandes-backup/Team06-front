@@ -7,12 +7,7 @@ export default class Home extends Component{
     fetching: false  
   }
 
-  componentDidMount(){
-    this.setState({
-      fetching: true
-    }, () => {
-      console.log('xd');     
-    });
+  componentDidMount(){    
     document.dispatchEvent(new Event('component'));
   }
 

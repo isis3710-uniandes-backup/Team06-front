@@ -10,9 +10,11 @@ export default class Explorer extends Component{
     artists: [],
     albums: [],
     songs: [],
+    artistToAdd :{},
     albumToAdd : {},
     songToAdd : {},
-    roomToAdd : {}
+    roomToAdd : {},
+    playlistToAdd : {}
   }
 
   stopSearching = () =>{
@@ -93,6 +95,18 @@ export default class Explorer extends Component{
     }
   }
 
+  setPlaylistToAdd = (playlist) =>{
+    this.setState({
+      playlistToAdd: playlist
+    });
+  }
+
+  setArtistToAdd = (artist) =>{
+    this.setState({
+      artistToAdd: artist
+    });
+  }
+
   setAlbumToAdd = (album) =>{
     this.setState({
       albumToAdd: album
@@ -111,19 +125,141 @@ export default class Explorer extends Component{
     });
   }
 
-  addAlbumToRoom = () =>{
+  addArtistToRoom = () =>{    
+    const new_room = {chatroom_name: this.state.roomToAdd.chatroom_name, chatroom_mediaidentifier: 'artist:'+this.state.artistToAdd.artist_identifier};
+      
+    fetch('/api/user/'+this.state.user.id + '/chatroom/'+this.state.roomToAdd.id,{
+      method: 'PUT',
+      body: JSON.stringify(new_room),
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }}).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("Has ocurred any problem trying to add this artist to that room");
+      }}).then(data => {
+          let idUser = this.state.user.id;
+          fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {  
+            this.setState({
+              roomToAdd: {},
+              songToAdd : {},
+              albumToAdd :{},
+              artistToAdd: {},
+              playlistToAdd :{}
+            }, () =>{
+              this.props.updateProfile(updatedUser);  
+              M.toast({html:'Artist correctly added to room', classes: 'rounded'});
+            });             
+          });                   
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));
+  }
 
+  addAlbumToRoom = () =>{    
+    const new_room = {chatroom_name: this.state.roomToAdd.chatroom_name, chatroom_mediaidentifier: 'album:'+this.state.albumToAdd.album_identifier};
+      
+    fetch('/api/user/'+this.state.user.id + '/chatroom/'+this.state.roomToAdd.id,{
+      method: 'PUT',
+      body: JSON.stringify(new_room),
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }}).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("Has ocurred any problem trying to add this album to that room");
+      }}).then(data => {
+          let idUser = this.state.user.id;
+          fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {  
+            this.setState({
+              roomToAdd: {},
+              songToAdd : {},
+              albumToAdd :{},
+              artistToAdd: {},
+              playlistToAdd :{}
+            }, () =>{
+              this.props.updateProfile(updatedUser);  
+              M.toast({html:'Album correctly added to room', classes: 'rounded'});
+            });            
+          });                   
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));
   }
 
   addSongToRoom = () =>{
+    const new_room = {chatroom_name: this.state.roomToAdd.chatroom_name, chatroom_mediaidentifier: 'song:'+this.state.songToAdd.song_identifier};
+      
+    fetch('/api/user/'+this.state.user.id + '/chatroom/'+this.state.roomToAdd.id,{
+      method: 'PUT',
+      body: JSON.stringify(new_room),
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }}).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("Has ocurred any problem trying to add this song to that room");
+      }}).then(data => {
+          let idUser = this.state.user.id;
+          fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {
+            this.setState({
+              roomToAdd: {},
+              songToAdd : {},
+              albumToAdd :{},
+              artistToAdd: {},
+              playlistToAdd :{}
+            }, () =>{
+              this.props.updateProfile(updatedUser);  
+              M.toast({html:'Song correctly added to room', classes: 'rounded'});
+            });                     
+          });                   
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));
+  }
 
+  addSongToPlaylist = () =>{
+    const new_playlistsong = {};
+      
+    fetch('/api/user/'+this.state.user.id + '/playlist/'+this.state.playlistToAdd.id+'/song/'+this.state.songToAdd.id,{
+      method: 'POST',
+      body: JSON.stringify(new_playlistsong),
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }}).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("Thay playlist already has this song");
+      }}).then(data => {
+          let idUser = this.state.user.id;
+          fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {
+            this.setState({
+              roomToAdd: {},
+              songToAdd : {},
+              albumToAdd :{},
+              artistToAdd: {},
+              playlistToAdd :{}
+            }, () =>{
+              this.props.updateProfile(updatedUser);  
+              M.toast({html:'Song correctly added to playlist', classes: 'rounded'});
+            });                     
+          });                   
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));
   }
 
   cancelAdd = () =>{
     this.setState({
       roomToAdd: {},
       songToAdd : {},
-      albumToAdd :{}
+      albumToAdd :{},
+      artistToAdd: {},
+      playlistToAdd :{}
     });
   }
 
@@ -135,7 +271,7 @@ export default class Explorer extends Component{
       });
       
       return(
-        <div key = {artist.artist_identifier} className="card">
+        <div key = {artist.artist_identifier} className="card hoverable">
           <div className="card-image waves-effect waves-block waves-light">
             <img className="activator" src={artist.artist_image}/>
           </div>
@@ -143,7 +279,7 @@ export default class Explorer extends Component{
             <span className="card-title activator grey-text text-darken-4">{artist.artist_name}<i className="material-icons right">more_vert</i></span>          
           </div>
           <div className="card-action">
-            <p><a href="#!">Add to Favorites</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
+            <p><a onClick = {() => this.setArtistToAdd(artist)} className="waves-effect modal-trigger" href="#addArtistModal">Add to Room</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{artist.artist_name}<i className="material-icons right">close</i></span>
@@ -181,7 +317,7 @@ export default class Explorer extends Component{
         });
 
         return(        
-          <div key = {'user'+user.id} className="card">
+          <div key = {'user'+user.id} className="card hoverable">
             <div className="card-image waves-effect waves-block waves-light">
                 <img className = "activator" src={"./images/"+user.user_image}/>              
             </div>
@@ -238,19 +374,15 @@ export default class Explorer extends Component{
       });
 
       return(
-        <div key = {album.album_identifier} className="card">
+        <div key = {album.album_identifier} className="card hoverable">
           <div className="card-image waves-effect waves-block waves-light">
             <img className="activator" src={album.album_image}/>
           </div>
           <div className="card-content">            
             <span className="card-title activator grey-text text-darken-4">{album.album_name}<i className="material-icons right">more_vert</i></span>
           </div>
-          <div className="card-action">
-          {
-            this.state.user.Chatrooms.length >0?
-              <p><a onClick = {() => this.setAlbumToAdd(album)} className="waves-effect modal-trigger" href="#addAlbumModal">Add to Room</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
-            :<p><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
-          }            
+          <div className="card-action">          
+            <p><a onClick = {() => this.setAlbumToAdd(album)} className="waves-effect modal-trigger" href="#addAlbumModal">Add to Room</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p>             
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{album.album_name}<i className="material-icons right">close</i></span>
@@ -276,7 +408,7 @@ export default class Explorer extends Component{
   buildSongsCards = () =>{
     const cards = this.state.songs.map((song,i)=>{
       return(
-        <div key = {song.song_identifier} className="card">
+        <div key = {song.song_identifier} className="card hoverable">
           <div className="card-content">
             <div className = "row">
               <div className = "col s10">
@@ -288,13 +420,7 @@ export default class Explorer extends Component{
             </div>
           </div>
           <div className="card-action">
-
-          {
-            this.state.user.Chatrooms.length >0?
-              <p><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongModal">Add to Room</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
-            :<p><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
-          }
-            
+            <p><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongRoomModal">+ Room</a><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongPlaylistModal">+ Playlist</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p> 
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{song.song_name}<i className="material-icons right">close</i></span>
@@ -314,6 +440,16 @@ export default class Explorer extends Component{
     const drops = this.state.user.Chatrooms.map((room,i)=>{
       return(
         <li key = {room.id}><a onClick = {() => this.setRoomToAdd(room)} href="#!">{room.chatroom_name}</a></li>
+      )
+    });
+
+    return drops;
+  }
+
+  buildRoomsPlaylists = () =>{
+    const drops = this.state.user.Playlists.map((playlist,i)=>{
+      return(
+        <li key = {playlist.id}><a onClick = {() => this.setPlaylistToAdd(playlist)} href="#!">{playlist.playlist_name}</a></li>
       )
     });
 
@@ -430,19 +566,48 @@ export default class Explorer extends Component{
 
         {/* Modals */}
 
-        <div id="addSongModal" className="modal">
+        <div id="addSongRoomModal" className="modal">
           <div className="modal-content">
             <h4>Add Song to Room</h4>
             <p><b>Song selected: </b>{this.state.songToAdd.song_name}</p>
-            <p>Choose the room you want to add the song you just selected:</p>
-            <a className='dropdown-trigger btn' data-target='dropdownSong'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
-            <ul id='dropdownSong' className='dropdown-content'>
-              {this.buildRoomsDrops()}
-            </ul>
+            {
+              this.state.user.Chatrooms.length>0?
+              <div>
+                <p>Choose the room where you want to add the song you just selected:</p>
+                <p><b>Room selected: </b></p><a className='dropdown-trigger btn' data-target='dropdownSongRoom'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
+                <ul id='dropdownSongRoom' className='dropdown-content'>
+                  {this.buildRoomsDrops()}
+                </ul>
+                <p><i>Any media object you have related to this room will be replaced for this new one.</i></p>
+              </div>
+              :<p>You have not created any room</p>
+            }            
           </div>
           <div className="modal-footer">
             <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
-            <a onClick = {this.addSongToRoom} href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>
+            {this.state.roomToAdd.chatroom_name?<a onClick = {this.addSongToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>:null}
+          </div>
+        </div>
+
+        <div id="addSongPlaylistModal" className="modal">
+          <div className="modal-content">
+            <h4>Add Song to Playlist</h4>
+            <p><b>Song selected: </b>{this.state.songToAdd.song_name}</p>
+            {
+              this.state.user.Playlists.length>0?
+              <div>
+                <p>Choose the playlist where you want to add the song you just selected:</p>
+                <p><b>Playlist selected: </b></p><a className='dropdown-trigger btn' data-target='dropdownSongPlaylist'>{!this.state.playlistToAdd.playlist_name?'Select Playlist':this.state.playlistToAdd.playlist_name}</a>
+                <ul id='dropdownSongPlaylist' className='dropdown-content'>
+                  {this.buildRoomsPlaylists()}
+                </ul>
+              </div>
+              :<p>You have not created any room</p>
+            }            
+          </div>
+          <div className="modal-footer">
+            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            {this.state.playlistToAdd.playlist_name?<a onClick = {this.addSongToPlaylist}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>:null}
           </div>
         </div>
 
@@ -450,15 +615,45 @@ export default class Explorer extends Component{
           <div className="modal-content">
             <h4>Add Album to Room</h4>
             <p><b>Album selected: </b>{this.state.albumToAdd.album_name}</p>
-            <p>Choose the room you want to add the album you just selected:</p>
-            <a className='dropdown-trigger btn' data-target='dropdownAlbum'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
-            <ul id='dropdownAlbum' className='dropdown-content'>
-              {this.buildRoomsDrops()}
-            </ul>
+            {
+              this.state.user.Chatrooms.length>0?
+              <div>
+                <p>Choose the room where you want to add the album you just selected:</p>
+                <p><b>Room selected: </b></p><a className='dropdown-trigger btn' data-target='dropdownAlbum'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
+                <ul id='dropdownAlbum' className='dropdown-content'>
+                  {this.buildRoomsDrops()}
+                </ul>
+                <p><i>Any media object you have related to this room will be replaced for this new one.</i></p>
+              </div>
+              :<p>You have not created any room</p>
+            }             
           </div>
           <div className="modal-footer">
             <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
-            <a onClick = {this.addAlbumToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>
+            {this.state.roomToAdd.chatroom_name?<a onClick = {this.addAlbumToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>:null}            
+          </div>
+        </div>
+
+        <div id="addArtistModal" className="modal">
+          <div className="modal-content">
+            <h4>Add Artist to Room</h4>
+            <p><b>Artist selected: </b>{this.state.artistToAdd.artist_name}</p>
+            {
+              this.state.user.Chatrooms.length>0?
+              <div>
+                <p>Choose the room where you want to add the artist you just selected:</p>
+                <p><b>Room selected: </b></p><a className='dropdown-trigger btn' data-target='dropdownArtist'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
+                <ul id='dropdownArtist' className='dropdown-content'>
+                  {this.buildRoomsDrops()}
+                </ul>
+                <p><i>Any media object you have related to this room will be replaced for this new one.</i></p>
+              </div>
+              :<p>You have not created any room</p>
+            }            
+          </div>
+          <div className="modal-footer">
+            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            {this.state.roomToAdd.chatroom_name?<a onClick = {this.addArtistToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>:null}            
           </div>
         </div>
 

@@ -2,14 +2,11 @@ import React, {Component} from 'react';
 
 export default class Rooms extends Component{
 
-    /* constructor(){
-        super();        
-    } */
-
   state = {
     user: this.props.user,
     rooms: this.props.user.Chatrooms,
     selected : 0,
+    selectedSong: {},
     chatroom_name: '',
     adding : false
   }
@@ -80,9 +77,32 @@ export default class Rooms extends Component{
   }
 
   selectRoom = (n) => {
-      this.setState({
-        selected: n
-      });
+    this.setState({
+      selected: n,
+      selectedSong: {}
+    });
+  }
+
+  selectPlaylistSong = (song) =>{
+    this.setState({
+      selectedSong: song
+    });
+  }
+
+  buildSpotifyPath=(playlistsong)=>{
+    let chains = this.state.rooms[this.state.selected].chatroom_mediaidentifier.split(":");
+    if (chains[0]=='album'){
+      return 'album/'+chains[1]
+    }
+    else if(chains[0]=='song'){
+      return 'track/'+chains[1]
+    }
+    else if(chains[0]=='artist'){
+      return 'artist/'+chains[1]
+    }
+    else if(chains[0]=='playlist'){
+      return 'track/'+ playlistsong.song_identifier
+    }
   }
 
   handleInput = (e) => {
@@ -90,6 +110,61 @@ export default class Rooms extends Component{
     this.setState({
       [id]: value
     });
+  }
+
+  buildPlaylistRoom = (playlist_id) => {
+
+    let playlist = this.state.user.Playlists.filter(playlist => playlist.id == playlist_id);   
+    playlist = playlist[0]; 
+
+    if(playlist.PlaylistSongs.length > 0){
+
+      const songs = playlist.PlaylistSongs.map((playlistsong, i)=>{
+
+        const song = playlistsong.Song;
+
+        if(this.state.selectedSong.id == song.id){
+            return(            
+                <a key = {i} href="#!" className="collection-item active">{song.song_name}</a>
+            )
+        }
+        else{
+            return(            
+                <a key = {i} onClick = {() => this.selectPlaylistSong(song)} href="#!" className="collection-item">{song.song_name}</a>
+            )
+        }        
+      });
+
+      return(
+        <div className = "row">
+          <div className = "col s4">
+            <center>
+              <p><b>Playlist: </b>{playlist.playlist_name}</p>
+              <br></br>
+              <div className = "collection">
+                {songs}
+              </div>
+            </center>
+          </div>
+          <div className = "col s8">
+            <center>
+              {
+                this.state.selectedSong.song_identifier?
+                <iframe src={"https://open.spotify.com/embed/"+this.buildSpotifyPath(this.state.selectedSong)} width={window.innerWidth*0.20} height="300" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                :
+                <div className = "container">
+                    <br></br>
+                    <h6>Select a song and enjoy!</h6>
+                </div>
+              }              
+            </center>
+          </div>
+        </div>    
+      )
+    }
+    else{
+      return(<h6>Add songs to this playlist for listening them</h6>)
+    }
   }
 
   componentDidMount(){    
@@ -101,12 +176,12 @@ export default class Rooms extends Component{
     const rooms = this.state.rooms.map((room, i)=>{
         if(this.state.selected == i){
             return(            
-                <a key = {i} href="#" className="collection-item active">{room.chatroom_name}</a>
+                <a key = {i} href="#!" className="collection-item active pink darken-2">{room.chatroom_name}</a>
             )
         }
         else{
             return(            
-                <a key = {i} onClick = {() => this.selectRoom(i)} href="#" className="collection-item">{room.chatroom_name}</a>
+                <a key = {i} onClick = {() => this.selectRoom(i)} href="#!" className="pink-text text-darken-1 collection-item">{room.chatroom_name}</a>
             )
         }        
     });
@@ -160,13 +235,34 @@ export default class Rooms extends Component{
                 <div className = "col s8">
                 {
                     this.state.rooms.length > 0?
-                    <div className="card large">                    
+                    <div className="card large">                                       
                         <div className="card-content">
-                        <p>{selectedRoom.chatroom_name}</p>
+                          <center>
+                            <span className="card-title grey-text text-darken-4">{selectedRoom.chatroom_name}</span>                           
+                          
+                            {
+                              selectedRoom.chatroom_mediaidentifier?
+                              <div>
+                                <div className="chip pink darken-1">
+                                  <p className="grey-text text-lighten-5">{selectedRoom.chatroom_mediaidentifier.split(":")[0]}</p>
+                                </div>
+                                <br></br> 
+                                <br></br>
+                                {
+                                  selectedRoom.chatroom_mediaidentifier.split(":")[0]=='playlist'?
+                                  <div>
+                                    {this.buildPlaylistRoom(Number(selectedRoom.chatroom_mediaidentifier.split(":")[1]))}
+                                  </div>
+                                  :<iframe src={"https://open.spotify.com/embed/"+this.buildSpotifyPath({})} width={window.innerWidth*0.25} height="300" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                                }                       
+                                
+                              </div>
+                              :<p><i>Search for multimedia to add content at this room</i></p>
+                            }
+                          </center>
                         </div>
                         <div className="card-action">
-                        <a className="grey-text text-darken-4" href="#">Change name</a>
-                        <a className="red-text text-darken-4" onClick = {this.deleteSelected} href="#"><i className="material-icons right">delete</i></a>
+                          <a className="red-text text-darken-4" onClick = {this.deleteSelected} href="#"><i className="material-icons right">delete</i></a>
                         </div>
                     </div>
                 :<center><h6>Add rooms to enjoy this feature!</h6></center>

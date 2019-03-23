@@ -1,9 +1,10 @@
 const Playlist = require('../models').Playlist;
 const User = require('../models').User;
+const PlaylistSong = require('../models').PlaylistSong;
 
 module.exports = {
     getAll(req,res){
-        return User.findById(req.params.user_id)
+        return User.findById(req.params.user_id,{include:[PlaylistSong]})
         .then((user) => {
             if(!user){
                 return res.status(404).send({
