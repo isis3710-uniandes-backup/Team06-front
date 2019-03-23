@@ -8,13 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     album_identifier: {type: DataTypes.STRING, unique: true}
   }, {});
   Album.associate = function(models) {
+    models.Album.hasMany(models.Song);
     models.Album.belongsTo(models.Artist,{
       onDelete: "CASCADE",      
       foreignKey:{
         allowNull: false
       }
-    });
-    models.Album.hasMany(models.Song, {as: 'album_songs'});
+    });    
   };
   return Album;
 };

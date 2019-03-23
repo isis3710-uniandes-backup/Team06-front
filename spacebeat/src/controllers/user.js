@@ -1,5 +1,9 @@
 const User = require('../models').User;
 const Partner = require('../models').Partner;
+const Playlist = require('../models').Playlist;
+const Chatroom = require('../models').Chatroom;
+const Post = require('../models').Post;
+const Message = require('../models').Message;
 
 module.exports = {
     getAll(req,res){
@@ -8,8 +12,16 @@ module.exports = {
         }).then((users) => res.status(200).send(users))
         .catch((error) => res.status(400).send(error));
     },
+    getByName(req,res){
+        return User.findAll({
+            include:[Playlist, Chatroom],
+            where: {$or:[{user_names:{$iLike:'%'+req.params.user_name+'%'}},{user_lastnames:{$iLike:'%'+req.params.user_name+'%'}}]},
+            limit: 10
+        }).then((users) => res.status(200).send(users))
+        .catch((error) => res.status(400).send(error));
+    },
     get(req, res){
-        return User.findById(req.params.id)
+        return User.findById(req.params.id,{include:[Playlist, Chatroom, Post, Message, {model: Partner, as:'Partners'}]})
         .then((user) =>{
             if(!user){
                 return res.status(404).send({
@@ -17,8 +29,7 @@ module.exports = {
                 });
             }
             return res.status(200).send(user);
-        })
-        .catch((error) => res.status(400).send(error));
+        }).catch((error) => res.status(400).send(error));
     },
     post(req,res){
         return User.create({

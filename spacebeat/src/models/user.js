@@ -9,9 +9,11 @@ module.exports = (sequelize, DataTypes) => {
     user_banner: DataTypes.STRING
   }, {});
   User.associate = function(models) {
-    models.User.hasMany(models.Post, {as: 'user_posts'});
-    models.User.hasMany(models.Message, {as: 'user_messages'});
-    models.User.hasMany(models.Playlist, {as: 'user_playlists'});
+    models.User.hasMany(models.Partner, {foreignKey:'UserFromId', as:'Partners'});
+    models.User.hasMany(models.Post);
+    models.User.hasMany(models.Message);
+    models.User.hasMany(models.Playlist);
+    models.User.hasMany(models.Chatroom);
   };
   return User;
 };

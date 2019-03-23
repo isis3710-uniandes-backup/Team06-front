@@ -30,7 +30,7 @@ module.exports = {
         }).catch((error) => res.status(400).send(error));               
     },
     getByIdentifier(req,res){        
-        return Song.findAll({
+        return Song.findAll({            
             where: {song_identifier: req.params.song_identifier},
             order: [['createdAt', 'DESC'],],
         }).then((songs) => {
@@ -44,8 +44,12 @@ module.exports = {
     },
     getByName(req,res){
         return Song.findAll({
+            include: [{
+                model: Album,
+                include: [Artist]
+              }],
             where:{song_name:{$iLike:'%'+req.params.song_name+'%'}},
-            limit: 10
+            limit: 20
         }).then((songs) => res.status(200).send(songs))
         .catch((error) => res.status(400).send(error));
     },

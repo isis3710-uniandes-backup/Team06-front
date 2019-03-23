@@ -7,7 +7,7 @@ import SignUp from './SignUp';
 export default class App extends Component{
 
   state = {
-    login: true
+    login: false
   }
 
   toSignUp = () =>{
@@ -34,76 +34,106 @@ export default class App extends Component{
 
     return(
       <div>
-        <nav>     
-            
+
+        <nav>        
           <div className="nav-wrapper pink darken-4">
             <div className = "row"> 
               <div className = "col s12">
                 <a href="#" className="brand-logo center">SPACEBEAT</a>
                 <ul className="right hide-on-med-and-down">
-                {
-                  this.state.login?
-                  <li><a onClick = {this.toSignUp} href="#">Sign Up</a></li>
-                  :<li><a onClick = {this.toLogIn} href="#">Log In</a></li>
-                }                
+                
+                  <li><a href="#action">Join us</a></li>
+                             
                 </ul>
               </div>
             </div>
           </div>  
         </nav>
 
-        <div className = "row">
-          <div className = "col s7">
-            <div className="slider">
-              <ul className="slides">
-                <li>
-                  <img src="./assets/1.jpg"/>
-                  <div className="caption center-align">
-                    <h3>Make your own profile!</h3>
-                    <h5 className="light grey-text text-lighten-3">Post your favorite songs</h5>
-                  </div>
-                </li>
-                <li>
-                  <img src="./assets/5.jpg"/>
-                  <div className="caption left-align">
-                    <h3>Connect to other people</h3>
-                    <h5 className="light grey-text text-lighten-3">And become friends!</h5>
-                  </div>
-                </li>
-                <li>
-                  <img src="./assets/4.jpg"/>
-                  <div className="caption right-align">
-                    <h3 className= "grey-text text-darken-3">Create your music spaces!</h3>
-                    <h5 className="light grey-text text-darken-2">Sharing never was that easy</h5>
-                  </div>
-                </li>
-                <li>
-                  <img src="./assets/2.jpg"/>
-                  <div className="caption center-align">
-                    <h3>Meet other artists</h3>
-                    <h5 className="light grey-text text-lighten-3">According to your preferences</h5>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className = "col s5">            
+        <div className="parallax-container">
+          <div className="parallax"><img className = "responsive-img" src="./assets/A.jpg"/></div>
+        </div>
 
-            <div className="container">
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              {
-                this.state.login?
-                <LogIn toSignUp = {this.toSignUp}/>  
-                :<SignUp toLogIn = {this.toLogIn}/>  
-              }
-                          
-            </div>            
-          </div>          
-        </div> 
+        <br></br>
+        <br></br>
+
+        <div className = "row">
+          <div className = "col s6">
+              <div className ="container">
+                <center>
+                  <br></br>
+                  <i className="material-icons large">account_box</i>
+                  <h3>Make your own profile!</h3>
+                  <h5 className="light grey-text text-lighten-1">Post your favorite songs</h5>
+                </center>
+              </div>
+          </div>
+          <div className = "col s6">
+              <div className ="container">
+                <center>
+                  <h3>Connect to other people</h3>
+                  <h5 className="light grey-text text-lighten-1">And become friends!</h5>
+                  <br></br>              
+                  <i className="material-icons large">supervisor_account</i>
+                  <br></br>
+                </center>
+              </div>
+          </div>
+        </div>
+
+        <br></br>
+        <br></br>
+
+        <div className="parallax-container">
+          <div className="parallax"><img className = "responsive-img" src="./assets/E.jpg"/></div>
+        </div>
+
+        <br></br>
+        <br></br>
+
+        <div className = "row">
+          <div className = "col s6">
+              <div className ="container">
+                <center>                  
+                  <h3>Create your music spaces!</h3>
+                  <h5 className="light grey-text text-lighten-1">Sharing never was this easy</h5>
+                  <br></br>
+                  <i className="material-icons large">music_video</i>
+                  <br></br>
+                </center>
+              </div>
+          </div>
+          <div className = "col s6">
+              <div className ="container">
+                <center>
+                  <br></br>
+                  <i className="material-icons large">check</i>
+                  <h3>Know more about music</h3>
+                  <h5 className="light grey-text text-lighten-1">According to your preferences</h5>                  
+                </center>
+              </div>
+          </div>
+        </div>
+
+        <br></br>
+        <br></br>
+
+        <div className="parallax-container">
+          <div className="parallax"><img className = "responsive-img" src="./assets/G.jpg"/></div>
+        </div>
+
+        <div id = "action" className="container">          
+          <br></br>
+          <br></br>
+          {
+            this.state.login?
+            <LogIn toSignUp = {this.toSignUp}/>  
+            :<SignUp toLogIn = {this.toLogIn}/>  
+          }
+          <br></br>
+          <br></br>
+          <br></br>                 
+        </div>     
 
         <footer className="page-footer pink darken-4">
           <div className="container">
@@ -125,7 +155,7 @@ export default class App extends Component{
           <div className="footer-copyright">
             <div className="container">
             © 2019 Copyright Text
-            <a className="grey-text text-lighten-4 right" href="#!">Home</a>
+            <a className="grey-text text-lighten-4 right" href="#">Home</a>
             </div>
           </div>
         </footer>   

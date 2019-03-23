@@ -1,5 +1,7 @@
 const Album = require('../models').Album;
 const Artist = require('../models').Artist;
+const Song = require('../models').Song;
+
 
 module.exports = {
     getAll(req,res){
@@ -32,6 +34,7 @@ module.exports = {
     },
     getByName(req,res){
         return Album.findAll({
+            include: [Artist, Song],
             where:{album_name:{$iLike:'%'+req.params.album_name+'%'}},
             limit: 10
         }).then((albums) => res.status(200).send(albums))

@@ -8,29 +8,88 @@ export default class Rooms extends Component{
 
   state = {
     user: this.props.user,
-    rooms: [{chatroom_name: 'Primero'},{chatroom_name: 'Segundo'}],
-    selected : 0
+    rooms: this.props.user.Chatrooms,
+    selected : 0,
+    chatroom_name: '',
+    adding : false
+  }
+
+  toAdd = () => {
+      this.setState({
+          adding: true
+      });
   }
 
   deleteSelected = () => {
-    let rooms = [...this.state.rooms];
-    rooms.splice(parseInt(this.state.selected),1);
-    this.setState({
-        rooms: rooms,
-        selected: this.state.selected > 0? this.state.selected-1:0
-    });
+
+    fetch('/api/user/'+this.state.user.id+'/chatroom/'+this.state.rooms[this.state.selected].id,{
+        method: 'DELETE'
+        }).then(res => {              
+          if(res.ok){
+            return res.json();                
+          } 
+          else{
+            throw new Error("Room could not be deleted");
+        }}).then(data => {
+            M.toast({html:'Your room has been deleted correctly', classes: 'rounded'});
+            let rooms = [...this.state.rooms];
+            rooms.splice(parseInt(this.state.selected),1);
+            this.setState({
+                rooms: rooms,
+                selected: this.state.selected > 0? this.state.selected-1:0
+            }, () => {
+                let updatedUser = this.state.user;
+                updatedUser.Chatrooms = rooms;
+                this.props.updateProfile(updatedUser);
+              });
+        }).catch(error => M.toast({html:error.message, classes: 'rounded'}));
   }
 
-  addRoom = () => {      
-      this.setState({
-        rooms: [...this.state.rooms, {chatroom_name: 'My new room'}]
-      });      
+  addRoom = () => {
+    if(this.state.chatroom_name != ''){
+
+        const new_chatroom = {chatroom_name: this.state.chatroom_name}
+  
+        fetch('/api/user/'+this.state.user.id+'/chatroom',{
+          method: 'POST',
+          body: JSON.stringify(new_chatroom),
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }}).then(res => {              
+            if(res.ok){
+              return res.json();                
+            } 
+            else{
+              throw new Error("Room could not be created");
+          }}).then(data => {
+            M.toast({html:'Your room has been created correctly', classes: 'rounded'});
+            this.setState({
+                rooms: [...this.state.rooms,data],
+                adding: false
+            }, () => {                
+                let updatedUser = this.state.user;
+                updatedUser.Chatrooms = this.state.rooms;
+                this.props.updateProfile(updatedUser);
+              });
+          }).catch(error => M.toast({html:error.message, classes: 'rounded'}));      
+      }
+      else{
+        M.toast({html: 'You must provide a valid name for a room', classes: 'rounded'});
+      }           
   }
 
   selectRoom = (n) => {
       this.setState({
-        selected:n
+        selected: n
       });
+  }
+
+  handleInput = (e) => {
+    const {value, id} = e.target;
+    this.setState({
+      [id]: value
+    });
   }
 
   componentDidMount(){    
@@ -75,11 +134,24 @@ export default class Rooms extends Component{
                         :null
                     }
 
-                    {
-                        this.state.rooms.length < 10?
+                    {                        
+                        this.state.adding?                            
+                        <div className = "row">
+                            <center>
+                                <div className = "container">
+                                    <div className = "col s12 l9">                  
+                                        <input id="chatroom_name" placeholder = "Name of room" type="text" className="validate" onChange = {this.handleInput}/>
+                                    </div>
+                                    <div className = "col s12 l3">
+                                        <a onClick = {this.addRoom} className="btn-floating btn-medium waves-effect waves-light green darken-3"><i className="small material-icons right ">check</i></a>
+                                    </div> 
+                                </div>                               
+                            </center>
+                        </div>
+                        :this.state.rooms.length < 10?
                         <center>
-                            <a onClick = {this.addRoom} className="btn-floating btn-medium waves-effect waves-light grey darken-2"><i className="material-icons">add</i></a>
-                        </center>
+                            <a onClick = {this.toAdd} className="btn-floating btn-large waves-effect waves-light grey darken-2"><i className="material-icons">add</i></a>
+                        </center> 
                         :null
                     }
                     
@@ -93,7 +165,7 @@ export default class Rooms extends Component{
                         <p>{selectedRoom.chatroom_name}</p>
                         </div>
                         <div className="card-action">
-                        <a className="grey-text text-darken-3" href="#"><b>Add song</b></a>
+                        <a className="grey-text text-darken-4" href="#">Change name</a>
                         <a className="red-text text-darken-4" onClick = {this.deleteSelected} href="#"><i className="material-icons right">delete</i></a>
                         </div>
                     </div>

@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     artist_identifier: {type: DataTypes.STRING, unique: true}
   }, {});
   Artist.associate = function(models) {
-    models.Artist.hasMany(models.Album,{as: 'artist_albums'});
+    models.Artist.hasMany(models.Album);
   };
   return Artist;
 };

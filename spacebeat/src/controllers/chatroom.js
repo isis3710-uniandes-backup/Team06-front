@@ -43,6 +43,7 @@ module.exports = {
                 }
                 return Chatroom.create({
                         chatroom_name: req.body.chatroom_name,
+                        chatroom_mediaidentifier: req.body.chatroom_mediaidentifier,
                         UserId: req.params.user_id
                     }).then((chatroom) => res.status(201).send(chatroom))
                     .catch((error) => res.status(400).send(error));
@@ -65,6 +66,7 @@ module.exports = {
                         }
                         return chatroom.update({
                                 chatroom_name: req.body.chatroom_name || chatroom.chatroom_name,
+                                chatroom_mediaidentifier: req.body.chatroom_mediaidentifier || chatroom.chatroom_mediaidentifier,
                                 UserId: req.params.user_id || chatroom.UserId
                             })
                             .then((chatroom) => res.status(201).send(chatroom))

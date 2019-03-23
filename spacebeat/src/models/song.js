@@ -7,14 +7,14 @@ module.exports = (sequelize, DataTypes) => {
     song_identifier: {type: DataTypes.STRING, unique: true}
   }, {});
   
-  Song.associate = function(models) {
+  Song.associate = function(models) {    
+    models.Song.hasMany(models.PlaylistSong);   
     models.Song.belongsTo(models.Album,{
       onDelete: "CASCADE",      
       foreignKey:{
         allowNull: false
       }
     });
-    models.Song.hasMany(models.PlaylistSong, {as: 'song_playlists'});   
   };
   return Song;
 };

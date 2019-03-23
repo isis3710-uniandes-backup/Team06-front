@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     });
-    models.Post.hasMany(models.Comment, {as: 'post_comments'});
+    models.Post.hasMany(models.Comment);
   };
   return Post;
 };

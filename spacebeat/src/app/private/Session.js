@@ -9,20 +9,6 @@ import Rooms from './components/Rooms';
 
 export default class Session extends Component{
 
-  constructor(){
-    super();
-    var retrievedObject = JSON.parse(localStorage.getItem('loggeduser'));
-    if(retrievedObject != null){
-      let idUser = retrievedObject.id;
-      fetch('/api/user/'+idUser).then(res => res.json()).then(data => {       
-        this.setState({
-          user: data,
-          ready: true
-        });             
-      }).catch(error => {this.setState({logged:false});});     
-    }    
-  }
-
   state = {
     user: {},
     logged : JSON.parse(localStorage.getItem('loggeduser')) == null ? false : true,
@@ -54,7 +40,18 @@ export default class Session extends Component{
   }
 
   componentDidMount(){
-    document.dispatchEvent(new Event('component'));    
+    var retrievedObject = JSON.parse(localStorage.getItem('loggeduser'));
+    if(retrievedObject != null){
+      let idUser = retrievedObject.id;
+      fetch('/api/user/'+idUser).then(res => res.json()).then(data => {  
+        console.log(data);    
+        this.setState({
+          user: data,
+          ready: true
+        });             
+      }).catch(error => {this.setState({logged:false});});     
+    } 
+    document.dispatchEvent(new Event('component'));       
   }
 
   render(){
@@ -68,14 +65,27 @@ export default class Session extends Component{
       <div className = "content">        
         
         <ul id="mobile-demo" className="sidenav sidenav-fixed">
-          <li><div className="user-view">
-            <div className="background">
-              <img className = "responsive-img" src={"./images/"+this.state.user.user_banner}/>
-            </div>
-            <a href="#"><img className="circle" src={"./images/"+this.state.user.user_image}/></a>
-            <a href="#"><span className="white-text name">{this.state.user.user_names + " " + this.state.user.user_lastnames}</span></a>
-            <a href="#"><span className="white-text email">{this.state.user.user_email}</span></a>
-          </div>
+          <li>
+            {
+              this.state.ready?
+              <div className="user-view">
+                <div className="background">
+                  <img className = "responsive-img" src={"./images/"+this.state.user.user_banner}/>
+                </div>
+                <a href="#"><img className="circle" src={"./images/"+this.state.user.user_image}/></a>
+                <a href="#"><span className="white-text name">{this.state.user.user_names + " " + this.state.user.user_lastnames}</span></a>
+                <a href="#"><span className="white-text email">{this.state.user.user_email}</span></a>
+              </div>
+              :
+              <div className="user-view">
+                <div className="background">
+                  <img className = "responsive-img" src={"./images/defaultbanner.jpg"}/>
+                </div>
+                <a href="#"><img className="circle" src={"./images/defaultprofile.jpg"}/></a>
+                <a href="#"><span className="white-text name">{this.state.user.user_names + " " + this.state.user.user_lastnames}</span></a>
+                <a href="#"><span className="white-text email">{this.state.user.user_email}</span></a>
+              </div>
+            }
           </li>
           {
             this.state.page == 'home'?
@@ -120,13 +130,13 @@ export default class Session extends Component{
 
           {
             this.state.page == 'home'?
-              <Home user = {this.state.user}/>
+              <Home updateProfile = {this.updateProfile} user = {this.state.user}/>
             :this.state.page == 'playlists'?
-              <Playlists user = {this.state.user}/>
+              <Playlists updateProfile = {this.updateProfile} user = {this.state.user}/>
             :this.state.page == 'rooms'?
-              <Rooms user = {this.state.user}/>
+              <Rooms updateProfile = {this.updateProfile} user = {this.state.user}/>
             :this.state.page == 'explorer'?
-              <Explorer user = {this.state.user}/>
+              <Explorer updateProfile = {this.updateProfile} user = {this.state.user}/>
             :this.state.page == 'preferences'?
               <Preferences updateProfile = {this.updateProfile} user = {this.state.user}/>
             :null
@@ -138,15 +148,13 @@ export default class Session extends Component{
           <div className="container">
             <div className="row">
               <div className="col l6 s12">
-                <h5 className="white-text">Spacebeat saves you</h5>
-                <p className="grey-text text-lighten-4">Spacebeat will manage your information correctly. We guarantee the safe handling of your data.</p>
+                <h5 className="white-text">Enjoy being here!</h5>
+                <p className="grey-text text-lighten-4">Your are in home. Do what ever you want.</p>
               </div>
               <div className="col l4 offset-l2 s12">
-                <h5 className="white-text">Made by</h5>
+                <h5 className="white-text">Links</h5>
                 <ul>
-                  <li><a className="grey-text text-lighten-3" href="#!">Sebastian Benítez</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Diego Ramos</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Nicolás Hernández</a></li>
+                  <li><a className="grey-text text-lighten-3" href="#">Contact support</a></li>
                 </ul>
               </div>
             </div>
@@ -154,7 +162,7 @@ export default class Session extends Component{
           <div className="footer-copyright">
             <div className="container">
             © 2019 Copyright Text
-            <a className="grey-text text-lighten-4 right" href="#!">Home</a>
+            <a className="grey-text text-lighten-4 right" href="#">Home</a>
             </div>
           </div>
         </footer>

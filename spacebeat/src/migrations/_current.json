@@ -113,6 +113,10 @@
                     "field": "chatroom_name",
                     "seqType": "Sequelize.STRING"
                 },
+                "chatroom_mediaidentifier": {
+                    "field": "chatroom_mediaidentifier",
+                    "seqType": "Sequelize.STRING"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -515,5 +519,5 @@
             "indexes": []
         }
     },
-    "revision": 1
+    "revision": 2
 }

@@ -70,7 +70,7 @@ export default class Preferences extends Component{
                             });  
                         }else{resolve(false);}                    
                   }
-            )
+            );
 
             var banner = new Promise(
                 function(resolve, reject) {
@@ -84,7 +84,7 @@ export default class Preferences extends Component{
                             });
                         }else{resolve(false);}                   
                   }
-            )
+            );
             
             image.then(res=>{
                 banner.then(res=>{

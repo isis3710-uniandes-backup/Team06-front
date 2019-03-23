@@ -5,10 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     Partner.associate = function(models) {
         models.Partner.belongsTo(models.User,{
             foreignKey: {name: 'UserFromId',allowNull: false}
-            });        
+        });        
         models.Partner.belongsTo(models.User,{
             foreignKey: {name: 'UserToId',allowNull: false}
-            });        
+        });        
     };
     return Partner;
 };

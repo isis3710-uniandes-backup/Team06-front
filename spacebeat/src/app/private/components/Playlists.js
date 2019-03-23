@@ -4,7 +4,7 @@ export default class Playlists extends Component{
 
   state = {
     user: this.props.user,
-    playlists: [{playlist_name: 'Primero'},{playlist_name: 'Segundo'}],
+    playlists: this.props.user.Playlists,
     adding: false,
     playlist_name: ''
   }
@@ -17,23 +17,64 @@ export default class Playlists extends Component{
   
   addPlaylist = () =>{
     if(this.state.playlist_name != ''){
-      this.setState({
-        playlists: [...this.state.playlists, {playlist_name: this.state.playlist_name}],
-        adding: false
-      }, () => {
-        if(this.state.playlists.length == 1){
-          document.dispatchEvent(new Event('component'));
-        };
-      });
-    }    
+
+      const new_playlist = {playlist_name: this.state.playlist_name}
+
+      fetch('/api/user/'+this.state.user.id+'/playlist',{
+        method: 'POST',
+        body: JSON.stringify(new_playlist),
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }}).then(res => {              
+          if(res.ok){
+            return res.json();                
+          } 
+          else{
+            throw new Error("Playlist could not be created");
+        }}).then(data => {
+          M.toast({html:'Your playlist has been created correctly', classes: 'rounded'});
+          this.setState({
+            playlists: [...this.state.playlists, data],
+            adding: false,
+            playlist_name: ''
+          }, () => {
+            if(this.state.playlists.length == 1){
+              document.dispatchEvent(new Event('component'));
+            }
+            let updatedUser = this.state.user;
+            updatedUser.Playlists = this.state.playlists;
+            this.props.updateProfile(updatedUser);
+          });
+        }).catch(error => M.toast({html:error.message, classes: 'rounded'}));      
+    }
+    else{
+      M.toast({html: 'You must provide a valid name for a playlist', classes: 'rounded'});
+    }  
   }
 
   deletePlaylist = (n) =>{
-    let playlists = [...this.state.playlists];
-    playlists.splice(parseInt(n),1);
-    this.setState({
-        playlists: playlists
-    });
+
+    fetch('/api/user/'+this.state.user.id+'/playlist/'+this.state.playlists[n].id,{
+      method: 'DELETE'
+      }).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("Playlist could not be deleted");
+      }}).then(data => {
+        M.toast({html:'Your playlist has been deleted correctly', classes: 'rounded'});
+        let playlists = [...this.state.playlists];
+        playlists.splice(parseInt(n),1);
+        this.setState({
+            playlists: playlists
+        }, () => {
+          let updatedUser = this.state.user;
+          updatedUser.Playlists = playlists;
+          this.props.updateProfile(updatedUser);
+        });
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));    
   }
 
   handleInput = (e) => {
@@ -88,7 +129,7 @@ export default class Playlists extends Component{
                   <center>
                     <div className = "container">
                       <div className = "col s11">                  
-                        <input id="playlist_name" placeholder = "Name of playlist" type="text" className="validate" value = {this.state.user_names} onChange = {this.handleInput}/>
+                        <input id="playlist_name" placeholder = "Name of playlist" type="text" className="validate" onChange = {this.handleInput}/>
                       </div>
                       <div className = "col s1">  
                         <a onClick = {this.addPlaylist} className="btn-floating btn-medium waves-effect waves-light green darken-3"><i className="material-icons right ">check</i></a>

@@ -18,6 +18,7 @@ router.get('/api/user/:id', userController.get);
 router.post('/api/user/', userController.post);
 router.put('/api/user/:id', userController.put);
 router.delete('/api/user/:id', userController.delete);
+router.get('/api/userbyname/:user_name',userController.getByName);
 
 // Friend
 router.get('/api/user/:userfrom_id/friends', userController.getFriends);
@@ -56,7 +57,7 @@ router.post('/api/artist/:artist_id/album/:album_id/song', songController.post);
 router.put('/api/artist/:artist_id/album/:album_id/song/:id', songController.put);
 router.delete('/api/artist/:artist_id/album/:album_id/song/:id', songController.delete);
 router.get('/api/songbyidentifier/:song_identifier',songController.getByIdentifier);
-router.get('/api/sodfsongs_name',songController.getByName);
+router.get('/api/songbyname/:song_name',songController.getByName);
 
 // Playlist
 router.get('/api/user/:user_id/playlist/', playlistController.getAll);

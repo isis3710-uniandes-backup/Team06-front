@@ -61,7 +61,7 @@ export default class SignUp extends Component{
       <div>
         <center>
         <h3>Sign Up</h3>
-        <h6>or <a onClick = {this.toLogIn} href="#">log in</a></h6>
+        <h6>or <a onClick = {this.toLogIn} href="#action">log in</a></h6>
         <br></br>
         </center>
         <div className="row">

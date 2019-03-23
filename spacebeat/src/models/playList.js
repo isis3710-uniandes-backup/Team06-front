@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     });
-    models.Playlist.hasMany(models.PlaylistSong, {as: 'playlist_songs'});
+    models.Playlist.hasMany(models.PlaylistSong);
   };
   return Playlist;
 };
