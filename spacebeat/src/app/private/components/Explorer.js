@@ -95,6 +95,128 @@ export default class Explorer extends Component{
     }
   }
 
+  likeArtist = (artist) => {
+    const new_artist = {artist_likes: artist.artist_likes+1};
+      
+    fetch('/api/artist/'+artist.id ,{
+      method: 'PUT',
+      body: JSON.stringify(new_artist),
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }}).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("Has ocurred any problem trying to like this artist");
+      }}).then(data => {
+        M.toast({html:'You liked '+artist.artist_name, classes: 'rounded'});
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));
+  }
+
+  likeAlbum = (album) =>{
+    const new_album = {album_likes: album.album_likes+1};
+      
+    fetch('/api/artist/'+album.Artist.id+'/album/'+album.id ,{
+      method: 'PUT',
+      body: JSON.stringify(new_album),
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }}).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("Has ocurred any problem trying to like this album");
+      }}).then(data => {
+        M.toast({html:'You liked '+album.album_name, classes: 'rounded'});   
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));
+  }
+  
+
+  likeSong = (song) =>{
+    const new_song = {song_likes: song.song_likes+1};
+      
+    fetch('/api/artist/'+song.Album.Artist.id+'/album/'+song.Album.id+'/song/'+song.id ,{
+      method: 'PUT',
+      body: JSON.stringify(new_song),
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }}).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("Has ocurred any problem trying to like this song");
+      }}).then(data => {
+        M.toast({html:'You liked '+song.song_name, classes: 'rounded'}); 
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));
+  }
+
+  isFriend = (user) => {
+    let users = this.state.user.Partners.filter(partner => partner.UserToId == user.id);   
+    return users.length>0
+  }
+
+  addFriend = (user) =>{
+    const new_partnership = {};
+      
+    fetch('/api/user/'+this.state.user.id + '/friends/'+user.id,{
+      method: 'POST',
+      body: JSON.stringify(new_partnership),
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }}).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("That user is already your friend");
+      }}).then(data => {
+          let idUser = this.state.user.id;
+          fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {  
+            this.setState({
+              user: updatedUser
+            }, () => {
+              this.props.updateProfile(updatedUser);               
+              M.toast({html:'User correctly added to friends', classes: 'rounded'}); 
+            });                                              
+          });                   
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));
+  }
+
+  deleteFriend = (user) => {    
+    const new_partnership = {};
+
+    fetch('/api/user/'+this.state.user.id + '/friends/'+user.id,{
+      method: 'DELETE',
+      body: JSON.stringify(new_partnership),
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }}).then(res => {              
+        if(res.ok){
+          return res.json();                
+        } 
+        else{
+          throw new Error("That user is not your friend");
+      }}).then(data => {
+          let idUser = this.state.user.id;
+          fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {    
+            this.setState({
+              user: updatedUser
+            }, () => {
+              this.props.updateProfile(updatedUser);  
+              M.toast({html:'User correctly deleted from your friends', classes: 'rounded'});
+            });                                          
+          });                   
+      }).catch(error => M.toast({html:error.message, classes: 'rounded'}));
+  }
+
   setPlaylistToAdd = (playlist) =>{
     this.setState({
       playlistToAdd: playlist
@@ -235,7 +357,7 @@ export default class Explorer extends Component{
           return res.json();                
         } 
         else{
-          throw new Error("Thay playlist already has this song");
+          throw new Error("That playlist already has this song");
       }}).then(data => {
           let idUser = this.state.user.id;
           fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {
@@ -279,7 +401,7 @@ export default class Explorer extends Component{
             <span className="card-title activator grey-text text-darken-4">{artist.artist_name}<i className="material-icons right">more_vert</i></span>          
           </div>
           <div className="card-action">
-            <p><a onClick = {() => this.setArtistToAdd(artist)} className="waves-effect modal-trigger" href="#addArtistModal">Add to Room</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p>
+            <p><a onClick = {() => this.setArtistToAdd(artist)} className="waves-effect modal-trigger" href="#addArtistModal">Add to Room</a><a onClick = {()=>this.likeArtist(artist)} href="#!"><i className="material-icons right">thumb_up</i></a></p>
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{artist.artist_name}<i className="material-icons right">close</i></span>
@@ -325,7 +447,11 @@ export default class Explorer extends Component{
               <span className="card-title activator grey-text text-darken-4">{user.user_names+' '+user.user_lastnames}<i className="material-icons right">more_vert</i></span>          
             </div>
             <div className="card-action">
-              <p><a href="#!">Add as Friend<i className="material-icons right">person_add</i></a></p>
+            {
+              this.isFriend(user)?
+              <p><a onClick= {() => this.deleteFriend(user)} href="#!">Delete as Friend<i className="material-icons right">person_outline</i></a></p>
+              :<p><a onClick= {() => this.addFriend(user)} href="#!">Add as Friend<i className="material-icons right">person_add</i></a></p>
+            }              
             </div>
             <div className="card-reveal">
               <span className="card-title grey-text text-darken-4">{user.user_names+' '+user.user_lastnames}<i className="material-icons right">close</i></span>
@@ -382,7 +508,7 @@ export default class Explorer extends Component{
             <span className="card-title activator grey-text text-darken-4">{album.album_name}<i className="material-icons right">more_vert</i></span>
           </div>
           <div className="card-action">          
-            <p><a onClick = {() => this.setAlbumToAdd(album)} className="waves-effect modal-trigger" href="#addAlbumModal">Add to Room</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p>             
+            <p><a onClick = {() => this.setAlbumToAdd(album)} className="waves-effect modal-trigger" href="#addAlbumModal">Add to Room</a><a onClick = {()=>this.likeAlbum(album)} href="#!"><i className="material-icons right">thumb_up</i></a></p>             
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{album.album_name}<i className="material-icons right">close</i></span>
@@ -420,7 +546,7 @@ export default class Explorer extends Component{
             </div>
           </div>
           <div className="card-action">
-            <p><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongRoomModal">+ Room</a><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongPlaylistModal">+ Playlist</a><a href="#!"><i className="material-icons right">thumb_up</i></a></p> 
+            <p><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongRoomModal">+ Room</a><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongPlaylistModal">+ Playlist</a><a onClick = {()=>this.likeSong(song)} href="#!"><i className="material-icons right">thumb_up</i></a></p> 
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{song.song_name}<i className="material-icons right">close</i></span>
@@ -474,20 +600,22 @@ export default class Explorer extends Component{
       <div>
         <br></br>
         <div className = "row">
-          <br></br>            
-          <div className="col s12">
-              <nav>
-                  <div className="nav-wrapper grey lighten-1">
-                      <form>
-                          <div className="input-field">
-                          <input id="search" type="search" value={this.state.search} onChange = {this.handleInput} required/>
-                          <label className="label-icon" htmlFor="search"><i className="material-icons">search</i></label>
-                          <i onClick = {this.stopSearching} className="material-icons">close</i>
-                          </div>
-                      </form>
-                  </div>
-              </nav>
-          </div>           
+          <br></br> 
+          <div className = "container">    
+            <div className="col s12">
+                <nav>
+                    <div className="nav-wrapper grey lighten-1">
+                        <form>
+                            <div className="input-field">
+                            <input id="search" type="search" value={this.state.search} onChange = {this.handleInput} required/>
+                            <label className="label-icon" htmlFor="search"><i className="material-icons">search</i></label>
+                            <i onClick = {this.stopSearching} className="material-icons">close</i>
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+          </div>            
         </div>
         
         {
@@ -578,7 +706,7 @@ export default class Explorer extends Component{
                 <ul id='dropdownSongRoom' className='dropdown-content'>
                   {this.buildRoomsDrops()}
                 </ul>
-                <p><i>Any media object you have related to this room will be replaced for this new one.</i></p>
+                <p><i>Any media object you have related to this room will be replaced by this new one.</i></p>
               </div>
               :<p>You have not created any room</p>
             }            
@@ -623,7 +751,7 @@ export default class Explorer extends Component{
                 <ul id='dropdownAlbum' className='dropdown-content'>
                   {this.buildRoomsDrops()}
                 </ul>
-                <p><i>Any media object you have related to this room will be replaced for this new one.</i></p>
+                <p><i>Any media object you have related to this room will be replaced by this new one.</i></p>
               </div>
               :<p>You have not created any room</p>
             }             
@@ -646,7 +774,7 @@ export default class Explorer extends Component{
                 <ul id='dropdownArtist' className='dropdown-content'>
                   {this.buildRoomsDrops()}
                 </ul>
-                <p><i>Any media object you have related to this room will be replaced for this new one.</i></p>
+                <p><i>Any media object you have related to this room will be replaced by this new one.</i></p>
               </div>
               :<p>You have not created any room</p>
             }            

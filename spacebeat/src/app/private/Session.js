@@ -37,7 +37,7 @@ export default class Session extends Component{
         page: new_page
       });
     }    
-  }
+  }  
 
   componentDidMount(){
     var retrievedObject = JSON.parse(localStorage.getItem('loggeduser'));
@@ -129,17 +129,28 @@ export default class Session extends Component{
           </nav>         
 
           {
-            this.state.page == 'home'?
-              <Home updateProfile = {this.updateProfile} user = {this.state.user}/>
-            :this.state.page == 'playlists'?
-              <Playlists updateProfile = {this.updateProfile} user = {this.state.user}/>
-            :this.state.page == 'rooms'?
-              <Rooms updateProfile = {this.updateProfile} user = {this.state.user}/>
-            :this.state.page == 'explorer'?
-              <Explorer updateProfile = {this.updateProfile} user = {this.state.user}/>
-            :this.state.page == 'preferences'?
-              <Preferences updateProfile = {this.updateProfile} user = {this.state.user}/>
-            :null
+            this.state.ready?            
+            <div>
+              {this.state.page == 'home'?
+                <Home updateProfile = {this.updateProfile} user = {this.state.user}/>
+              :this.state.page == 'playlists'?
+                <Playlists updateProfile = {this.updateProfile} user = {this.state.user}/>
+              :this.state.page == 'rooms'?
+                <Rooms updateProfile = {this.updateProfile} user = {this.state.user}/>
+              :this.state.page == 'explorer'?
+                <Explorer updateProfile = {this.updateProfile} user = {this.state.user}/>
+              :this.state.page == 'preferences'?
+                <Preferences updateProfile = {this.updateProfile} user = {this.state.user}/>
+              :null
+            }
+            </div>
+            :
+            <div className = "container">
+              <br></br>
+              <div className="progress pink lighten-5">
+                <div className="indeterminate pink darken-4"></div>
+              </div>
+            </div>
           }        
 
         </div>

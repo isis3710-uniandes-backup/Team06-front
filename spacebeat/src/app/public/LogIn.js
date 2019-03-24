@@ -43,7 +43,7 @@ export default class LogIn extends Component{
             M.toast({html:'Provide valid values of your account', classes: 'rounded'});
         }
         else{
-            M.toast({html:'E-mail no registered by any account', classes: 'rounded'});
+            M.toast({html:'Information do not match with any account', classes: 'rounded'});
         }       
     });     
   }

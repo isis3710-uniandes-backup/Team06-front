@@ -25,7 +25,7 @@ module.exports = {
         .catch((error) => res.status(400).send(error));
     },
     get(req, res){
-        return User.findById(req.params.id,{include:[{model: Playlist, include: [{model: PlaylistSong, include: [{model: Song, include: [{model: Album, include: [Artist]}]}]}]}, Chatroom, Post, Message, {model: Partner, as:'Partners'}]})
+        return User.findById(req.params.id,{include:[{model: Playlist, include: [{model: PlaylistSong, include: [{model: Song, include: [{model: Album, include: [Artist]}]}]}]}, Chatroom, Post, Message, {model: Partner, as:'Partners', include: [{model: User, include: [Post]}]}]})
         .then((user) =>{
             if(!user){
                 return res.status(404).send({

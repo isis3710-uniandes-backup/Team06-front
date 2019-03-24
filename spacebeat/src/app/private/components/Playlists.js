@@ -258,7 +258,7 @@ export default class Playlists extends Component{
                     <ul id='dropdownSongRoom' className='dropdown-content'>
                       {this.buildRoomsDrops()}
                     </ul>
-                    <p><i>Any media object you have related to this room will be replaced for this new one.</i></p>
+                    <p><i>Any media object you have related to this room will be replaced by this new one.</i></p>
                   </div>
                   :<p>You have not created any room</p>
                 }            

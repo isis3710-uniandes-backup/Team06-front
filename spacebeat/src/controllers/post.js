@@ -9,6 +9,14 @@ module.exports = {
         }).then((posts) => res.status(200).send(posts))
         .catch((error) => res.status(400).send(error));
     },
+    getByQuantity(req,res){
+        return Post.findAll({
+            where: {UserId: req.params.user_id},
+            order: [['createdAt', 'DESC'],],
+            limit: req.params.limit
+        }).then((posts) => res.status(200).send(posts))
+        .catch((error) => res.status(400).send(error));
+    },
     get(req, res){
         return User.findById(req.params.user_id)
         .then((user) => {
