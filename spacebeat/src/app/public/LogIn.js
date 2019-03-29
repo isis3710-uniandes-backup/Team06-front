@@ -69,7 +69,7 @@ export default class LogIn extends Component{
                         <div className="input-field col s12">
                             <input id="user_email" type="email" className="validate" onChange = {this.handleInput}/>
                             <label htmlFor="user_email">E-mail</label>
-                            <span className="helper-text" data-error="No es válido" data-success="Es válido">Escribe tu correo...</span>
+                            <span className="helper-text" data-error="This e-mail is not valid" data-success="This e-mail is valid">Write your e-mail...</span>
                         </div>
                     </div>
                     <div className="row">
@@ -88,7 +88,7 @@ export default class LogIn extends Component{
             <a onClick ={this.handleSubmit} className="waves-effect waves-light btn grey darken-4">Log In</a>
             <br></br>
             <br></br>
-            <a onClick = {this.toSignUp} href="#">Did you forget your password?</a>
+            {/**<a onClick = {this.toSignUp} href="#">Did you forget your password?</a>*/}
             </center>
         </div>
       </div>
