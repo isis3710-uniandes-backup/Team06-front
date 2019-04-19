@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import PostLikes from './subcomponents/PostLikes'
 
@@ -140,7 +141,7 @@ export default class Home extends Component{
       <div>
         <br></br>
         <br></br>
-        <h5 className = "center-align">Home</h5>        
+        <h5 className = "center-align"><FormattedMessage id="Home"/></h5>        
         <br></br>
         <div className = "container">
           <div className = "container">            
@@ -152,18 +153,18 @@ export default class Home extends Component{
                 <div className="card-stacked">
                   <div className="card-content">                  
                     <center>
-                      <h5>Write a new post...</h5>
+                      <h5><FormattedMessage id="WriteANewPost"/></h5>
                       <br></br>
                       <div className="input-field">
                         <i className="material-icons prefix">mode_edit</i>
                         <textarea id="post_content" className="materialize-textarea" onChange={this.handleInput}></textarea>
-                        <label htmlFor="post_content">Content</label>
+                        <label htmlFor="post_content"><FormattedMessage id="Content"/></label>
                       </div>
                     </center>
                   </div>
                   <div className="card-action">
                     <center>
-                      <a onClick={this.addPost} href="#!">ADD POST</a>
+                      <a onClick={this.addPost} href="#!"><FormattedMessage id="AddPost"/></a>
                     </center>
                   </div>
                 </div>
@@ -190,13 +191,13 @@ export default class Home extends Component{
           </center>
           :
           <div className = "row">  
-            <center><h5>Timeline</h5></center>
+            <center><h5><FormattedMessage id="Timeline"/></h5></center>
             <br></br>        
             {
               this.state.posts.length >0?
               this.buildPostsCards()
               :
-              <center><h6>We will show you the posts you and your friends created. But first, create one.</h6></center>
+              <center><h6><FormattedMessage id="TimelineM"/></h6></center>
               }
           </div>
         }

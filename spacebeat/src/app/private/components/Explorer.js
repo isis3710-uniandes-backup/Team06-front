@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { FormattedMessage } from 'react-intl';
 
 export default class Explorer extends Component{
 
@@ -401,15 +402,15 @@ export default class Explorer extends Component{
             <span className="card-title activator grey-text text-darken-4">{artist.artist_name}<i className="material-icons right">more_vert</i></span>          
           </div>
           <div className="card-action">
-            <p><a onClick = {() => this.setArtistToAdd(artist)} className="waves-effect modal-trigger" href="#addArtistModal">Add to Room</a><a onClick = {()=>this.likeArtist(artist)} href="#!"><i className="material-icons right">thumb_up</i></a></p>
+            <p><a onClick = {() => this.setArtistToAdd(artist)} className="waves-effect modal-trigger" href="#addArtistModal"><FormattedMessage id="AddToRoom"/></a><a onClick = {()=>this.likeArtist(artist)} href="#!"><i className="material-icons right">thumb_up</i></a></p>
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{artist.artist_name}<i className="material-icons right">close</i></span>
-            <p><b>Genre: </b>{artist.artist_genre}</p>
-            <p><b>Likes: </b>{artist.artist_likes}</p>
+            <p><b><FormattedMessage id="Genre"/>: </b>{artist.artist_genre}</p>
+            <p><b><FormattedMessage id="Likes"/>: </b>{artist.artist_likes}</p>
             <br></br>
             <center>
-              <h6><b>Albums</b></h6>
+              <h6><b><FormattedMessage id="Albums"/></b></h6>
             </center>
             <br></br>
             <ul className="collection">
@@ -449,18 +450,18 @@ export default class Explorer extends Component{
             <div className="card-action">
             {
               this.isFriend(user)?
-              <p><a onClick= {() => this.deleteFriend(user)} href="#!">Delete as Friend<i className="material-icons right">person_outline</i></a></p>
-              :<p><a onClick= {() => this.addFriend(user)} href="#!">Add as Friend<i className="material-icons right">person_add</i></a></p>
+              <p><a onClick= {() => this.deleteFriend(user)} href="#!"><FormattedMessage id="DeleteAsFriend"/><i className="material-icons right">person_outline</i></a></p>
+              :<p><a onClick= {() => this.addFriend(user)} href="#!"><FormattedMessage id="AddAsFriend"/><i className="material-icons right">person_add</i></a></p>
             }              
             </div>
             <div className="card-reveal">
               <span className="card-title grey-text text-darken-4">{user.user_names+' '+user.user_lastnames}<i className="material-icons right">close</i></span>
-              <p><b>Names: </b>{user.user_names}</p>
-              <p><b>Last Names: </b>{user.user_lastnames}</p>
-              <p><b>E-mail: </b>{user.user_email}</p>
+              <p><b><FormattedMessage id="Names"/>: </b>{user.user_names}</p>
+              <p><b><FormattedMessage id="LastNames"/>: </b>{user.user_lastnames}</p>
+              <p><b><FormattedMessage id="E-mail"/>: </b>{user.user_email}</p>
               <br></br>
               <center>
-                <h6><b>Rooms</b></h6>
+                <h6><b><FormattedMessage id="Rooms"/></b></h6>
               </center>
               <br></br>
               {
@@ -468,12 +469,12 @@ export default class Explorer extends Component{
                 <ul className="collection">
                   {roomsItems}
                 </ul>
-                :<p>This user has not created any room</p>
+                :<p><FormattedMessage id="UserM1"/></p>
               }
               
               <br></br>
               <center>
-                <h6><b>Playlists</b></h6>
+                <h6><b><FormattedMessage id="Playlists"/></b></h6>
               </center>
               <br></br>
               {
@@ -481,7 +482,7 @@ export default class Explorer extends Component{
                 <ul className="collection">
                   {playlistsItems}
                 </ul>
-                :<p>This user has not created any playlist</p>
+                :<p><FormattedMessage id="UserM2"/></p>
               }              
             </div>
           </div>
@@ -508,16 +509,16 @@ export default class Explorer extends Component{
             <span className="card-title activator grey-text text-darken-4">{album.album_name}<i className="material-icons right">more_vert</i></span>
           </div>
           <div className="card-action">          
-            <p><a onClick = {() => this.setAlbumToAdd(album)} className="waves-effect modal-trigger" href="#addAlbumModal">Add to Room</a><a onClick = {()=>this.likeAlbum(album)} href="#!"><i className="material-icons right">thumb_up</i></a></p>             
+            <p><a onClick = {() => this.setAlbumToAdd(album)} className="waves-effect modal-trigger" href="#addAlbumModal"><FormattedMessage id="AddToRoom"/></a><a onClick = {()=>this.likeAlbum(album)} href="#!"><i className="material-icons right">thumb_up</i></a></p>             
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{album.album_name}<i className="material-icons right">close</i></span>
-            <p><b>Artist: </b>{album.Artist.artist_name}</p>
-            <p><b>Release date: </b>{album.album_releasedate.substring(0,10)}</p>
-            <p><b>Likes: </b>{album.album_likes}</p>
+            <p><b><FormattedMessage id="Artist"/>: </b>{album.Artist.artist_name}</p>
+            <p><b><FormattedMessage id="ReleaseDate"/>: </b>{album.album_releasedate.substring(0,10)}</p>
+            <p><b><FormattedMessage id="Likes"/>: </b>{album.album_likes}</p>
             <br></br>
             <center>
-              <h6><b>Songs</b></h6>
+              <h6><b><FormattedMessage id="Songs"/></b></h6>
             </center>
             <br></br>
             <ul className="collection">
@@ -546,14 +547,14 @@ export default class Explorer extends Component{
             </div>
           </div>
           <div className="card-action">
-            <p><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongRoomModal">+ Room</a><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongPlaylistModal">+ Playlist</a><a onClick = {()=>this.likeSong(song)} href="#!"><i className="material-icons right">thumb_up</i></a></p> 
+            <p><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongRoomModal">+ <FormattedMessage id="Room"/></a><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongPlaylistModal">+ <FormattedMessage id="Playlist"/></a><a onClick = {()=>this.likeSong(song)} href="#!"><i className="material-icons right">thumb_up</i></a></p> 
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{song.song_name}<i className="material-icons right">close</i></span>
-            <p><b>Artist: </b>{song.Album.Artist.artist_name}</p>
-            <p><b>Album: </b>{song.Album.album_name}</p>
-            <p><b>Duration: </b>{this.convertDuration(song.song_duration)}</p>
-            <p><b>Likes: </b>{song.song_likes}</p>
+            <p><b><FormattedMessage id="Artist"/>: </b>{song.Album.Artist.artist_name}</p>
+            <p><b><FormattedMessage id="Album"/>: </b>{song.Album.album_name}</p>
+            <p><b><FormattedMessage id="Duration"/>: </b>{this.convertDuration(song.song_duration)}</p>
+            <p><b><FormattedMessage id="Likes"/>: </b>{song.song_likes}</p>
           </div>
         </div>
       )
@@ -623,7 +624,7 @@ export default class Explorer extends Component{
           <div className ="container">
             <br></br>
             <center>
-              <h4>Please, type something for searching</h4>
+              <h4><FormattedMessage id="ExplorerM1"/></h4>
             </center>
           </div>
           :this.state.searching?
@@ -647,45 +648,45 @@ export default class Explorer extends Component{
           <div className = "row">
             <div className = "col s12 m6 xl3">
               <center>
-                <h5>Users</h5>
+                <h5><FormattedMessage id="Users"/></h5>
                 <br></br>
                 {
                   (this.state.users.length > 1 || (this.state.users.length == 1 && this.state.users[0].id != this.state.user.id))?
                     this.buildUsersCards()
-                  :<h6>No users found</h6>
+                  :<h6><FormattedMessage id="NoUsersFound"/></h6>
                 }
               </center>
             </div>
             <div className = "col s12 m6 xl3">
               <center>
-                <h5>Artists</h5>
+                <h5><FormattedMessage id="Artists"/></h5>
                 <br></br>
                 {
                   this.state.artists.length >0?
                     this.buildArtistsCards()
-                  :<h6>No artists found</h6>
+                  :<h6><FormattedMessage id="NoArtistsFound"/></h6>
                 }
               </center>
             </div> 
             <div className = "col s12 m6 xl3">
               <center>
-                <h5>Albums</h5>
+                <h5><FormattedMessage id="Albums"/></h5>
                 <br></br>
                 {
                   this.state.albums.length > 0?
                     this.buildAlbumsCards()
-                  :<h6>No albums found</h6>
+                  :<h6><FormattedMessage id="NoAlbumsFound"/></h6>
                 }
               </center>
             </div> 
             <div className = "col s12 m6 xl3">
               <center>
-                <h5>Songs</h5>
+                <h5><FormattedMessage id="Songs"/></h5>
                 <br></br>
                 {
                   this.state.songs.length > 0?
                     this.buildSongsCards()
-                  :<h6>No songs found</h6>
+                  :<h6><FormattedMessage id="NoSongsFound"/></h6>
                 }
               </center>
             </div>  
@@ -696,92 +697,92 @@ export default class Explorer extends Component{
 
         <div id="addSongRoomModal" className="modal">
           <div className="modal-content">
-            <h4>Add Song to Room</h4>
-            <p><b>Song selected: </b>{this.state.songToAdd.song_name}</p>
+            <h4><FormattedMessage id="AddSongToRoom"/></h4>
+            <p><b><FormattedMessage id="Song"/> <FormattedMessage id="Selected"/>: </b>{this.state.songToAdd.song_name}</p>
             {
               this.state.user.Chatrooms.length>0?
               <div>
-                <p>Choose the room where you want to add the song you just selected:</p>
-                <p><b>Room selected: </b></p><a className='dropdown-trigger btn' data-target='dropdownSongRoom'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
+                <p><FormattedMessage id="AddToRoomM1"/> <FormattedMessage id="Song"/> <FormattedMessage id="AddToRoomM2"/></p>
+                <p><b><FormattedMessage id="Room"/> <FormattedMessage id="Selected"/>: </b></p><a className='dropdown-trigger btn' data-target='dropdownSongRoom'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
                 <ul id='dropdownSongRoom' className='dropdown-content'>
                   {this.buildRoomsDrops()}
                 </ul>
-                <p><i>Any media object you have related to this room will be replaced by this new one.</i></p>
+                <p><i><FormattedMessage id="AddToRoomM3"/></i></p>
               </div>
-              :<p>You have not created any room</p>
+              :<p><FormattedMessage id="AddToRoomM4"/></p>
             }            
           </div>
           <div className="modal-footer">
-            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
-            {this.state.roomToAdd.chatroom_name?<a onClick = {this.addSongToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>:null}
+            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat"><FormattedMessage id="Cancel"/></a>
+            {this.state.roomToAdd.chatroom_name?<a onClick = {this.addSongToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat"><FormattedMessage id="Done"/></a>:null}
           </div>
         </div>
 
         <div id="addSongPlaylistModal" className="modal">
           <div className="modal-content">
-            <h4>Add Song to Playlist</h4>
-            <p><b>Song selected: </b>{this.state.songToAdd.song_name}</p>
+            <h4><FormattedMessage id="AddSongToPlaylist"/></h4>
+            <p><b><FormattedMessage id="Song"/> <FormattedMessage id="Selected"/>: </b>{this.state.songToAdd.song_name}</p>
             {
               this.state.user.Playlists.length>0?
               <div>
-                <p>Choose the playlist where you want to add the song you just selected:</p>
-                <p><b>Playlist selected: </b></p><a className='dropdown-trigger btn' data-target='dropdownSongPlaylist'>{!this.state.playlistToAdd.playlist_name?'Select Playlist':this.state.playlistToAdd.playlist_name}</a>
+                <p><FormattedMessage id="AddToPlaylistM1"/></p>
+                <p><b><FormattedMessage id="Playlist"/> <FormattedMessage id="Selected"/>: </b></p><a className='dropdown-trigger btn' data-target='dropdownSongPlaylist'>{!this.state.playlistToAdd.playlist_name?'Select Playlist':this.state.playlistToAdd.playlist_name}</a>
                 <ul id='dropdownSongPlaylist' className='dropdown-content'>
                   {this.buildRoomsPlaylists()}
                 </ul>
               </div>
-              :<p>You have not created any room</p>
+              :<p><FormattedMessage id="AddToPlaylistM2"/></p>
             }            
           </div>
           <div className="modal-footer">
-            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
-            {this.state.playlistToAdd.playlist_name?<a onClick = {this.addSongToPlaylist}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>:null}
+            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat"><FormattedMessage id="Cancel"/></a>
+            {this.state.playlistToAdd.playlist_name?<a onClick = {this.addSongToPlaylist}  href="#!" className="modal-close waves-effect waves-green btn-flat"><FormattedMessage id="Done"/></a>:null}
           </div>
         </div>
 
         <div id="addAlbumModal" className="modal">
           <div className="modal-content">
-            <h4>Add Album to Room</h4>
-            <p><b>Album selected: </b>{this.state.albumToAdd.album_name}</p>
+            <h4><FormattedMessage id="AddTAlbumToRoom"/></h4>
+            <p><b><FormattedMessage id="Album"/> <FormattedMessage id="Selected"/>: </b>{this.state.albumToAdd.album_name}</p>
             {
               this.state.user.Chatrooms.length>0?
               <div>
-                <p>Choose the room where you want to add the album you just selected:</p>
-                <p><b>Room selected: </b></p><a className='dropdown-trigger btn' data-target='dropdownAlbum'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
+                <p><FormattedMessage id="AddToRoomM1"/> <FormattedMessage id="Album"/> <FormattedMessage id="AddToRoomM2"/></p>
+                <p><b><FormattedMessage id="Room"/> <FormattedMessage id="Selected"/>: </b></p><a className='dropdown-trigger btn' data-target='dropdownAlbum'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
                 <ul id='dropdownAlbum' className='dropdown-content'>
                   {this.buildRoomsDrops()}
                 </ul>
-                <p><i>Any media object you have related to this room will be replaced by this new one.</i></p>
+                <p><i><FormattedMessage id="AddToRoom3"/></i></p>
               </div>
-              :<p>You have not created any room</p>
+              :<p><FormattedMessage id="AddToRoom4"/></p>
             }             
           </div>
           <div className="modal-footer">
-            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
-            {this.state.roomToAdd.chatroom_name?<a onClick = {this.addAlbumToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>:null}            
+            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat"><FormattedMessage id="Cancel"/></a>
+            {this.state.roomToAdd.chatroom_name?<a onClick = {this.addAlbumToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat"><FormattedMessage id="Done"/></a>:null}            
           </div>
         </div>
 
         <div id="addArtistModal" className="modal">
           <div className="modal-content">
-            <h4>Add Artist to Room</h4>
-            <p><b>Artist selected: </b>{this.state.artistToAdd.artist_name}</p>
+            <h4><FormattedMessage id="AddArtistToRoom"/></h4>
+            <p><b><FormattedMessage id="Artist"/> <FormattedMessage id="Selected"/>: </b>{this.state.artistToAdd.artist_name}</p>
             {
               this.state.user.Chatrooms.length>0?
               <div>
-                <p>Choose the room where you want to add the artist you just selected:</p>
-                <p><b>Room selected: </b></p><a className='dropdown-trigger btn' data-target='dropdownArtist'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
+                <p><FormattedMessage id="AddToRoomM1"/> <FormattedMessage id="Artist"/> <FormattedMessage id="AddToRoomM2"/></p>
+                <p><b><FormattedMessage id="Room"/> <FormattedMessage id="Selected"/>: </b></p><a className='dropdown-trigger btn' data-target='dropdownArtist'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
                 <ul id='dropdownArtist' className='dropdown-content'>
                   {this.buildRoomsDrops()}
                 </ul>
-                <p><i>Any media object you have related to this room will be replaced by this new one.</i></p>
+                <p><i><FormattedMessage id="AddToRoom3"/></i></p>
               </div>
-              :<p>You have not created any room</p>
+              :<p><FormattedMessage id="AddToRoom4"/></p>
             }            
           </div>
           <div className="modal-footer">
-            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
-            {this.state.roomToAdd.chatroom_name?<a onClick = {this.addArtistToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>:null}            
+            <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat"><FormattedMessage id="Cancel"/></a>
+            {this.state.roomToAdd.chatroom_name?<a onClick = {this.addArtistToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat"><FormattedMessage id="Done"/></a>:null}            
           </div>
         </div>
 

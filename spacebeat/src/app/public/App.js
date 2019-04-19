@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 
 import LogIn from './LogIn';
 import SignUp from './SignUp';
@@ -42,7 +43,7 @@ export default class App extends Component{
                 <a href="#" className="brand-logo center">SPACEBEAT</a>
                 <ul className="right hide-on-med-and-down">
                 
-                  <li><a href="#action">Join us</a></li>
+                  <li><a href="#action"><FormattedMessage id="JoinUs"/></a></li>
                              
                 </ul>
               </div>
@@ -63,16 +64,16 @@ export default class App extends Component{
                 <center>
                   <br></br>
                   <i className="material-icons large">account_box</i>
-                  <h3>Make your own profile!</h3>
-                  <h5 className="light grey-text text-lighten-1">Post your favorite songs</h5>
+                  <h3><FormattedMessage id="WM1"/></h3>
+                  <h5 className="light grey-text text-lighten-1"><FormattedMessage id="WSM1"/></h5>
                 </center>
               </div>
           </div>
           <div className = "col s6">
               <div className ="container">
                 <center>
-                  <h3>Connect to other people</h3>
-                  <h5 className="light grey-text text-lighten-1">And become friends!</h5>
+                  <h3><FormattedMessage id="WM2"/></h3>
+                  <h5 className="light grey-text text-lighten-1"><FormattedMessage id="WSM2"/></h5>
                   <br></br>              
                   <i className="material-icons large">supervisor_account</i>
                   <br></br>
@@ -95,8 +96,8 @@ export default class App extends Component{
           <div className = "col s6">
               <div className ="container">
                 <center>                  
-                  <h3>Create your music spaces!</h3>
-                  <h5 className="light grey-text text-lighten-1">Sharing never was this easy</h5>
+                  <h3><FormattedMessage id="WM3"/></h3>
+                  <h5 className="light grey-text text-lighten-1"><FormattedMessage id="WSM3"/></h5>
                   <br></br>
                   <i className="material-icons large">music_video</i>
                   <br></br>
@@ -108,8 +109,8 @@ export default class App extends Component{
                 <center>
                   <br></br>
                   <i className="material-icons large">check</i>
-                  <h3>Know more about music</h3>
-                  <h5 className="light grey-text text-lighten-1">According to your preferences</h5>                  
+                  <h3><FormattedMessage id="WM4"/></h3>
+                  <h5 className="light grey-text text-lighten-1"><FormattedMessage id="WSM4"/></h5>                  
                 </center>
               </div>
           </div>
@@ -139,11 +140,11 @@ export default class App extends Component{
           <div className="container">
             <div className="row">
               <div className="col l6 s12">
-                <h5 className="white-text">Spacebeat saves you</h5>
-                <p className="grey-text text-lighten-4">Spacebeat will manage your information correctly. We guarantee the safe handling of your data.</p>
+                <h5 className="white-text"><FormattedMessage id="FM1"/></h5>
+                <p className="grey-text text-lighten-4"><FormattedMessage id="FM2"/></p>
               </div>
               <div className="col l4 offset-l2 s12">
-                <h5 className="white-text">Made by</h5>
+                <h5 className="white-text"><FormattedMessage id="MadeBy"/></h5>
                 <ul>
                   <li><a className="grey-text text-lighten-3" href="#!">Sebastian Benítez</a></li>
                   <li><a className="grey-text text-lighten-3" href="#!">Diego Ramos</a></li>
@@ -155,7 +156,7 @@ export default class App extends Component{
           <div className="footer-copyright">
             <div className="container">
             © 2019 Copyright Text
-            <a className="grey-text text-lighten-4 right" href="#">Home</a>
+            <a className="grey-text text-lighten-4 right" href="#"><FormattedMessage id="Home"/></a>
             </div>
           </div>
         </footer>   

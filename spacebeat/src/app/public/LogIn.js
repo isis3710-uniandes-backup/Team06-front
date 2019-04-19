@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 
 export default class LogIn extends Component{
 
@@ -57,8 +58,8 @@ export default class LogIn extends Component{
     return(
       <div>
         <center>
-            <h3>Log In</h3>
-            <h6>or <a onClick = {this.toSignUp} href="#action">sign your account up</a></h6>
+            <h3><FormattedMessage id="LogIn"/></h3>
+            <h6><FormattedMessage id="Or"/> <a onClick = {this.toSignUp} href="#action"><FormattedMessage id="SignUp"/></a></h6>
             <br></br>
             <br></br>
         </center>
@@ -68,14 +69,14 @@ export default class LogIn extends Component{
                     <div className="row">
                         <div className="input-field col s12">
                             <input id="user_email" type="email" className="validate" onChange = {this.handleInput}/>
-                            <label htmlFor="user_email">E-mail</label>
-                            <span className="helper-text" data-error="This e-mail is not valid" data-success="This e-mail is valid">Write your e-mail...</span>
+                            <label htmlFor="user_email"><FormattedMessage id="E-mail"/></label>
+                            <span className="helper-text" data-error="" data-success=""><FormattedMessage id="E-mailSM"/></span>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
                         <input id="user_password" type="password" className="validate" onChange = {this.handleInput}/>
-                        <label htmlFor="user_password">Password</label>
+                        <label htmlFor="user_password"><FormattedMessage id="Password"/></label>
                         </div>
                     </div>
                 </div>              
@@ -85,7 +86,7 @@ export default class LogIn extends Component{
             <br></br>
             
             <center>
-            <a onClick ={this.handleSubmit} className="waves-effect waves-light btn grey darken-4">Log In</a>
+            <a onClick ={this.handleSubmit} className="waves-effect waves-light btn grey darken-4">{<FormattedMessage id="LogIn"/>}</a>
             <br></br>
             <br></br>
             {/**<a onClick = {this.toSignUp} href="#">Did you forget your password?</a>*/}

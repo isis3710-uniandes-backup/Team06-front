@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { FormattedMessage } from 'react-intl';
 
 export default class SignUp extends Component{
 
@@ -18,6 +19,7 @@ export default class SignUp extends Component{
     this.setState({
       [id]: value
     });
+    
   }
 
   handleSubmit = () =>{    
@@ -57,11 +59,12 @@ export default class SignUp extends Component{
   }
 
   render(){
+
     return(
       <div>
         <center>
-        <h3>Sign Up</h3>
-        <h6>or <a onClick = {this.toLogIn} href="#action">log in</a></h6>
+        <h3><FormattedMessage id="SignUp"/></h3>
+        <h6><FormattedMessage id="Or"/> <a onClick = {this.toLogIn} href="#action"><FormattedMessage id="LogIn"/></a></h6>
         <br></br>
         </center>
         <div className="row">
@@ -71,32 +74,32 @@ export default class SignUp extends Component{
                     <div className="row">
                         <div className="input-field col s6">
                             <input id="user_names" type="text" className="validate" onChange = {this.handleInput}/>
-                            <label htmlFor="user_names">Names</label>
+                            <label htmlFor="user_names"><FormattedMessage id="Names"/></label>
                         </div>
                         <div className="input-field col s6">
                             <input id="user_lastnames" type="text" className="validate" onChange = {this.handleInput}/>
-                            <label htmlFor="user_lastnames">Last Names</label>
+                            <label htmlFor="user_lastnames"><FormattedMessage id="LastNames"/></label>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
                             <input id="user_email" type="email" className="validate" onChange = {this.handleInput}/>
-                            <label htmlFor="user_email">E-mail</label>
-                            <span className="helper-text" data-error="This e-mail is not valid" data-success="This e-mail is valid">Write your e-mail...</span>
+                            <label htmlFor="user_email"><FormattedMessage id="E-mail"/></label>
+                            <span className="helper-text" data-error="" data-success=""><FormattedMessage id="E-mailSM"/></span>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
                         <input id="user_password" type="password" className="validate" onChange = {this.handleInput}/>
-                        <label htmlFor="user_password">Password</label>
-                        <span className="helper-text">Must have at least 8 tokens</span>
+                        <label htmlFor="user_password"><FormattedMessage id="Password"/></label>
+                        <span className="helper-text"><FormattedMessage id="PasswordSM"/></span>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
                         <input id="user_password_confirm" type="password" className="validate" onChange = {this.handleInput}/>
-                        <label htmlFor="user_password_confirm">Password confirmation</label>
-                        <span className="helper-text">Rewrite your password</span>
+                        <label htmlFor="user_password_confirm"><FormattedMessage id="PasswordConfirmation"/></label>
+                        <span className="helper-text"><FormattedMessage id="PasswordConfirmationSM"/></span>
                         </div>
                     </div>  
                 </div>                  
@@ -105,7 +108,7 @@ export default class SignUp extends Component{
             <br></br>
             <br></br>
             
-            <center><a onClick ={this.handleSubmit} className="waves-effect waves-light btn grey darken-4">Sign Up</a></center>
+            <center><a onClick ={this.handleSubmit} className="waves-effect waves-light btn grey darken-4"><FormattedMessage id="SignUp"/></a></center>
         </div>
       </div>
     )     

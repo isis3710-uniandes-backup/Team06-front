@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { FormattedMessage } from 'react-intl';
 
 export default class Rooms extends Component{
 
@@ -139,7 +140,7 @@ export default class Rooms extends Component{
         <div className = "row">
           <div className = "col s4">
             <center>
-              <p><b>Playlist: </b>{playlist.playlist_name}</p>
+              <p><b><FormattedMessage id="Playlist"/>: </b>{playlist.playlist_name}</p>
               <br></br>
               <div className = "collection">
                 {songs}
@@ -154,7 +155,7 @@ export default class Rooms extends Component{
                 :
                 <div className = "container">
                     <br></br>
-                    <h6>Select a song and enjoy!</h6>
+                    <h6><FormattedMessage id="RoomM2"/></h6>
                 </div>
               }              
             </center>
@@ -163,7 +164,7 @@ export default class Rooms extends Component{
       )
     }
     else{
-      return(<h6>Add songs to this playlist for listening them</h6>)
+      return(<h6><FormattedMessage id="RoomM3"/></h6>)
     }
   }
 
@@ -194,7 +195,7 @@ export default class Rooms extends Component{
 
             <br></br>
             <br></br>
-            <h5 className = "center-align">My rooms</h5>
+            <h5 className = "center-align"><FormattedMessage id="MyRooms"/></h5>
             <br></br>
 
             <div className = "row">
@@ -257,7 +258,7 @@ export default class Rooms extends Component{
                                 }                       
                                 
                               </div>
-                              :<p><i>Search for multimedia to add content at this room</i></p>
+                              :<p><i><FormattedMessage id="RoomM1"/></i></p>
                             }
                           </center>
                         </div>
@@ -265,7 +266,7 @@ export default class Rooms extends Component{
                           <a className="red-text text-darken-4" onClick = {this.deleteSelected} href="#"><i className="material-icons right">delete</i></a>
                         </div>
                     </div>
-                :<center><h6>Add rooms to enjoy this feature!</h6></center>
+                :<center><h6><FormattedMessage id="RoomM4"/></h6></center>
                 }               
                 </div>
 

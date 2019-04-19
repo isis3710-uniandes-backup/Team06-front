@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { FormattedMessage } from 'react-intl';
 
 export default class Preferences extends Component{
 
@@ -155,13 +156,13 @@ export default class Preferences extends Component{
         <div className = "container">
             <br></br>
             <br></br>
-            <h5 className = "center-align">My account</h5>
+            <h5 className = "center-align"><FormattedMessage id="MyAccount"/></h5>
             <br></br>
 
             <table>
                 <tbody>
                     <tr>
-                        <td>Name</td>
+                        <td><FormattedMessage id="Names"/></td>
                         {
                             this.state.edit?
                             <td>
@@ -172,7 +173,7 @@ export default class Preferences extends Component{
                         
                     </tr>
                     <tr>
-                        <td>Last Names</td>
+                        <td><FormattedMessage id="LastNames"/></td>
                         {
                             this.state.edit?
                             <td>
@@ -182,7 +183,7 @@ export default class Preferences extends Component{
                         }
                     </tr>
                     <tr>
-                        <td>E-mail</td>
+                        <td><FormattedMessage id="E-mail"/></td>
                         {
                             this.state.edit?
                             <td>
@@ -192,7 +193,7 @@ export default class Preferences extends Component{
                         }
                     </tr>
                     <tr>
-                        <td>Password</td>
+                        <td><FormattedMessage id="Password"/></td>
                         {
                             this.state.edit?
                             <td>
@@ -212,7 +213,7 @@ export default class Preferences extends Component{
                     <div className= "col s6">
                         <div className="file-field input-field">
                             <div className="btn">
-                                <span>Profile image</span>
+                                <span><FormattedMessage id="ProfileImage"/></span>
                                 <input type="file" ref={(ref) => { this.uploadProfile = ref; }}/>
                             </div>
                             <div className="file-path-wrapper">
@@ -223,7 +224,7 @@ export default class Preferences extends Component{
                     <div className= "col s6">
                         <div className="file-field input-field">
                             <div className="btn">
-                                <span>Banner image</span>
+                                <span><FormattedMessage id="BannerImage"/></span>
                                 <input type="file" ref={(ref) => { this.uploadBanner = ref; }}/>
                             </div>
                             <div className="file-path-wrapper">
@@ -267,11 +268,11 @@ export default class Preferences extends Component{
             {
                 this.state.edit?
                 <div>
-                    <a onClick ={this.toNormal} className="waves-effect waves-light btn red darken-4">Cancel</a>
+                    <a onClick ={this.toNormal} className="waves-effect waves-light btn red darken-4"><FormattedMessage id="Cancel"/></a>
                     {" "}                 
-                    <a onClick ={this.handleSubmit} className="waves-effect waves-light btn grey darken-4">Save settings</a>
+                    <a onClick ={this.handleSubmit} className="waves-effect waves-light btn grey darken-4"><FormattedMessage id="Done"/></a>
                 </div>
-                :<a onClick ={this.toEdit} className="waves-effect waves-light btn grey darken-4">Change preferences and settings</a>
+                :<a onClick ={this.toEdit} className="waves-effect waves-light btn grey darken-4"><FormattedMessage id="ChangePAS"/></a>
             }                
             </center>
 

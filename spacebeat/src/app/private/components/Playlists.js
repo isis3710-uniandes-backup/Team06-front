@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { FormattedMessage } from 'react-intl';
 
 export default class Playlists extends Component{
 
@@ -165,8 +166,8 @@ export default class Playlists extends Component{
         <img src={playlistsong.Song.Album.album_image} alt="" className="circle"/>
         <span className="title">{playlistsong.Song.song_name}</span>
         <p>
-          <b>Album: </b>{playlistsong.Song.Album.album_name} <br></br>
-          <b>Artist: </b>{playlistsong.Song.Album.Artist.artist_name}
+          <b><FormattedMessage id="Album"/>: </b>{playlistsong.Song.Album.album_name} <br></br>
+          <b><FormattedMessage id="Artist"/>: </b>{playlistsong.Song.Album.Artist.artist_name}
         </p>
         <a className="red-text text-darken-4 secondary-content" onClick = {()=>{this.deleteSongFromPlaylist(playlist, playlistsong.Song)}} href="#!"><i className="material-icons">delete</i></a>
       </li>)
@@ -199,9 +200,9 @@ export default class Playlists extends Component{
               </ul>
               <br></br>
               <center>
-                <a onClick = {() => this.setPlaylistToAdd(playlist)} className="waves-effect modal-trigger waves-light btn grey" href="#addPlaylistRoomModal">Add to Room</a>
+                <a onClick = {() => this.setPlaylistToAdd(playlist)} className="waves-effect modal-trigger waves-light btn grey" href="#addPlaylistRoomModal"><FormattedMessage id="AddToRoom"/></a>
                 {" "}
-                <a onClick = {() => this.deletePlaylist(playlist)} className="waves-effect waves-light btn red darken-4"  href="#!">Delete</a>
+                <a onClick = {() => this.deletePlaylist(playlist)} className="waves-effect waves-light btn red darken-4"  href="#!"><FormattedMessage id="Delete"/></a>
               </center>
             </div>
           </li>
@@ -214,7 +215,7 @@ export default class Playlists extends Component{
 
             <br></br>
             <br></br>
-            <h5 className = "center-align">My playlists</h5>
+            <h5 className = "center-align"><FormattedMessage id="MyPlaylists"/></h5>
             <br></br>
             {
               this.state.user.Playlists.length > 0?
@@ -248,24 +249,24 @@ export default class Playlists extends Component{
 
             <div id="addPlaylistRoomModal" className="modal">
               <div className="modal-content">
-                <h4>Add Playlist to Room</h4>
-                <p><b>Playlist selected: </b>{this.state.playlistToAdd.playlist_name}</p>
+                <h4><FormattedMessage id="AddPlaylistToRoom"/></h4>
+                <p><b><FormattedMessage id="Playlist"/> <FormattedMessage id="Selected"/>: </b>{this.state.playlistToAdd.playlist_name}</p>
                 {
                   this.state.user.Chatrooms.length>0?
                   <div>
-                    <p>Choose the room where you want to add the playlist you just selected:</p>
+                    <p><FormattedMessage id="AddToRoom1"/> <FormattedMessage id="Playlist"/> <FormattedMessage id="AddToRoom2"/></p>
                     <p><b>Room selected: </b></p><a className='dropdown-trigger btn' data-target='dropdownSongRoom'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
                     <ul id='dropdownSongRoom' className='dropdown-content'>
                       {this.buildRoomsDrops()}
                     </ul>
-                    <p><i>Any media object you have related to this room will be replaced by this new one.</i></p>
+                    <p><i><FormattedMessage id="AddToRoom3"/></i></p>
                   </div>
-                  :<p>You have not created any room</p>
+                  :<p><FormattedMessage id="AddToRoom4"/></p>
                 }            
               </div>
               <div className="modal-footer">
-                <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat">Cancel</a>
-                {this.state.roomToAdd.chatroom_name?<a onClick = {this.addPlaylistToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>:null}
+                <a onClick = {this.cancelAdd} href="#!" className="modal-close waves-effect waves-green btn-flat"><FormattedMessage id="Cancel"/></a>
+                {this.state.roomToAdd.chatroom_name?<a onClick = {this.addPlaylistToRoom}  href="#!" className="modal-close waves-effect waves-green btn-flat"><FormattedMessage id="Done"/></a>:null}
               </div>
             </div>
                  
