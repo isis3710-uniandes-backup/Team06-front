@@ -63,8 +63,8 @@ export default class SignUp extends Component{
     return(
       <div>
         <center>
-        <h3><FormattedMessage id="SignUp"/></h3>
-        <h6><FormattedMessage id="Or"/> <a onClick = {this.toLogIn} href="#action"><FormattedMessage id="LogIn"/></a></h6>
+        <h1><FormattedMessage id="SignUp"/></h1>
+        <p><FormattedMessage id="Or"/> <a className="pink-text text-darken-4" onClick = {this.toLogIn} href="#action"><FormattedMessage id="LogIn"/></a></p>
         <br></br>
         </center>
         <div className="row">
@@ -74,31 +74,31 @@ export default class SignUp extends Component{
                     <div className="row">
                         <div className="input-field col s6">
                             <input id="user_names" type="text" className="validate" onChange = {this.handleInput}/>
-                            <label htmlFor="user_names"><FormattedMessage id="Names"/></label>
+                            <label className ="grey-text text-darken-1" htmlFor="user_names"><FormattedMessage id="Names"/></label>
                         </div>
                         <div className="input-field col s6">
                             <input id="user_lastnames" type="text" className="validate" onChange = {this.handleInput}/>
-                            <label htmlFor="user_lastnames"><FormattedMessage id="LastNames"/></label>
+                            <label className ="grey-text text-darken-1" htmlFor="user_lastnames"><FormattedMessage id="LastNames"/></label>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
                             <input id="user_email" type="email" className="validate" onChange = {this.handleInput}/>
-                            <label htmlFor="user_email"><FormattedMessage id="E-mail"/></label>
+                            <label className ="grey-text text-darken-1" htmlFor="user_email"><FormattedMessage id="E-mail"/></label>
                             <span className="helper-text" data-error="" data-success=""><FormattedMessage id="E-mailSM"/></span>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
                         <input id="user_password" type="password" className="validate" onChange = {this.handleInput}/>
-                        <label htmlFor="user_password"><FormattedMessage id="Password"/></label>
+                        <label className ="grey-text text-darken-1" htmlFor="user_password"><FormattedMessage id="Password"/></label>
                         <span className="helper-text"><FormattedMessage id="PasswordSM"/></span>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
                         <input id="user_password_confirm" type="password" className="validate" onChange = {this.handleInput}/>
-                        <label htmlFor="user_password_confirm"><FormattedMessage id="PasswordConfirmation"/></label>
+                        <label className ="grey-text text-darken-1" htmlFor="user_password_confirm"><FormattedMessage id="PasswordConfirmation"/></label>
                         <span className="helper-text"><FormattedMessage id="PasswordConfirmationSM"/></span>
                         </div>
                     </div>  

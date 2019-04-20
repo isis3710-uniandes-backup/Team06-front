@@ -212,7 +212,7 @@ export default class Preferences extends Component{
                 <div className = "row">
                     <div className= "col s6">
                         <div className="file-field input-field">
-                            <div className="btn">
+                            <div className="btn teal darken-3">
                                 <span><FormattedMessage id="ProfileImage"/></span>
                                 <input type="file" ref={(ref) => { this.uploadProfile = ref; }}/>
                             </div>
@@ -223,7 +223,7 @@ export default class Preferences extends Component{
                     </div>
                     <div className= "col s6">
                         <div className="file-field input-field">
-                            <div className="btn">
+                            <div className="btn teal darken-3">
                                 <span><FormattedMessage id="BannerImage"/></span>
                                 <input type="file" ref={(ref) => { this.uploadBanner = ref; }}/>
                             </div>

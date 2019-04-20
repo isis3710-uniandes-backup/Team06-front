@@ -71,18 +71,18 @@ export default class Session extends Component{
               this.state.ready?
               <div className="user-view">
                 <div className="background">
-                  <img className = "responsive-img" src={"./images/"+this.state.user.user_banner}/>
+                  <img alt="image" className = "responsive-img" src={"./images/"+this.state.user.user_banner}/>
                 </div>
-                <a href="#!"><img className="circle" src={"./images/"+this.state.user.user_image}/></a>
+                <img alt="image" className="circle" src={"./images/"+this.state.user.user_image}/>
                 <a href="#!"><span className="white-text name">{this.state.user.user_names + " " + this.state.user.user_lastnames}</span></a>
                 <a href="#!"><span className="white-text email">{this.state.user.user_email}</span></a>
               </div>
               :
               <div className="user-view">
                 <div className="background">
-                  <img className = "responsive-img" src={"./images/defaultbanner.jpg"}/>
+                  <img alt="image" className = "responsive-img" src={"./images/defaultbanner.jpg"}/>
                 </div>
-                <a href="#!"><img className="circle" src={"./images/defaultprofile.jpg"}/></a>
+                <img alt="image" className="circle" src={"./images/defaultprofile.jpg"}/>
                 <a href="#!"><span className="white-text name">{"Loading..."}</span></a>
                 <a href="#!"><span className="white-text email">{"Wait a second..."}</span></a>
               </div>
@@ -160,11 +160,11 @@ export default class Session extends Component{
           <div className="container">
             <div className="row">
               <div className="col l6 s12">
-                <h5 className="white-text"><FormattedMessage id="FLM1"/></h5>
+                <h1 style={{"fontSize":"25px"}} className="white-text"><FormattedMessage id="FLM1"/></h1>
                 <p className="grey-text text-lighten-4"><FormattedMessage id="FLM4"/></p>
               </div>
               <div className="col l4 offset-l2 s12">
-                <h5 className="white-text"><FormattedMessage id="FLM2"/></h5>
+                <p style={{"fontSize":"25px"}} className="white-text"><FormattedMessage id="FLM2"/></p>
                 <ul>
                   <li><a className="grey-text text-lighten-3" href="#!"><FormattedMessage id="FLM3"/></a></li>
                 </ul>

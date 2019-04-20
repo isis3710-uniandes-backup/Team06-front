@@ -396,13 +396,13 @@ export default class Explorer extends Component{
       return(
         <div key = {artist.artist_identifier} className="card hoverable">
           <div className="card-image waves-effect waves-block waves-light">
-            <img className="activator" src={artist.artist_image}/>
+            <img alt="image" className="activator" src={artist.artist_image}/>
           </div>
           <div className="card-content">
             <span className="card-title activator grey-text text-darken-4">{artist.artist_name}<i className="material-icons right">more_vert</i></span>          
           </div>
           <div className="card-action">
-            <p><a onClick = {() => this.setArtistToAdd(artist)} className="waves-effect modal-trigger" href="#addArtistModal"><FormattedMessage id="AddToRoom"/></a><a onClick = {()=>this.likeArtist(artist)} href="#!"><i className="material-icons right">thumb_up</i></a></p>
+            <p><a className ="deep-orange-text text-darken-4 waves-effect modal-trigger" onClick = {() => this.setArtistToAdd(artist)} href="#addArtistModal"><FormattedMessage id="AddToRoom"/></a><a className ="deep-orange-text text-darken-1" onClick = {()=>this.likeArtist(artist)} href="#!"><i className="material-icons right">thumb_up</i></a></p>
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{artist.artist_name}<i className="material-icons right">close</i></span>
@@ -442,7 +442,7 @@ export default class Explorer extends Component{
         return(        
           <div key = {'user'+user.id} className="card hoverable">
             <div className="card-image waves-effect waves-block waves-light">
-                <img className = "activator" src={"./images/"+user.user_image}/>              
+                <img alt="image" className = "activator" src={"./images/"+user.user_image}/>              
             </div>
             <div className="card-content">
               <span className="card-title activator grey-text text-darken-4">{user.user_names+' '+user.user_lastnames}<i className="material-icons right">more_vert</i></span>          
@@ -450,8 +450,8 @@ export default class Explorer extends Component{
             <div className="card-action">
             {
               this.isFriend(user)?
-              <p><a onClick= {() => this.deleteFriend(user)} href="#!"><FormattedMessage id="DeleteAsFriend"/><i className="material-icons right">person_outline</i></a></p>
-              :<p><a onClick= {() => this.addFriend(user)} href="#!"><FormattedMessage id="AddAsFriend"/><i className="material-icons right">person_add</i></a></p>
+              <p><a className ="deep-orange-text text-darken-4" onClick= {() => this.deleteFriend(user)} href="#!"><FormattedMessage id="DeleteAsFriend"/><i className="material-icons right">person_outline</i></a></p>
+              :<p><a className ="deep-orange-text text-darken-4" onClick= {() => this.addFriend(user)} href="#!"><FormattedMessage id="AddAsFriend"/><i className="material-icons right">person_add</i></a></p>
             }              
             </div>
             <div className="card-reveal">
@@ -503,13 +503,13 @@ export default class Explorer extends Component{
       return(
         <div key = {album.album_identifier} className="card hoverable">
           <div className="card-image waves-effect waves-block waves-light">
-            <img className="activator" src={album.album_image}/>
+            <img alt="image" className="activator" src={album.album_image}/>
           </div>
           <div className="card-content">            
             <span className="card-title activator grey-text text-darken-4">{album.album_name}<i className="material-icons right">more_vert</i></span>
           </div>
           <div className="card-action">          
-            <p><a onClick = {() => this.setAlbumToAdd(album)} className="waves-effect modal-trigger" href="#addAlbumModal"><FormattedMessage id="AddToRoom"/></a><a onClick = {()=>this.likeAlbum(album)} href="#!"><i className="material-icons right">thumb_up</i></a></p>             
+            <p><a className ="deep-orange-text text-darken-4 waves-effect modal-trigger" onClick = {() => this.setAlbumToAdd(album)} href="#addAlbumModal"><FormattedMessage id="AddToRoom"/></a><a className ="deep-orange-text text-darken-1" onClick = {()=>this.likeAlbum(album)} href="#!"><i className="material-icons right">thumb_up</i></a></p>             
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{album.album_name}<i className="material-icons right">close</i></span>
@@ -547,7 +547,7 @@ export default class Explorer extends Component{
             </div>
           </div>
           <div className="card-action">
-            <p><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongRoomModal">+ <FormattedMessage id="Room"/></a><a onClick = {() => this.setSongToAdd(song)} className="waves-effect modal-trigger" href="#addSongPlaylistModal">+ <FormattedMessage id="Playlist"/></a><a onClick = {()=>this.likeSong(song)} href="#!"><i className="material-icons right">thumb_up</i></a></p> 
+            <p><a className ="deep-orange-text text-darken-4 waves-effect modal-trigger" onClick = {() => this.setSongToAdd(song)} href="#addSongRoomModal">+ <FormattedMessage id="Room"/></a><a className ="deep-orange-text text-darken-4 waves-effect modal-trigger" onClick = {() => this.setSongToAdd(song)} href="#addSongPlaylistModal">+ <FormattedMessage id="Playlist"/></a><a className ="deep-orange-text text-darken-1" onClick = {()=>this.likeSong(song)} href="#!"><i className="material-icons right">thumb_up</i></a></p> 
           </div>
           <div className="card-reveal">
             <span className="card-title grey-text text-darken-4">{song.song_name}<i className="material-icons right">close</i></span>
@@ -605,11 +605,11 @@ export default class Explorer extends Component{
           <div className = "container">    
             <div className="col s12">
                 <nav>
-                    <div className="nav-wrapper grey lighten-1">
+                    <div className="nav-wrapper grey darken-1">
                         <form>
                             <div className="input-field">
                             <input id="search" type="search" value={this.state.search} onChange = {this.handleInput} required/>
-                            <label className="label-icon" htmlFor="search"><i className="material-icons">search</i></label>
+                            <label className="label-icon" htmlFor="search"><i className="white-text material-icons">search</i></label>
                             <i onClick = {this.stopSearching} className="material-icons">close</i>
                             </div>
                         </form>

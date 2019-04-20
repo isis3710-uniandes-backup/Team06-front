@@ -36,7 +36,7 @@ export default class PostLikes extends Component{
   render(){
 
    return(
-    <div className= "valign-wrapper"><i className="material-icons">favorite</i>{" "}{this.state.post.post_likes}<a onClick={this.likePost} href="#!"><i className="material-icons right">thumb_up</i></a></div>
+    <div className= "valign-wrapper"><i className="material-icons">favorite</i>{" "}{this.state.post.post_likes}<a className ="deep-orange-text text-darken-1" onClick={this.likePost} href="#!"><i className="material-icons right">thumb_up</i></a></div>
    )    
   }  
 }

@@ -131,7 +131,7 @@ export default class Rooms extends Component{
         }
         else{
             return(            
-                <a key = {i} onClick = {() => this.selectPlaylistSong(song)} href="#!" className="collection-item">{song.song_name}</a>
+                <a key = {i} className = "teal-text text-darken-4" onClick = {() => this.selectPlaylistSong(song)} href="#!" className="collection-item">{song.song_name}</a>
             )
         }        
       });
@@ -151,7 +151,7 @@ export default class Rooms extends Component{
             <center>
               {
                 this.state.selectedSong.song_identifier?
-                <iframe src={"https://open.spotify.com/embed/"+this.buildSpotifyPath(this.state.selectedSong)} width={window.innerWidth*0.20} height="300" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                <iframe title="media" src={"https://open.spotify.com/embed/"+this.buildSpotifyPath(this.state.selectedSong)} width={window.innerWidth*0.20} height="300" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 :
                 <div className = "container">
                     <br></br>
@@ -254,7 +254,7 @@ export default class Rooms extends Component{
                                   <div>
                                     {this.buildPlaylistRoom(Number(selectedRoom.chatroom_mediaidentifier.split(":")[1]))}
                                   </div>
-                                  :<iframe src={"https://open.spotify.com/embed/"+this.buildSpotifyPath({})} width={window.innerWidth*0.25} height="300" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                                  :<iframe title="media" src={"https://open.spotify.com/embed/"+this.buildSpotifyPath({})} width={window.innerWidth*0.25} height="300" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                                 }                       
                                 
                               </div>

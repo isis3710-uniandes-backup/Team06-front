@@ -92,12 +92,12 @@ export default class Home extends Component{
         <div key = {post.id} className="col s6 l4 xl3">
           <div className="card horizontal hoverable">
             <div className="card-image">
-              <img className = "responsive-img" src={"./images/"+post.User.user_image}/>
+              <img alt="image" className = "responsive-img" src={"./images/"+post.User.user_image}/>
             </div>
             <div className="card-stacked">
               <div className="card-content">                  
                 <center>                
-                  <h6>{post.post_content}</h6>
+                  <p style={{"fontSize":"20px"}}>{post.post_content}</p>
                   <br></br>
                   <p><b>{post.User.user_names+' '+post.User.user_lastnames}</b></p>
                   <p>{post.createdAt.substring(0,10)+' '+post.createdAt.substring(11,16)}</p>
@@ -141,30 +141,30 @@ export default class Home extends Component{
       <div>
         <br></br>
         <br></br>
-        <h5 className = "center-align"><FormattedMessage id="Home"/></h5>        
+        <h1 style={{"fontSize":"30px"}} className = "center-align"><FormattedMessage id="Home"/></h1>        
         <br></br>
         <div className = "container">
           <div className = "container">            
             <div className="col s12">
               <div className="card small horizontal">
                 <div className="card-image">
-                  <img className="responsive-img" src={"./images/"+this.state.user.user_image}/>
+                  <img alt="image" className="responsive-img" src={"./images/"+this.state.user.user_image}/>
                 </div>
                 <div className="card-stacked">
                   <div className="card-content">                  
                     <center>
-                      <h5><FormattedMessage id="WriteANewPost"/></h5>
+                      <p style={{"fontSize":"20px"}}><FormattedMessage id="WriteANewPost"/></p>
                       <br></br>
                       <div className="input-field">
                         <i className="material-icons prefix">mode_edit</i>
                         <textarea id="post_content" className="materialize-textarea" onChange={this.handleInput}></textarea>
-                        <label htmlFor="post_content"><FormattedMessage id="Content"/></label>
+                        <label className="grey-text text-darken-1" htmlFor="post_content"><FormattedMessage id="Content"/></label>
                       </div>
                     </center>
                   </div>
                   <div className="card-action">
                     <center>
-                      <a onClick={this.addPost} href="#!"><FormattedMessage id="AddPost"/></a>
+                      <a className ="deep-orange-text text-darken-4" onClick={this.addPost} href="#!"><FormattedMessage id="AddPost"/></a>
                     </center>
                   </div>
                 </div>
@@ -191,13 +191,13 @@ export default class Home extends Component{
           </center>
           :
           <div className = "row">  
-            <center><h5><FormattedMessage id="Timeline"/></h5></center>
+            <center><p style={{"fontSize":"28px"}}><FormattedMessage id="Timeline"/></p></center>
             <br></br>        
             {
               this.state.posts.length >0?
               this.buildPostsCards()
               :
-              <center><h6><FormattedMessage id="TimelineM"/></h6></center>
+              <center><p style={{"fontSize":"25px"}}><FormattedMessage id="TimelineM"/></p></center>
               }
           </div>
         }

@@ -163,7 +163,7 @@ export default class Playlists extends Component{
     const songs = playlist.PlaylistSongs.map((playlistsong, i)=>{
       return (
       <li key = {playlistsong.id} className="collection-item avatar">
-        <img src={playlistsong.Song.Album.album_image} alt="" className="circle"/>
+        <img alt="image" src={playlistsong.Song.Album.album_image} alt="" className="circle"/>
         <span className="title">{playlistsong.Song.song_name}</span>
         <p>
           <b><FormattedMessage id="Album"/>: </b>{playlistsong.Song.Album.album_name} <br></br>
@@ -200,7 +200,7 @@ export default class Playlists extends Component{
               </ul>
               <br></br>
               <center>
-                <a onClick = {() => this.setPlaylistToAdd(playlist)} className="waves-effect modal-trigger waves-light btn grey" href="#addPlaylistRoomModal"><FormattedMessage id="AddToRoom"/></a>
+                <a onClick = {() => this.setPlaylistToAdd(playlist)} className="waves-effect modal-trigger waves-light btn grey darken-2" href="#addPlaylistRoomModal"><FormattedMessage id="AddToRoom"/></a>
                 {" "}
                 <a onClick = {() => this.deletePlaylist(playlist)} className="waves-effect waves-light btn red darken-4"  href="#!"><FormattedMessage id="Delete"/></a>
               </center>

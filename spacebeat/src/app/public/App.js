@@ -52,7 +52,7 @@ export default class App extends Component{
         </nav>
 
         <div className="parallax-container">
-          <div className="parallax"><img className = "responsive-img" src="./assets/A.jpg"/></div>
+          <div className="parallax"><img alt="image" className = "responsive-img" src="./assets/A.jpg"/></div>
         </div>
 
         <br></br>
@@ -65,7 +65,7 @@ export default class App extends Component{
                   <br></br>
                   <i className="material-icons large">account_box</i>
                   <h3><FormattedMessage id="WM1"/></h3>
-                  <h5 className="light grey-text text-lighten-1"><FormattedMessage id="WSM1"/></h5>
+                  <p style={{"fontSize":"20px"}} className="light grey-text text-darken-1"><FormattedMessage id="WSM1"/></p>
                 </center>
               </div>
           </div>
@@ -73,7 +73,7 @@ export default class App extends Component{
               <div className ="container">
                 <center>
                   <h3><FormattedMessage id="WM2"/></h3>
-                  <h5 className="light grey-text text-lighten-1"><FormattedMessage id="WSM2"/></h5>
+                  <p style={{"fontSize":"20px"}} className="light grey-text text-darken-1"><FormattedMessage id="WSM2"/></p>
                   <br></br>              
                   <i className="material-icons large">supervisor_account</i>
                   <br></br>
@@ -86,7 +86,7 @@ export default class App extends Component{
         <br></br>
 
         <div className="parallax-container">
-          <div className="parallax"><img className = "responsive-img" src="./assets/E.jpg"/></div>
+          <div className="parallax"><img alt="image" className = "responsive-img" src="./assets/E.jpg"/></div>
         </div>
 
         <br></br>
@@ -97,7 +97,7 @@ export default class App extends Component{
               <div className ="container">
                 <center>                  
                   <h3><FormattedMessage id="WM3"/></h3>
-                  <h5 className="light grey-text text-lighten-1"><FormattedMessage id="WSM3"/></h5>
+                  <p style={{"fontSize":"20px"}} className="light grey-text text-darken-1"><FormattedMessage id="WSM3"/></p>
                   <br></br>
                   <i className="material-icons large">music_video</i>
                   <br></br>
@@ -110,7 +110,7 @@ export default class App extends Component{
                   <br></br>
                   <i className="material-icons large">check</i>
                   <h3><FormattedMessage id="WM4"/></h3>
-                  <h5 className="light grey-text text-lighten-1"><FormattedMessage id="WSM4"/></h5>                  
+                  <p style={{"fontSize":"20px"}} className="light grey-text text-darken-1"><FormattedMessage id="WSM4"/></p>                  
                 </center>
               </div>
           </div>
@@ -120,7 +120,7 @@ export default class App extends Component{
         <br></br>
 
         <div className="parallax-container">
-          <div className="parallax"><img className = "responsive-img" src="./assets/G.jpg"/></div>
+          <div className="parallax"><img alt="image" className = "responsive-img" src="./assets/G.jpg"/></div>
         </div>
 
         <div id = "action" className="container">          
@@ -140,11 +140,11 @@ export default class App extends Component{
           <div className="container">
             <div className="row">
               <div className="col l6 s12">
-                <h5 className="white-text"><FormattedMessage id="FM1"/></h5>
+                <p style={{"fontSize":"25px"}} className="white-text"><FormattedMessage id="FM1"/></p>
                 <p className="grey-text text-lighten-4"><FormattedMessage id="FM2"/></p>
               </div>
               <div className="col l4 offset-l2 s12">
-                <h5 className="white-text"><FormattedMessage id="MadeBy"/></h5>
+                <p style={{"fontSize":"25px"}} className="white-text"><FormattedMessage id="MadeBy"/></p>
                 <ul>
                   <li><a className="grey-text text-lighten-3" href="#!">Sebastian Benítez</a></li>
                   <li><a className="grey-text text-lighten-3" href="#!">Diego Ramos</a></li>

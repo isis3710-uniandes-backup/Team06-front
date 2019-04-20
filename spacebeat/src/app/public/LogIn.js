@@ -58,8 +58,8 @@ export default class LogIn extends Component{
     return(
       <div>
         <center>
-            <h3><FormattedMessage id="LogIn"/></h3>
-            <h6><FormattedMessage id="Or"/> <a onClick = {this.toSignUp} href="#action"><FormattedMessage id="SignUp"/></a></h6>
+            <h1><FormattedMessage id="LogIn"/></h1>
+            <p><FormattedMessage id="Or"/> <a className="pink-text text-darken-4" onClick = {this.toSignUp} href="#action"><FormattedMessage id="SignUp"/></a></p>
             <br></br>
             <br></br>
         </center>
@@ -69,14 +69,14 @@ export default class LogIn extends Component{
                     <div className="row">
                         <div className="input-field col s12">
                             <input id="user_email" type="email" className="validate" onChange = {this.handleInput}/>
-                            <label htmlFor="user_email"><FormattedMessage id="E-mail"/></label>
+                            <label className ="grey-text text-darken-1" htmlFor="user_email"><FormattedMessage id="E-mail"/></label>
                             <span className="helper-text" data-error="" data-success=""><FormattedMessage id="E-mailSM"/></span>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
                         <input id="user_password" type="password" className="validate" onChange = {this.handleInput}/>
-                        <label htmlFor="user_password"><FormattedMessage id="Password"/></label>
+                        <label className ="grey-text text-darken-1" htmlFor="user_password"><FormattedMessage id="Password"/></label>
                         </div>
                     </div>
                 </div>              
