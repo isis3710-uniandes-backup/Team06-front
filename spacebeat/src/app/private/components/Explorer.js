@@ -742,7 +742,7 @@ export default class Explorer extends Component{
 
         <div id="addAlbumModal" className="modal">
           <div className="modal-content">
-            <h4><FormattedMessage id="AddTAlbumToRoom"/></h4>
+            <h4><FormattedMessage id="AddAlbumToRoom"/></h4>
             <p><b><FormattedMessage id="Album"/> <FormattedMessage id="Selected"/>: </b>{this.state.albumToAdd.album_name}</p>
             {
               this.state.user.Chatrooms.length>0?
