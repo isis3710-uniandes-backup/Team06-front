@@ -254,14 +254,14 @@ export default class Playlists extends Component{
                 {
                   this.state.user.Chatrooms.length>0?
                   <div>
-                    <p><FormattedMessage id="AddToRoom1"/> <FormattedMessage id="Playlist"/> <FormattedMessage id="AddToRoom2"/></p>
+                    <p><FormattedMessage id="AddToRoomM1"/> <FormattedMessage id="Playlist"/> <FormattedMessage id="AddToRoomM2"/></p>
                     <p><b>Room selected: </b></p><a className='dropdown-trigger btn' data-target='dropdownSongRoom'>{!this.state.roomToAdd.chatroom_name?'Select Room':this.state.roomToAdd.chatroom_name}</a>
                     <ul id='dropdownSongRoom' className='dropdown-content'>
                       {this.buildRoomsDrops()}
                     </ul>
-                    <p><i><FormattedMessage id="AddToRoom3"/></i></p>
+                    <p><i><FormattedMessage id="AddToRoomM3"/></i></p>
                   </div>
-                  :<p><FormattedMessage id="AddToRoom4"/></p>
+                  :<p><FormattedMessage id="AddToRoomM4"/></p>
                 }            
               </div>
               <div className="modal-footer">
