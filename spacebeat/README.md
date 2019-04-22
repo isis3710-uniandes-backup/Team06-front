@@ -2,7 +2,7 @@
 
 ## Vídeo
 
-https://www.youtube.com/watch?v=oNZW6PsV6wE&feature=youtu.be
+[Dar click aquí para ver vídeo de funcionalidades de la página](https://www.youtube.com/watch?v=oNZW6PsV6wE&feature=youtu.be)
  
 ## Usabilidad
 
