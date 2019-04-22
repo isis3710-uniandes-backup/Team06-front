@@ -1,13 +1,38 @@
-﻿# Entrega 3 Proyecto WEB
+# Entrega 4 Proyecto WEB
+ 
+## Usabilidad
+
+### Combinaciones adecuadas de tipografía y colores
+
+- La carpeta *./ui/tests/usability* contiene dos evidencias del contraste de los colores principales de la página.
+- La tipografía utilizada es la icónica del paradigma de diseño Materialize: Roboto.
+
+### Axe
+
+- La carpeta *./ui/tests/usability/axe* contiene pantallazos evidencia de las pruebas Axe.
+
+### Reglas de diseño
+
+- La carpeta *./ui/tests/usability/evaluation* contiene un documento resumen del cumplimiento de las reglas de diseño.
+- La carpeta *./ui/tests/usability/evaluation/screenshots* contiene pantallazos citados en el documento y evidencia de las reglas.
+
+### Internacionalización
+
+- La página está configurada para inglés y español. Dependiendo del lenguaje predeterminado del navegador, la página será mostrada en uno u otro idioma.
+
+### Tests de usabilidad
+
+- La carpeta *./ui/tests/usability/* contiene el documento **resultados_tests_usabilidad.pdf**.
+
+### Otros elementos
+
+- Los demás elementos de calificación son directamente evidenciables en la página web y la materialización del proyecto.
 
 ## Ejecución
 
 ### Estructura
 
-Tanto el front como el back se ejecutan en este proyecto (no es necesario ejecutar el proyecto de la entrega anterior). El back tiene la implementación
-de una base de datos PostgreSQL que está en la máquina virtual del estudiante Nicolás Hernández (nm.hernandez10). La IP de la máquina con la base de datos
-es 172.24.41.67. Esta máquina está en la red local de la Universidad de los Andes, por tanto, cuando se haga el uso y le ejecución de este proyecto, **debe
-estarse conectado en dicha red físicamente o por medio de una VPN**.
+Tanto el front como el back se ejecutan en este proyecto (no es necesario ejecutar el proyecto de la entrega anterior). El back tiene la implementación de una base de datos PostgreSQL que está en la máquina virtual del estudiante Nicolás Hernández (nm.hernandez10). La IP de la máquina con la base de datos es 172.24.41.67. Esta máquina está en la red local de la Universidad de los Andes, por tanto, cuando se haga el uso y le ejecución de este proyecto, **debe estarse conectado en dicha red físicamente o por medio de una VPN**.
 
 Los elementos del back están distribuidos de la siguiente manera:
 
