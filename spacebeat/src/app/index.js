@@ -9,6 +9,7 @@ import localeEnMessages from "./locales/en";
 
 import Session from './private/Session'
 import App from './public/App'
+import NotFound from './public/NotFound'
 
 var localeLanguage = ""
 var userLang = navigator.language || navigator.userLanguage;
@@ -31,6 +32,7 @@ render(
             <Switch>
                 <Route path="/session" component={Session} />
                 <Route path="/" component={App} exact />
+                <Route path="/:any" component={NotFound}/>
             </Switch>
         </BrowserRouter>
     </IntlProvider>, document.getElementById('app'));
