@@ -12,7 +12,7 @@ export default class Session extends Component{
 
   state = {
     user: {},
-    logged : JSON.parse(localStorage.getItem('loggeduser')) == null ? false : true,
+    logged: false,
     page: 'home',
     ready: false
   }
@@ -39,6 +39,18 @@ export default class Session extends Component{
       });
     }    
   }  
+
+  componentWillMount() {
+    const { userProfile, getProfile } = this.props.auth;
+    this.setState({logged: this.props.auth})
+    if (!userProfile) {
+      getProfile((err, profile) => {
+        this.setState({ profile });
+      });
+    } else {
+      this.setState({ profile: userProfile });
+    }
+  }
 
   componentDidMount(){
     var retrievedObject = JSON.parse(localStorage.getItem('loggeduser'));

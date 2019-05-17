@@ -1,37 +1,29 @@
 import React, {Component} from 'react';
-import { Redirect } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
-import LogIn from './LogIn';
-import SignUp from './SignUp';
-
 export default class App extends Component{
-
-  state = {
-    login: false
-  }
-
-  toSignUp = () =>{
-    this.setState({
-        login: false
-    });
-  }
-
-  toLogIn = () =>{
-      this.setState({
-          login: true
-      });
-  }
   
+  goTo(route) {
+    this.props.history.replace(`/${route}`)
+  }
+  login() {
+    this.props.auth.login();
+  }
+  logout() {
+    this.props.auth.logout();
+  }
+
   componentDidMount(){
+    const { renewSession } = this.props.auth;
+    if(localStorage.getItem('isLoggedIn') === 'true') {
+      renewSession();
+    }
     document.dispatchEvent(new Event('component'));
   }
 
   render(){
 
-    if(JSON.parse(localStorage.getItem('loggeduser')) != null){
-      return <Redirect to='/session'/>;
-    }
+    const { isAuthenticated } = this.props.auth;
 
     return(
       <div>
@@ -42,9 +34,11 @@ export default class App extends Component{
               <div className = "col s12">
                 <a href="#" className="brand-logo center">SPACEBEAT</a>
                 <ul className="right hide-on-med-and-down">
-                
-                  <li><a href="#action"><FormattedMessage id="JoinUs"/></a></li>
-                             
+                  {
+                    !isAuthenticated() && (
+                      <li> <a onClick={this.login.bind(this)}><FormattedMessage id="LogIn" /></a></li>
+                    )
+                  }
                 </ul>
               </div>
             </div>
@@ -126,11 +120,11 @@ export default class App extends Component{
         <div id = "action" className="container">          
           <br></br>
           <br></br>
-          {
+          {/* {
             this.state.login?
             <LogIn toSignUp = {this.toSignUp}/>  
             :<SignUp toLogIn = {this.toLogIn}/>  
-          }
+          } */}
           <br></br>
           <br></br>
           <br></br>                 
