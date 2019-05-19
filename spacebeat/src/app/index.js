@@ -45,14 +45,7 @@ render(
                     return <Session auth={auth} {...props}/>
                 }}/>
                 <Route path="/" render={(props) => <App auth={auth} {...props}/> }/>
-                {/* <Route path="/:any" render={() => <NotFound/> }/> */}
-                {/* <Route path="/callback" render={(props) => {
-                    handleAuthentication(props);
-                    return <Callback {...props} /> 
-                }}/> */}
-                {/* <Route path="/session" component={Session} /> */}
-                {/* <Route path="/" component={App} exact /> */}
-                {/* <Route path="/:any" component={NotFound}/> */}
+                <Route path="/:any" component={NotFound}/>
             </Switch>
         </Router>
     </IntlProvider>, document.getElementById('app'));

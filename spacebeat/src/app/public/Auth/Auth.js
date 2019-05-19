@@ -52,8 +52,8 @@ export default class Auth {
     }
 
     getProfile(cb) {
-        this.auth0.client.userInfo(this.accessToken, (err, profile) => {
-            if(profile) {
+        this.auth0.client.userInfo(localStorage.getItem('accessToken'), (err, profile) => {
+            if (profile) {
                 this.userProfile = profile;
             }
             cb(err, profile);
@@ -67,6 +67,7 @@ export default class Auth {
         // Set the time that the access token will expire at
         let expiresAt = (authResult.expiresIn * 1000) + new Date().getTime();
         this.accessToken = authResult.accessToken;
+        localStorage.setItem('accessToken', this.accessToken);
         this.idToken = authResult.idToken;
         this.expiresAt = expiresAt;
 
@@ -89,6 +90,7 @@ export default class Auth {
     logout() {
         // Remove tokens and expiry time
         this.accessToken = null;
+        this.userProfile = null;    
         this.idToken = null;
         this.expiresAt = 0;
 
@@ -101,7 +103,6 @@ export default class Auth {
 
         // navigate to the home route
         history.replace('/');
-        this.userProfile = null;    
     }
 
     isAuthenticated() {

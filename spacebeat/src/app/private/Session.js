@@ -11,8 +11,7 @@ import Rooms from './components/Rooms';
 export default class Session extends Component{
 
   state = {
-    user: {},
-    logged: false,
+    isLoggedIn: false,
     page: 'home',
     ready: false
   }
@@ -24,12 +23,7 @@ export default class Session extends Component{
   }
 
   logOut = () => {
-    localStorage.setItem('loggeduser', JSON.stringify(null));
-    this.setState({
-      logged: false
-    }, () => {
-      M.toast({html:'Spacebeat will miss you', classes: 'rounded'});
-    });
+    this.props.auth.logout();
   }
 
   changePage = (new_page) => {
@@ -38,38 +32,35 @@ export default class Session extends Component{
         page: new_page
       });
     }    
-  }  
+  }   
 
   componentWillMount() {
+    this.setState({isLoggedIn: localStorage.getItem('isLoggedIn')});
     const { userProfile, getProfile } = this.props.auth;
-    this.setState({logged: this.props.auth})
     if (!userProfile) {
       getProfile((err, profile) => {
-        this.setState({ profile });
+        this.setState({ profile: profile });
+        // fetch('/api/userbyemail/'+ this.state.profile.email).then(res => res.json()).then(data => {  
+        //   console.log(data);    
+        //   this.setState({
+        //     user: data,
+        //     ready: true
+        //   });             
+        // }).catch(error => {localStorage.setItem('isLoggedIn', false)});     
       });
     } else {
       this.setState({ profile: userProfile });
     }
+    document.dispatchEvent(new Event('component'));       
   }
 
   componentDidMount(){
-    var retrievedObject = JSON.parse(localStorage.getItem('loggeduser'));
-    if(retrievedObject != null){
-      let idUser = retrievedObject.id;
-      fetch('/api/user/'+idUser).then(res => res.json()).then(data => {  
-        console.log(data);    
-        this.setState({
-          user: data,
-          ready: true
-        });             
-      }).catch(error => {this.setState({logged:false});});     
-    } 
-    document.dispatchEvent(new Event('component'));       
+    
   }
 
   render(){
 
-    if(!this.state.logged){
+    if(!this.state.isLoggedIn){
       return <Redirect to='/'/>;
     }
 
