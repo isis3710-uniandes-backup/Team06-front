@@ -26,7 +26,7 @@ module.exports = {
     },
     getByEmail(req, res) {
         return User.findAll({
-            where: { user_banner: req.params.user_email }
+            where: { user_email: req.params.user_email }
         }).then((users) => {
             if (users.length == 0) {
                 return res.status(404).send({
