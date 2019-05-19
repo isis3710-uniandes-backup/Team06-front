@@ -19,6 +19,7 @@ router.post('/api/user/', userController.post);
 router.put('/api/user/:id', userController.put);
 router.delete('/api/user/:id', userController.delete);
 router.get('/api/userbyname/:user_name',userController.getByName);
+router.get('/api/userbyemail/:user_email',userController.getByEmail);
 
 // Friend
 router.get('/api/user/:userfrom_id/friends', userController.getFriends);
