@@ -26,12 +26,18 @@ module.exports = {
     },
     getByEmail(req, res) {
         return User.findAll({
-            where: { user_banner: req.params.user_email }
+            where: { user_email: req.params.user_email }
         }).then((users) => {
             if (users.length == 0) {
-                return res.status(404).send({
-                    message: 'User not found',
-                });
+                return User.create({
+                    user_names: req.params.user_email,
+                    user_lastnames: req.params.user_email,
+                    user_email: req.params.user_email,
+                    user_password: req.body.user_password,
+                    user_image: req.body.user_image,
+                    user_banner: req.body.user_banner
+                }).then((user) => res.status(201).send(user))
+                    .catch((error) => res.status(400).send(error));
             }
             return res.status(200).send(users[0]);
         }).catch((error) => res.status(400).send(error));
