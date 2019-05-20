@@ -30,8 +30,8 @@ module.exports = {
         }).then((users) => {
             if (users.length == 0) {
                 return User.create({
-                    user_names: req.params.user_email,
-                    user_lastnames: req.params.user_email,
+                    user_names: " ",
+                    user_lastnames: " ",
                     user_email: req.params.user_email,
                     user_password: req.body.user_password,
                     user_image: 'defaultprofile.jpg',
