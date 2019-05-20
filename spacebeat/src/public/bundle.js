@@ -7310,7 +7310,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nvar AUTH_CONFIG = exports.AUTH_CONFIG = {\n    //Configure los valores por los obtenidos al registrarse en la página de Auth0\n    domain: 'isis2503-diegoramosb.auth0.com',\n    clientId: 'RhgWs5eq1NsnbfkjcHPjagrghDbkl4Vq',\n    callbackUrl: 'http://localhost:8082/session'\n};\n\n//# sourceURL=webpack:///./src/app/public/Auth/auth0-variables.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nvar AUTH_CONFIG = exports.AUTH_CONFIG = {\n    //Configure los valores por los obtenidos al registrarse en la página de Auth0\n    domain: 'isis2503-diegoramosb.auth0.com',\n    clientId: 'RhgWs5eq1NsnbfkjcHPjagrghDbkl4Vq',\n    callbackUrl: window.location.hostname + ':8082/session'\n};\n\n//# sourceURL=webpack:///./src/app/public/Auth/auth0-variables.js?");
 
 /***/ }),
 
