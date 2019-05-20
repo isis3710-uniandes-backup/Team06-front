@@ -124,7 +124,7 @@ export default class Playlists extends Component{
       }}).then(data => {
         let idUser = this.state.user.id;
         fetch('/api/user/'+idUser, {
-          authorization: 'Bearer ' + localStorage.getItem('webToken')
+          headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')}
         }).then(res => res.json()).then(updatedUser => {              
             this.props.updateProfile(updatedUser); 
             this.setState({
@@ -136,6 +136,7 @@ export default class Playlists extends Component{
 
   deleteSongFromPlaylist = (playlist, song) => {
     fetch('/api/user/'+this.state.user.id+'/playlist/'+playlist.id+'/song/'+song.id,{
+      authorization: 'Bearer ' + localStorage.getItem('webToken'),
       method: 'DELETE'
       }).then(res => {              
         if(res.ok){
@@ -145,7 +146,9 @@ export default class Playlists extends Component{
           throw new Error("Song could not be deleted");
       }}).then(data => {
         let idUser = this.state.user.id;
-        fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {              
+        fetch('/api/user/'+idUser, {
+          headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')}
+        }).then(res => res.json()).then(updatedUser => {              
             this.props.updateProfile(updatedUser); 
             this.setState({
               user:updatedUser

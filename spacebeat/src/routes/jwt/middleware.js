@@ -21,10 +21,11 @@ let checkToken = ( req, res, next ) => {
         // Si no pasa la validación, un mensaje de error es retornado
         // de lo contrario, permite a la solicitud continuar
         if( err ) {
-          res.send( 403 ).json( {
+          res.sendStatus( 403 ).json( {
             success: false,
             message: 'Authentication failed! Please check the request'
           } );
+          res.end();
         } else {
           req.decoded = decoded;
           next();
@@ -33,10 +34,11 @@ let checkToken = ( req, res, next ) => {
     }
   } else {
     
-    res.send( 403 ).json( {
+    res.sendStatus( 403 ).json( {
       success: false,
       message: 'Authentication failed! Please check the request'
     } );
+    res.end();
 
   }
 

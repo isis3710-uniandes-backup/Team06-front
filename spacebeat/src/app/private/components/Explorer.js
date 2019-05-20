@@ -47,7 +47,9 @@ export default class Explorer extends Component{
 
         var users = new Promise(
           (resolve, reject)=>{
-            fetch('/api/userbyname/'+ this.state.search.trim()).then(res=>res.json()).then(data =>{    
+            fetch('/api/userbyname/'+ this.state.search.trim(), {
+              headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')}
+            }).then(res=>res.json()).then(data =>{    
               this.setState({
                 users: data
               }, () => resolve(true));        
@@ -57,7 +59,9 @@ export default class Explorer extends Component{
 
         var artists = new Promise(
           (resolve, reject)=>{
-            fetch('/api/artistbyname/'+ this.state.search.trim()).then(res=>res.json()).then(data =>{        
+            fetch('/api/artistbyname/'+ this.state.search.trim(), {
+              headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')}
+            }).then(res=>res.json()).then(data =>{        
               this.setState({
                 artists: data
               }, () => resolve(true));        
@@ -67,7 +71,9 @@ export default class Explorer extends Component{
 
         var albums = new Promise(
           (resolve, reject)=>{
-            fetch('/api/albumbyname/'+ this.state.search.trim()).then(res=>res.json()).then(data =>{     
+            fetch('/api/albumbyname/'+ this.state.search.trim(), {
+              headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')}
+            }).then(res=>res.json()).then(data =>{     
               this.setState({
                 albums: data
               }, () => resolve(true));        
@@ -77,7 +83,9 @@ export default class Explorer extends Component{
 
         var songs = new Promise(
           (resolve, reject)=>{
-            fetch('/api/songbyname/'+ this.state.search.trim()).then(res=>res.json()).then(data =>{
+            fetch('/api/songbyname/'+ this.state.search.trim(), {
+              headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')}
+            }).then(res=>res.json()).then(data =>{
               this.setState({
                 songs: data
               }, () => resolve(true));        
@@ -103,6 +111,7 @@ export default class Explorer extends Component{
       method: 'PUT',
       body: JSON.stringify(new_artist),
       headers:{
+        authorization: 'Bearer ' + localStorage.getItem('webToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }}).then(res => {              
@@ -123,6 +132,7 @@ export default class Explorer extends Component{
       method: 'PUT',
       body: JSON.stringify(new_album),
       headers:{
+        authorization: 'Bearer ' + localStorage.getItem('webToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }}).then(res => {              
@@ -144,6 +154,7 @@ export default class Explorer extends Component{
       method: 'PUT',
       body: JSON.stringify(new_song),
       headers:{
+        authorization: 'Bearer ' + localStorage.getItem('webToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }}).then(res => {              
@@ -169,6 +180,7 @@ export default class Explorer extends Component{
       method: 'POST',
       body: JSON.stringify(new_partnership),
       headers:{
+        authorization: 'Bearer ' + localStorage.getItem('webToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }}).then(res => {              
@@ -179,7 +191,9 @@ export default class Explorer extends Component{
           throw new Error("That user is already your friend");
       }}).then(data => {
           let idUser = this.state.user.id;
-          fetch('/api/user/'+idUser).then(res => res.json()).then(updatedUser => {  
+          fetch('/api/user/'+idUser, {
+            headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')}
+          }).then(res => res.json()).then(updatedUser => {  
             this.setState({
               user: updatedUser
             }, () => {
@@ -197,6 +211,7 @@ export default class Explorer extends Component{
       method: 'DELETE',
       body: JSON.stringify(new_partnership),
       headers:{
+        authorization: 'Bearer ' + localStorage.getItem('webToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }}).then(res => {              
@@ -255,6 +270,7 @@ export default class Explorer extends Component{
       method: 'PUT',
       body: JSON.stringify(new_room),
       headers:{
+        authorization: 'Bearer ' + localStorage.getItem('webToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }}).then(res => {              
@@ -287,6 +303,7 @@ export default class Explorer extends Component{
       method: 'PUT',
       body: JSON.stringify(new_room),
       headers:{
+        authorization: 'Bearer ' + localStorage.getItem('webToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }}).then(res => {              
@@ -319,6 +336,7 @@ export default class Explorer extends Component{
       method: 'PUT',
       body: JSON.stringify(new_room),
       headers:{
+        authorization: 'Bearer ' + localStorage.getItem('webToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }}).then(res => {              
@@ -351,6 +369,7 @@ export default class Explorer extends Component{
       method: 'POST',
       body: JSON.stringify(new_playlistsong),
       headers:{
+        authorization: 'Bearer ' + localStorage.getItem('webToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }}).then(res => {              
