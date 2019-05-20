@@ -7,6 +7,7 @@ import Explorer from './components/Explorer';
 import Playlists from './components/Playlists';
 import Preferences from './components/Preferences';
 import Rooms from './components/Rooms';
+import Chart from './components/Chart'
 
 export default class Session extends Component{
 
@@ -108,6 +109,11 @@ export default class Session extends Component{
             <li className ="active"><a className="waves-effect" onClick = {() => this.changePage('explorer')} href="#"><i className="material-icons">search</i><FormattedMessage id="Explorer"/></a></li>
             :<li><a className="waves-effect" onClick = {() => this.changePage('explorer')} href="#"><i className="material-icons">search</i><FormattedMessage id="Explorer"/></a></li>
           }
+          {
+            this.state.page == 'chart'?
+            <li className ="active"><a className="waves-effect" onClick = {() => this.changePage('chart')} href="#"><i className="material-icons">insert_chart</i><FormattedMessage id="Chart"/></a></li>
+            :<li><a className="waves-effect" onClick = {() => this.changePage('chart')} href="#"><i className="material-icons">insert_chart</i><FormattedMessage id="Chart"/></a></li>
+          }
           <li><div className="divider"></div></li>
           <li><a className="subheader"><FormattedMessage id="YourAccount"/></a></li>
           {
@@ -142,6 +148,8 @@ export default class Session extends Component{
                 <Explorer updateProfile = {this.updateProfile} user = {this.state.user}/>
               :this.state.page == 'preferences'?
                 <Preferences updateProfile = {this.updateProfile} user = {this.state.user}/>
+              :this.state.page == 'chart'?
+                <Chart updateProfile = {this.updateProfile} user = {this.state.user}/>
               :null
             }
             </div>
