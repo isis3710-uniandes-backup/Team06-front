@@ -1,4 +1,8 @@
-# Entrega 4 Proyecto WEB
+# Entrega 5 Proyecto WEB
+
+La entrega server back y server front está contenida en este mismo repositorio. Es decir, Team06-front tiene back y front. Los entregables de esta entrega pueden visualizarse al correr el proyecto.
+
+# Entregas anteriores Proyecto WEB
 
 ## Vídeo
 
