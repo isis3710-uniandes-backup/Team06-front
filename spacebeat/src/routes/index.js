@@ -21,10 +21,10 @@ router.post('/api/auth/', HandlerGenerator.login);
 router.get('/api/user/', middleware.checkToken, userController.getAll);
 router.get('/api/user/:id', userController.get);
 router.post('/api/user/', userController.post);
-router.put('/api/user/:id', userController.put);
+router.put('/api/user/:id', middleware.checkToken, userController.put);
 router.delete('/api/user/:id', userController.delete);
 router.get('/api/userbyname/:user_name',userController.getByName);
-router.get('/api/userbyemail/:user_email',userController.getByEmail);
+router.get('/api/userbyemail/:user_email', middleware.checkToken, userController.getByEmail);
 
 // Friend
 router.get('/api/user/:userfrom_id/friends', userController.getFriends);
@@ -32,10 +32,10 @@ router.post('/api/user/:userfrom_id/friends/:userto_id', userController.postFrie
 router.delete('/api/user/:userfrom_id/friends/:userto_id', userController.deleteFriend);
 
 // Post
-router.get('/api/user/:user_id/post/', postController.getAll);
-router.get('/api/user/:user_id/post/:id', postController.get);
+router.get('/api/user/:user_id/post/', middleware.checkToken, postController.getAll);
+router.get('/api/user/:user_id/post/:id', middleware.checkToken, postController.get);
 router.post('/api/user/:user_id/post/', middleware.checkToken,postController.post);
-router.put('/api/user/:user_id/post/:id', postController.put);
+router.put('/api/user/:user_id/post/:id', middleware.checkToken, postController.put);
 router.delete('/api/user/:user_id/post/:id', middleware.checkToken, postController.delete);
 
 // Artist
@@ -87,11 +87,11 @@ router.put('/api/user/:user_id/post/:post_id/comment/:id', commentController.put
 router.delete('/api/user/:user_id/post/:post_id/comment/:id', commentController.delete);
 
 // Chatroom
-router.get('/api/user/:user_id/chatroom', chatroomController.getAll);
-router.get('/api/user/:user_id/chatroom/:id', chatroomController.get);
-router.post('/api/user/:user_id/chatroom', chatroomController.post);
-router.put('/api/user/:user_id/chatroom/:id', chatroomController.put);
-router.delete('/api/user/:user_id/chatroom/:id', chatroomController.delete);
+router.get('/api/user/:user_id/chatroom', middleware.checkToken, chatroomController.getAll);
+router.get('/api/user/:user_id/chatroom/:id', middleware.checkToken,chatroomController.get);
+router.post('/api/user/:user_id/chatroom', middleware.checkToken, chatroomController.post);
+router.put('/api/user/:user_id/chatroom/:id', middleware.checkToken, chatroomController.put);
+router.delete('/api/user/:user_id/chatroom/:id', middleware.checkToken, chatroomController.delete);
 
 // Message
 router.get('/api/user/:user_id/chatroom/:chatroom_id/message', messageController.getAll);

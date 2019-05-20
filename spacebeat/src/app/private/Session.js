@@ -50,11 +50,15 @@ export default class Session extends Component{
           },
         }).then(res => res.json()).then(data => {
           localStorage.setItem('webToken', data.token);
-          fetch('/api/userbyemail/'+ this.state.profile.email).then(res => res.json()).then(data => {  
+          fetch('/api/userbyemail/'+ this.state.profile.email, {
+            headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')}
+          }).then(res => res.json()).then(data => {  
             this.setState({
               user: data
             });      
-            fetch('/api/user/' + this.state.user.id).then(res => res.json()).then(data => {
+            fetch('/api/user/' + this.state.user.id, {
+              headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')}
+            }).then(res => res.json()).then(data => {
               this.setState({
                 user: data,
                 ready: true

@@ -21,6 +21,7 @@ export default class Rooms extends Component{
   deleteSelected = () => {
 
     fetch('/api/user/'+this.state.user.id+'/chatroom/'+this.state.rooms[this.state.selected].id,{
+        headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')},
         method: 'DELETE'
         }).then(res => {              
           if(res.ok){
@@ -52,6 +53,7 @@ export default class Rooms extends Component{
           method: 'POST',
           body: JSON.stringify(new_chatroom),
           headers:{
+            authorization: 'Bearer ' + localStorage.getItem('webToken'),
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           }}).then(res => {              

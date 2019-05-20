@@ -43,6 +43,7 @@ export default class Home extends Component{
   
   deletePost = (post, i) => {
     fetch('/api/user/'+this.state.user.id + '/post/'+post.id,{
+      headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')},
       method: 'DELETE',
       }).then(res => {              
         if(res.ok){
@@ -68,6 +69,7 @@ export default class Home extends Component{
       method: 'POST',
       body: JSON.stringify(new_post),
       headers:{
+        authorization: 'Bearer ' + localStorage.getItem('webToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }}).then(res => {              
