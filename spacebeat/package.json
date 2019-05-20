@@ -13,11 +13,13 @@
   "license": "ISC",
   "dependencies": {
     "ajv": "^6.8.1",
+    "auth0-js": "^9.10.2",
     "busboy": "^0.3.0",
     "copy-to-clipboard": "^3.0.8",
     "d3": "^5.9.2",
     "dateformat": "^3.0.3",
     "express": "^4.16.4",
+    "history": "^4.9.0",
     "morgan": "^1.9.1",
     "pg": "^7.8.1",
     "pg-hstore": "^2.3.2",

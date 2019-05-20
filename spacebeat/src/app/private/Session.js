@@ -13,7 +13,7 @@ export default class Session extends Component{
 
   state = {
     user: {},
-    logged : JSON.parse(localStorage.getItem('loggeduser')) == null ? false : true,
+    isLoggedIn: false,
     page: 'home',
     ready: false
   }
@@ -25,12 +25,7 @@ export default class Session extends Component{
   }
 
   logOut = () => {
-    localStorage.setItem('loggeduser', JSON.stringify(null));
-    this.setState({
-      logged: false
-    }, () => {
-      M.toast({html:'Spacebeat will miss you', classes: 'rounded'});
-    });
+    this.props.auth.logout();
   }
 
   changePage = (new_page) => {
@@ -39,26 +34,49 @@ export default class Session extends Component{
         page: new_page
       });
     }    
-  }  
+  }   
 
-  componentDidMount(){
-    var retrievedObject = JSON.parse(localStorage.getItem('loggeduser'));
-    if(retrievedObject != null){
-      let idUser = retrievedObject.id;
-      fetch('/api/user/'+idUser).then(res => res.json()).then(data => {  
-        console.log(data);    
-        this.setState({
-          user: data,
-          ready: true
-        });             
-      }).catch(error => {this.setState({logged:false});});     
-    } 
+  componentWillMount() {
+    this.setState({isLoggedIn: localStorage.getItem('isLoggedIn')});
+    const { userProfile, getProfile } = this.props.auth;
+    if (!userProfile) {
+      getProfile((err, profile) => {
+        this.setState({ profile: profile });
+        let requestBody = {"username": this.state.profile.email};
+        fetch('/api/auth', {
+          method: "POST",
+          body: JSON.stringify(requestBody),
+          headers: {
+            "Content-Type": "application/json"
+          },
+        }).then(res => res.json()).then(data => {
+          localStorage.setItem('webToken', data.token);
+          fetch('/api/userbyemail/'+ this.state.profile.email, {
+            headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')}
+          }).then(res => res.json()).then(data => {  
+            this.setState({
+              user: data
+            });      
+            fetch('/api/user/' + this.state.user.id, {
+              headers: {authorization: 'Bearer ' + localStorage.getItem('webToken')}
+            }).then(res => res.json()).then(data => {
+              this.setState({
+                user: data,
+                ready: true
+               });
+              }).catch(error => {localStorage.setItem('isLoggedIn', false)});       
+            }).catch(error => {localStorage.setItem('isLoggedIn', false)});     
+        }).catch(error => {localStorage.setItem('isLoggedIn', false)}); 
+
+      });
+    } else {
+      this.setState({ profile: userProfile });
+    }
     document.dispatchEvent(new Event('component'));       
   }
 
   render(){
-
-    if(!this.state.logged){
+    if(!this.state.isLoggedIn){
       return <Redirect to='/'/>;
     }
 

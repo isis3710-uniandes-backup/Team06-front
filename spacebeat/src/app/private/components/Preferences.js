@@ -77,6 +77,9 @@ export default class Preferences extends Component{
                 function(resolve, reject) {
                     if(bannerImage != null){                    
                         fetch('/images', {
+                            headers: {
+                                authorization: 'Bearer ' + localStorage.getItem('webToken')
+                            },
                             method: 'POST',
                             body: bannerImageData
                             }).then(res=> resolve(true)).catch(error => {
@@ -95,6 +98,7 @@ export default class Preferences extends Component{
                     method: 'PUT',
                     body: JSON.stringify(changes),
                     headers:{
+                    authorization: 'Bearer ' + localStorage.getItem('webToken'),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                     }}).then(res => {              

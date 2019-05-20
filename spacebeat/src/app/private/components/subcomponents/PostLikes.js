@@ -14,6 +14,7 @@ export default class PostLikes extends Component{
       method: 'PUT',
       body: JSON.stringify(new_post),
       headers:{
+        authorization: 'Bearer ' + localStorage.getItem('webToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }}).then(res => {              
