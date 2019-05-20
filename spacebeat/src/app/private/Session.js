@@ -11,6 +11,7 @@ import Rooms from './components/Rooms';
 export default class Session extends Component{
 
   state = {
+    user: {},
     isLoggedIn: false,
     page: 'home',
     ready: false
@@ -40,13 +41,17 @@ export default class Session extends Component{
     if (!userProfile) {
       getProfile((err, profile) => {
         this.setState({ profile: profile });
-        // fetch('/api/userbyemail/'+ this.state.profile.email).then(res => res.json()).then(data => {  
-        //   console.log(data);    
-        //   this.setState({
-        //     user: data,
-        //     ready: true
-        //   });             
-        // }).catch(error => {localStorage.setItem('isLoggedIn', false)});     
+        fetch('/api/userbyemail/'+ this.state.profile.email).then(res => res.json()).then(data => {  
+          this.setState({
+            user: data
+          });      
+          fetch('api/user/' + this.state.user.id).then(res => res.json()).then(data => {
+            this.setState({
+            user: data,
+            ready: true
+           });
+          }).catch(error => {localStorage.setItem('isLoggedIn', false)});       
+        }).catch(error => {localStorage.setItem('isLoggedIn', false)});     
       });
     } else {
       this.setState({ profile: userProfile });
@@ -54,12 +59,7 @@ export default class Session extends Component{
     document.dispatchEvent(new Event('component'));       
   }
 
-  componentDidMount(){
-    
-  }
-
   render(){
-
     if(!this.state.isLoggedIn){
       return <Redirect to='/'/>;
     }
