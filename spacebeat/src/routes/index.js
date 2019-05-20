@@ -9,11 +9,16 @@ const commentController = require('../controllers/comment');
 const chatroomController = require('../controllers/chatroom');
 const messageController = require('../controllers/message');
 const playlistController = require('../controllers/playlist');
+var middleware = require('./jwt/middleware');
+var HandlerGenerator = require('./jwt/handlerGenerator');
 
 // Static files on index.js of app will render front
 
+//Authentication
+router.post('/api/auth/', HandlerGenerator.login);
+
 // User
-router.get('/api/user/', userController.getAll);
+router.get('/api/user/', middleware.checkToken, userController.getAll);
 router.get('/api/user/:id', userController.get);
 router.post('/api/user/', userController.post);
 router.put('/api/user/:id', userController.put);
@@ -29,9 +34,9 @@ router.delete('/api/user/:userfrom_id/friends/:userto_id', userController.delete
 // Post
 router.get('/api/user/:user_id/post/', postController.getAll);
 router.get('/api/user/:user_id/post/:id', postController.get);
-router.post('/api/user/:user_id/post/', postController.post);
+router.post('/api/user/:user_id/post/', middleware.checkToken,postController.post);
 router.put('/api/user/:user_id/post/:id', postController.put);
-router.delete('/api/user/:user_id/post/:id', postController.delete);
+router.delete('/api/user/:user_id/post/:id', middleware.checkToken, postController.delete);
 
 // Artist
 router.get('/api/artist/', artistController.getAll);

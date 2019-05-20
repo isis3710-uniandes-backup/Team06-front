@@ -9,11 +9,6 @@ const app = express();
 var indexRouter = require('./routes/index');
 const fs = require('fs');
 const Busboy = require('busboy');
-var session = require('express-session');
-
-// var sess = {
-//   secret
-// }
 
 // Settings
 

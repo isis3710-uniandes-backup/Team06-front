@@ -41,17 +41,28 @@ export default class Session extends Component{
     if (!userProfile) {
       getProfile((err, profile) => {
         this.setState({ profile: profile });
-        fetch('/api/userbyemail/'+ this.state.profile.email).then(res => res.json()).then(data => {  
-          this.setState({
-            user: data
-          });      
-          fetch('api/user/' + this.state.user.id).then(res => res.json()).then(data => {
+        let requestBody = {"username": this.state.profile.email};
+        fetch('/api/auth', {
+          method: "POST",
+          body: JSON.stringify(requestBody),
+          headers: {
+            "Content-Type": "application/json"
+          },
+        }).then(res => res.json()).then(data => {
+          localStorage.setItem('webToken', data.token);
+          fetch('/api/userbyemail/'+ this.state.profile.email).then(res => res.json()).then(data => {  
             this.setState({
-            user: data,
-            ready: true
-           });
-          }).catch(error => {localStorage.setItem('isLoggedIn', false)});       
-        }).catch(error => {localStorage.setItem('isLoggedIn', false)});     
+              user: data
+            });      
+            fetch('/api/user/' + this.state.user.id).then(res => res.json()).then(data => {
+              this.setState({
+                user: data,
+                ready: true
+               });
+              }).catch(error => {localStorage.setItem('isLoggedIn', false)});       
+            }).catch(error => {localStorage.setItem('isLoggedIn', false)});     
+        }).catch(error => {localStorage.setItem('isLoggedIn', false)}); 
+
       });
     } else {
       this.setState({ profile: userProfile });
