@@ -34,8 +34,8 @@ module.exports = {
                     user_lastnames: req.params.user_email,
                     user_email: req.params.user_email,
                     user_password: req.body.user_password,
-                    user_image: req.body.user_image,
-                    user_banner: req.body.user_banner
+                    user_image: 'defaultprofile.jpg',
+                    user_banner: 'defaultbanner.jpg'
                 }).then((user) => res.status(201).send(user))
                     .catch((error) => res.status(400).send(error));
             }
