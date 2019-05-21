@@ -1,36 +1,18 @@
 # Entrega 5 Proyecto WEB
 
-La entrega server back y server front está contenida en este mismo repositorio. Es decir, Team06-front tiene back y front. Los entregables de esta entrega pueden visualizarse al correr el proyecto.
+La entrega server back y server front está contenida en este mismo repositorio. Es decir, Team06-front tiene back y front. Los entregables de esta entrega pueden visualizarse al correr el proyecto. 
 
-# Entregas anteriores Proyecto WEB
+### JWT
 
-## Vídeo
+Los endpoint del back para los REST de cada recurso fueron configurados con JWT para solicitar el token de acceso de una persona que use la aplicación.
 
-[Dar click aquí para ver vídeo de funcionalidades de la página](https://www.youtube.com/watch?v=oNZW6PsV6wE&feature=youtu.be)
- 
-## Usabilidad
+### Auth0
 
-### Combinaciones adecuadas de tipografía y colores
+El inicio de sesión fue configurado para que se hiciera el inicio de sesión y registro con Auth0.
 
-- La carpeta *./ui/tests/usability* contiene dos evidencias del contraste de los colores principales de la página.
-- La tipografía utilizada es la icónica del paradigma de diseño Materialize: Roboto.
+### D3
 
-### Axe
-
-- La carpeta *./ui/tests/usability/axe* contiene pantallazos evidencia de las pruebas Axe.
-
-### Reglas de diseño
-
-- La carpeta *./ui/tests/usability/evaluation* contiene un documento resumen del cumplimiento de las reglas de diseño.
-- La carpeta *./ui/tests/usability/evaluation/screenshots* contiene pantallazos citados en el documento y evidencia de las reglas.
-
-### Internacionalización
-
-- La página está configurada para inglés y español. Dependiendo del lenguaje predeterminado del navegador, la página será mostrada en uno u otro idioma.
-
-### Tests de usabilidad
-
-- La carpeta *./ui/tests/usability/* contiene el documento **resultados_tests_usabilidad.pdf**.
+Se hizo una sección nueva dentro de la aplicación que tuviera los datos de las listas de los usuarios para conocer el número de canciones y, además, presentar de manera general, la distribución de canciones por género en la base de datos.
 
 ### Otros elementos
 
